@@ -47,20 +47,32 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('RegisterCtrl', ["$scope", function($scope){  
+.controller('RegisterCtrl', ["$scope", function($scope){
+  // Form data for the register modal
+  $scope.registerData = {};
+
+  // Perform the registration action when the user submits the register form
+  $scope.doRegister = function() {
+    console.log('Registering', $scope.registerData);
+    // send data to server side for validating and saving 
+  };
 }])
 
 .controller('RideCtrl', function($scope, $ionicLoading, $compile){  
   // A single ride
+    $scope.rideData = {};
+    $scope.fromLocationMap = 'kandy';
+    $scope.toLocationMap = 'colombo';
+    $scope.availableSeats = 4;
+    $scope.rideStatus = 'planned';
 
       function initialize() {
-        alert("test")
-        var site = new google.maps.LatLng(55.9879314,-4.3042387);
-        var hospital = new google.maps.LatLng(55.8934378,-4.2201905);
+        var fromLocation = new google.maps.LatLng(6.9218386,79.8562055);
+        var toLocation = new google.maps.LatLng(7.2945453,80.6257814);
       
         var mapOptions = {
           streetViewControl:true,
-          center: site,
+          center: fromLocation,
           zoom: 18,
           mapTypeId: google.maps.MapTypeId.TERRAIN
         };
@@ -76,25 +88,25 @@ angular.module('starter.controllers', [])
         });
 
         var marker = new google.maps.Marker({
-          position: site,
+          position: fromLocation,
           map: map,
           title: 'Strathblane (Job Location)'
         });
         
         var hospitalRoute = new google.maps.Marker({
-          position: hospital,
+          position: toLocation,
           map: map,
           title: 'Hospital (Stobhill)'
         });
         
         var infowindow = new google.maps.InfoWindow({
-             content:"Project Location"
+             content:"Colombo"
         });
 
         infowindow.open(map,marker);
         
         var hospitalwindow = new google.maps.InfoWindow({
-             content:"Nearest Hospital"
+             content:"Kandy "
         });
 
         hospitalwindow.open(map,hospitalRoute);
@@ -109,8 +121,8 @@ angular.module('starter.controllers', [])
         var directionsDisplay = new google.maps.DirectionsRenderer();
 
         var request = {
-            origin : site,
-            destination : hospital,
+            origin : fromLocation,
+            destination : toLocation,
             travelMode : google.maps.TravelMode.DRIVING
         };
         directionsService.route(request, function(response, status) {
