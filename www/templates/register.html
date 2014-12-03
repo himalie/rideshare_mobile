@@ -24,7 +24,12 @@
         <label class="item item-input">
           <span class="input-label">My Location</span>
           <input type="text" ng-model="registerData.location">
-          <!-- get the location here using a map           -->
+          <!-- get the location here using a map   -- need to adjust placement .. otherwise the map wont show        -->
+          <!-- placement is a mess -->
+          <!-- should modify so that user can select the location from map or give a place name and select from a list -->
+          <span>
+          <div id="map" data-tap-disabled="true" style= "height:800px;width:1000px">testttt</div>
+          </span>
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Register</button>

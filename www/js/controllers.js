@@ -47,16 +47,7 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('RegisterCtrl', ["$scope", function($scope){
-  // Form data for the register modal
-  $scope.registerData = {};
 
-  // Perform the registration action when the user submits the register form
-  $scope.doRegister = function() {
-    console.log('Registering', $scope.registerData);
-    // send data to server side for validating and saving 
-  };
-}])
 
 .controller('RideCtrl', function($scope, $ionicLoading, $compile){  
   // A single ride
@@ -106,7 +97,7 @@ angular.module('starter.controllers', [])
         infowindow.open(map,marker);
         
         var hospitalwindow = new google.maps.InfoWindow({
-             content:"Kandy "
+             content:"Kandy"
         });
 
         hospitalwindow.open(map,hospitalRoute);
@@ -160,6 +151,77 @@ angular.module('starter.controllers', [])
 
       initialize();
 })
+
+
+
+.controller('RegisterCtrl', function($scope, $ionicLoading, $compile) {
+  //Form data for the register modal
+  $scope.registerData = {};
+
+  // Perform the registration action when the user submits the register form
+  $scope.doRegister = function() {
+    console.log('Registering', $scope.registerData);
+    // send data to server side for validating and saving 
+  };
+  function initialize() {
+        var myLatlng = new google.maps.LatLng(7.2964,80.6350);
+        
+        var mapOptions = {
+          center: myLatlng,
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+        
+        //Marker + infowindow + angularjs compiled ng-click
+        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+          content: compiled[0]
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Uluru (Ayers Rock)'
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+
+        $scope.map = map;
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+      
+      $scope.centerOnMe = function() {
+        if(!$scope.map) {
+          return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.loading.hide();
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+      };
+      
+      $scope.clickTest = function() {
+        alert('Example of infowindow with ng-click')
+      };
+      initialize();
+
+  })
+
+
 
 // Rideshare logic, the controller first.
 .controller('RidesCtrl', function($scope) {
