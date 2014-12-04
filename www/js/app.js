@@ -20,7 +20,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+
+
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.defaults.useXDomain = true;﻿
   $stateProvider
 
     .state('app', {
@@ -69,6 +72,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.user', {
+      url: "/user",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/user.html",
+          controller: 'UserCtrl'
+        }
+      }
+    })
+
     .state('app.single', {
       url: "/ride/:rideId",
       views: {
@@ -81,4 +94,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/findride');
 });
+
+
 

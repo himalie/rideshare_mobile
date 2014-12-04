@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
@@ -46,7 +47,6 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
-
 
 
 .controller('RideCtrl', function($scope, $ionicLoading, $compile){  
@@ -153,7 +153,6 @@ angular.module('starter.controllers', [])
 })
 
 
-
 .controller('RegisterCtrl', function($scope, $ionicLoading, $compile) {
   //Form data for the register modal
   $scope.registerData = {};
@@ -222,6 +221,17 @@ angular.module('starter.controllers', [])
   })
 
 
+.controller('UserCtrl', function($scope, $http) {
+
+  $scope.users = [ ];
+    $http.get('http://localhost/api/user').
+      success(function(data) {
+      console.log(data);
+      $scope.users.push(data);
+    });
+
+})
+
 
 // Rideshare logic, the controller first.
 .controller('RidesCtrl', function($scope) {
@@ -235,3 +245,5 @@ angular.module('starter.controllers', [])
   ];
 
 });
+
+
