@@ -45,6 +45,17 @@ angular.module('starter.controllers', [])
   ];
 })
 
+.controller('AddRideCtrl', function($scope) {
+  $scope.playlists = [
+    { title: 'Reggae', id: 1 },
+    { title: 'Chill', id: 2 },
+    { title: 'Dubstep', id: 3 },
+    { title: 'Indie', id: 4 },
+    { title: 'Rap', id: 5 },
+    { title: 'Cowbell', id: 6 }
+  ];
+})
+
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
@@ -81,13 +92,13 @@ angular.module('starter.controllers', [])
         var marker = new google.maps.Marker({
           position: fromLocation,
           map: map,
-          title: 'Strathblane (Job Location)'
+          title: 'Kandy'
         });
         
         var hospitalRoute = new google.maps.Marker({
           position: toLocation,
           map: map,
-          title: 'Hospital (Stobhill)'
+          title: 'Colombo'
         });
         
         var infowindow = new google.maps.InfoWindow({
@@ -110,6 +121,10 @@ angular.module('starter.controllers', [])
         
         var directionsService = new google.maps.DirectionsService();
         var directionsDisplay = new google.maps.DirectionsRenderer();
+
+        // var mapUrl = "http://maps.google.com/maps/api/staticmap?center=";
+        // mapUrl = mapUrl + position.coords.latitude + ',' + position.coords.longitude;
+        // mapUrl = mapUrl + '&zoom=15&size=512x512&maptype=roadmap&sensor=true';
 
         var request = {
             origin : fromLocation,
@@ -221,16 +236,16 @@ angular.module('starter.controllers', [])
   })
 
 
-.controller('UserCtrl', function($scope, $http) {
+// .controller('UserCtrl', function($scope, $http) {
 
-  $scope.users = [ ];
-    $http.get('http://localhost/api/user').
-      success(function(data) {
-      console.log(data);
-      $scope.users.push(data);
-    });
+//   $scope.users = [ ];
+//     $http.get('http://localhost/api/user').
+//       success(function(data) {
+//       console.log(data);
+//       $scope.users.push(data);
+//     });
 
-})
+// })
 
 
 // Rideshare logic, the controller first.

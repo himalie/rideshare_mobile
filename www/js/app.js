@@ -43,6 +43,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.addride', {
+      url: "/addride",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/addride.html",
+          controller: 'AddRideCtrl'
+        }
+      }
+    })
+
     .state('app.register', {
       url: "/register",
       views: {
