@@ -5,30 +5,34 @@
   <ion-content class="has-header">
     <form ng-submit="doRegister()">
       <div class="list">
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="registerData.username">
+          <input type="text" ng-model="registerData.username" placeholder="Ex: tom_123">
         </label>
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="registerData.password">
+          <input type="password" ng-model="registerData.password" placeholder="">
         </label>
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Confirm Password</span>
+          <input type="password" ng-model="registerData.password" placeholder="">
+        </label>
+        <label class="item item-input item-stacked-label">
           <span class="input-label">First Name</span>
-          <input type="text" ng-model="registerData.firstName">
+          <input type="text" ng-model="registerData.firstName" placeholder="Tom">
         </label>
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">Last Name</span>
-          <input type="text" ng-model="registerData.lastName">
+          <input type="text" ng-model="registerData.lastName" placeholder="Mattew">
         </label>
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">E mal</span>
-          <input type="email" ng-model="registerData.email">
+          <input type="email" ng-model="registerData.email" placeholder="tom@gmail.com">
         </label>
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">My Location</span>
           <input type="text" ng-model="registerData.location">
-          <!-- get the location here using a map   -- need to adjust placement .. otherwise the map wont show        -->
+          <!-- get the location here using a map    need to adjust placement .. otherwise the map wont show        -->
           <!-- placement is a mess -->
           <!-- should modify so that user can select the location from map or give a place name and select from a list -->
           <span>
