@@ -8,10 +8,15 @@
     <label class="item item-input">
           <span class="input-label">user data :: </span>
           <p ng-model="users"> {{users}}</p>
-
-          <!-- <ul data-ng-show="showUsers">
-      <li data-ng-repeat="user in users">{{user.first_name}}</li>
-    </ul>  -->
-        </label>
+    </label>
+    <br>
+    <table >
+      come here
+      <tr ng-repeat="x in users">
+        <td>{{ x.first_name.trim() }} &nbsp</td>
+        <td>{{ x.last_name.trim() }}</td>
+      </tr>
+    </table>
+        
   </ion-content>
 </ion-view>
