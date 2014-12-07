@@ -45,7 +45,7 @@ function getVehicle() {
   });
 };
 
-function putUser() {
+function registerUser() {
   $http.post('http://localhost/api/user', {
     first_name : 'from ionic 1',
     last_name : 'onic again',
@@ -64,13 +64,13 @@ function putUser() {
 };
 
 console.log("beforeeeeeeeee");
-  //putUser();
+  //registerUser();
 
   console.log("afterrrrrrrrr");
   // for testing 
     //getVehicle();
-    //getUserByUserName();
-    getUserById();
+    getUserByUserName();
+   // getUserById();
     //getAllUsers();
 
 })
