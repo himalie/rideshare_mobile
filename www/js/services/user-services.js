@@ -1,31 +1,133 @@
-app.factory('User', function (Auth, $rootScope) {
+angular.module('starter.controllers', [])
+
+.factory('UserFactory', ['$http', '$rootScope', function($http, $rootScope, $q) {
+
+    var urlBase = 'http://localhost/ARideShare/api/user';
+    var User = {};
+
+    User.currentUser = {};
+
+    User.getUsers = function () {
+        return $http.get(urlBase);
+    };
+
+    User.getUser = function (user_name, password) {
+        console.log('come here');
+
+
+        // return $http.get(urlBase, {params: {user_name : user_name, password : password}})
+        //             .then(function(data, status, headers, config) {
+        //                 if (typeof data.data === 'object') {
+        //                     console.log('RES :'+data);
+        //                     User.currentUser = data;
+        //                     console.log(User.currentUser.user_name);
+        //                     setCurrentUser(User.currentUser.user_name);
+        //                     return data.data;
+        //                 } else {
+        //                     // invalid response
+        //                     return $q.reject(data.data);
+        //                 }
+
+        //             }, function(data) {
+        //                 // something went wrong
+        //                 return $q.reject(data.data);
+        //             });
+
+
+
+
+
+        $http.get(urlBase, {params: {user_name : user_name, password : password}}).
+              success(function(data, status, headers, config) {
+                // this callback will be called asynchronously
+                // when the response is available
+                console.log('come hereeee');
+                console.log(data);
+                User.currentUser = data;
+                console.log(' User.currentUser ='+ User.currentUser.user_name);
+                setCurrentUser(User.currentUser.user_name);
+                return data;
+              }).
+              error(function (data, status, headers, config) {
+                User.currentUser = null;
+                console.log('error: ' + data);
+      });
+        //return $http.get('http://localhost/ARideShare/api/user', {params: {user_name : user_name, password : password}})
+                  
+    };
+
+    User.insertUser = function (user) {
+        return $http.post(urlBase, user);
+    };
+
+    User.updateUser = function (user) {
+        return $http.put(urlBase + '/' + user.user_id, user);
+    };
+
+    User.deleteUser = function (id) {
+        return $http.delete(urlBase + '/' + id);
+    };
+
+    User.signedIn = function () {
+        console.log(' signedIn');
+        return $rootScope.currentUser !== undefined;
+    };
+
+    setCurrentUser = function(username) {
+        console.log('set curr user :'+ username);
+        $rootScope.currentUser = username;
+
+        //User.currentUser = User.findByUsername(username);
+    };
+    return User;
+}])
+
+
+.factory('User', function ($rootScope, $http) {
 
     var User = {
         currentUser : {},
 
         create: function (authUser, username, email) {
             
+            
+            // insert a record here? like below
 
-            setCurrentUser(username);
-
-            return user.$loaded(function () //noinspection JSHint
-            {
-                user.username = username;
-                user.email = email;
-                user.md5_hash = authUser.md5_hash;
-                user.$priority = authUser.uid;
-                user.$save();
-            });
+            $http.post('http://localhost/api/user', {
+                first_name : user.first_name,
+                last_name : user.last_name,
+                user_name : user.user_name,
+                gender : user.gender,
+                password : user.password,
+                email : user.email,
+                location : user.location
+            }).
+              success(function(data, status, headers, config) {
+                // this callback will be called asynchronously
+                // when the response is available
+                setCurrentUser(username);
+                console.log(data);
+                return data;
+              })
+            
         },
+
+
+        // here is there a problem with semicolons??
 
         findByUsername: function (username) {
             if (username) {
-                $http.get('http://localhost/api/user', {params: {user_name : username}).
-			      success(function(data, status, headers, config) {
-			          return data;
-			    });
-            }
+                console.log(username);
+               return  $http.get('http://localhost/ARideShare/api/user', {params: {user_name : username}}).
+                  success(function(data, status, headers, config) {
+                      console.log(data);
+                      setCurrentUser(username);
+                    }); 
+                  //return user;
+                }
+            
         },
+
 
         signedIn: function () {
             return $rootScope.currentUser !== undefined;
