@@ -70,7 +70,33 @@ angular.module('starter.controllers', [])
     };
 
     User.insertUser = function (user) {
-        return $http.post(urlBase, user);
+
+        var deferred = $q.defer();
+
+         $http.post(urlBase, {
+                first_name : user.firstName,
+                last_name : user.lastName,
+                user_name : user.username,
+                gender : user.gender,
+                password : user.password,
+                email : user.email,
+                location : user.location
+            }).
+              success(function(data, status, headers, config) {
+                // this callback will be called asynchronously
+                // when the response is available
+                User.currentUser = data;
+                setCurrentUser(User.currentUser.user_name);
+                console.log('POST SERVICE='+ data);
+                deferred.resolve(data);
+              }).
+              error(function (data, status, headers, config) {
+                User.currentUser = null;
+                setCurrentUser(User.currentUser.user_name);
+                console.log('error: ' + data);
+                deferred.reject(data);
+            });
+              return deferred.promise;
     };
 
     User.updateUser = function (user) {

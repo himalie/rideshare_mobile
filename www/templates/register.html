@@ -15,7 +15,7 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Confirm Password</span>
-          <input type="password" ng-model="registerData.password" placeholder="">
+          <input type="password"  placeholder="">
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">First Name</span>
@@ -25,8 +25,18 @@
           <span class="input-label">Last Name</span>
           <input type="text" ng-model="registerData.lastName" placeholder="Mattew">
         </label>
+        <label class="item item-input item-select">
+            <div class="input-label">
+              Gender
+            </div>
+            <select ng-model="registerData.gender">
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </label>
+
         <label class="item item-input item-stacked-label">
-          <span class="input-label">E mal</span>
+          <span class="input-label">E mail</span>
           <input type="email" ng-model="registerData.email" placeholder="tom@gmail.com">
         </label>
         <label class="item item-input item-stacked-label">

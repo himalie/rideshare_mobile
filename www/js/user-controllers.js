@@ -34,14 +34,14 @@ angular.module('starter')
         console.log('TTRYY '+ $rootScope.currentUser);
     });
 
-// =============================================================================================
-// UserFactory.getUser($scope.loginData.username, $scope.loginData.password)
-//             .success(function (data, status, headers, config) {
-//                 console.log(' DATA ' + data.user_name );
-//             })
-//             .error(function (error) {
-//                 console.log(' ERROR '  );
-//             });
+  // =============================================================================================
+  // UserFactory.getUser($scope.loginData.username, $scope.loginData.password)
+  //             .success(function (data, status, headers, config) {
+  //                 console.log(' DATA ' + data.user_name );
+  //             })
+  //             .error(function (error) {
+  //                 console.log(' ERROR '  );
+  //             });
 
 // =============================================================================================
    // var currentUser = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
@@ -70,68 +70,68 @@ angular.module('starter')
 
   };
 
-// **************************
-//   $scope.users = [ ];
+    // **************************
+    //   $scope.users = [ ];
 
-//   // get all users
-//   function getAllUsers() {
-//     $http.get('http://localhost/api/user').
-//     success(function(data, status, headers, config) {
-//       angular.forEach(data, function(data) {
-//         $scope.users.push(data);
-//         console.log(" first name : " + data.first_name.trim());
-//       })
-//     });
-//   };
+    //   // get all users
+    //   function getAllUsers() {
+    //     $http.get('http://localhost/api/user').
+    //     success(function(data, status, headers, config) {
+    //       angular.forEach(data, function(data) {
+    //         $scope.users.push(data);
+    //         console.log(" first name : " + data.first_name.trim());
+    //       })
+    //     });
+    //   };
 
-//   function getUserByUserName(user_name_, password_) { 
-//     $http.get('http://localhost/ARideShare/api/user', {params: {user_name : user_name_, password : password_}}).
-//       success(function(data, status, headers, config) {
-//           $scope.users.push(data);
-//           console.log(user_name_ + ' , '+ password_);
-//           console.log(data);
-//           console.log(" first name : " + data.first_name);
-//     });
-//   };
+    //   function getUserByUserName(user_name_, password_) { 
+    //     $http.get('http://localhost/ARideShare/api/user', {params: {user_name : user_name_, password : password_}}).
+    //       success(function(data, status, headers, config) {
+    //           $scope.users.push(data);
+    //           console.log(user_name_ + ' , '+ password_);
+    //           console.log(data);
+    //           console.log(" first name : " + data.first_name);
+    //     });
+    //   };
 
 
-// function getUserById() {
-//   $http.get('http://localhost/api/user', {params: {id : 1}}).
-//     success(function(data, status, headers, config) {
-//         $scope.users.push(data);
-//         console.log(data);
-//         console.log(" first name : " + data.first_name.trim());
-//     });
-// };
+    // function getUserById() {
+    //   $http.get('http://localhost/api/user', {params: {id : 1}}).
+    //     success(function(data, status, headers, config) {
+    //         $scope.users.push(data);
+    //         console.log(data);
+    //         console.log(" first name : " + data.first_name.trim());
+    //     });
+    // };
 
-// function getVehicle() {
-//   $http.get('http://localhost/api/vehicle', {params: {id : 2}}).
-//     success(function(data, status, headers, config) {
-//       angular.forEach(data, function(data) {
-//         $scope.users.push(data);
-//         console.log(data);
-//         console.log(" vehicle_no : " + data.vehicle_no.trim());
-//     });
-//   });
-// };
+    // function getVehicle() {
+    //   $http.get('http://localhost/api/vehicle', {params: {id : 2}}).
+    //     success(function(data, status, headers, config) {
+    //       angular.forEach(data, function(data) {
+    //         $scope.users.push(data);
+    //         console.log(data);
+    //         console.log(" vehicle_no : " + data.vehicle_no.trim());
+    //     });
+    //   });
+    // };
 
-// function registerUser() {
-//   $http.post('http://localhost/ARideShare/api/user', {
-//     first_name : 'from ionic 1',
-//     last_name : 'onic again',
-//     user_name : 'uniq111',
-//     gender : 'F',
-//     password : 'ioniccc',
-//     email : 'ddd',
-//     location : 'teest'
-//   }).
-//   success(function(data, status, headers, config) {
-//     // this callback will be called asynchronously
-//     // when the response is available
-//     console.log(data);
-//   })
+    // function registerUser() {
+    //   $http.post('http://localhost/ARideShare/api/user', {
+    //     first_name : 'from ionic 1',
+    //     last_name : 'onic again',
+    //     user_name : 'uniq111',
+    //     gender : 'F',
+    //     password : 'ioniccc',
+    //     email : 'ddd',
+    //     location : 'teest'
+    //   }).
+    //   success(function(data, status, headers, config) {
+    //     // this callback will be called asynchronously
+    //     // when the response is available
+    //     console.log(data);
+    //   })
 
-// };
+    // };
 
 console.log("beforeeeeeeeee");
   //registerUser();
@@ -145,13 +145,19 @@ console.log("beforeeeeeeeee");
 
 })
 
-.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory) {
+.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory, $rootScope) {
   //Form data for the register modal
   $scope.registerData = {};
-
+console.log('register');
   // Perform the registration action when the user submits the register form
   $scope.doRegister = function() {
     console.log('Registering', $scope.registerData);
+
+    var promise = UserFactory.insertUser($scope.registerData);
+    promise.then(function() {
+        console.log(' POST '+ UserFactory.currentUser.first_name);
+        console.log('POST  '+ $rootScope.currentUser);
+    });
     // send data to server side for validating and saving 
   };
   function initialize() {
@@ -208,13 +214,14 @@ console.log("beforeeeeeeeee");
       $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
       };
-      initialize();
+      //initialize();
 
   })
 
 
 
-.controller('SettingsCtrl', function($scope) {
+.controller('SettingsCtrl', function($scope, UserFactory) {
+  console.log('settings '+ UserFactory.currentUser.user_name);
   $scope.playlists = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
