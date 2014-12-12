@@ -6,6 +6,8 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
 
+.constant('RIDESHARE_URL', 'http://localhost/')
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -28,13 +30,22 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   $httpProvider.defaults.headers.common["Accept"] = "application/json";
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 
+ // $routeProvider
+ //            .when('/', {
+ //                templateUrl: '../templates/menu.html',
+ //                controller: 'UserCtrl'
+ //            })
+ //            .otherwise({
+ //                redirectTo: '/'
+ //            });
+  
   $stateProvider
 
     .state('app', {
       url: "/app",
       abstract: true,
       templateUrl: "templates/menu.html",
-      controller: 'AppCtrl'
+      controller: 'UserCtrl'
     })
 
     .state('app.findride', {

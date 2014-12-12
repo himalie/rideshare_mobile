@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.factory('UserFactory', ['$http', '$rootScope', function($http, $rootScope, $q) {
+.factory('UserFactory', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
 
     var urlBase = 'http://localhost/ARideShare/api/user';
     var User = {};
@@ -13,16 +13,32 @@ angular.module('starter.controllers', [])
 
     User.getUser = function (user_name, password) {
         console.log('come here');
+        
+        var deferred = $q.defer();
+        $http.get(urlBase, {params: {user_name : user_name, password : password}})
+        .success(function(data, status, headers, config) {
+                console.log(data);
+                User.currentUser = data;
+                console.log('SERVICE User.currentUser ='+ User.currentUser.user_name);
+                setCurrentUser(User.currentUser.user_name);
+                deferred.resolve(data);
+              }).
+              error(function (data, status, headers, config) {
+                User.currentUser = null;
+                console.log('error: ' + data);
+                deferred.reject(data);
+      });
+        return deferred.promise;
 
-
-        // return $http.get(urlBase, {params: {user_name : user_name, password : password}})
+// =============================
+        // $http.get(urlBase, {params: {user_name : user_name, password : password}})
         //             .then(function(data, status, headers, config) {
         //                 if (typeof data.data === 'object') {
-        //                     console.log('RES :'+data);
+        //                     console.log(' SERVICE data :'+data);
         //                     User.currentUser = data;
-        //                     console.log(User.currentUser.user_name);
+        //                     console.log('SERVICE User.currentUser.user_name' + User.currentUser.user_name);
         //                     setCurrentUser(User.currentUser.user_name);
-        //                     return data.data;
+        //                     return $q.resolve(data.data);
         //                 } else {
         //                     // invalid response
         //                     return $q.reject(data.data);
@@ -33,26 +49,23 @@ angular.module('starter.controllers', [])
         //                 return $q.reject(data.data);
         //             });
 
+// =====================================================================================
 
-
-
-
-        $http.get(urlBase, {params: {user_name : user_name, password : password}}).
-              success(function(data, status, headers, config) {
-                // this callback will be called asynchronously
-                // when the response is available
-                console.log('come hereeee');
-                console.log(data);
-                User.currentUser = data;
-                console.log(' User.currentUser ='+ User.currentUser.user_name);
-                setCurrentUser(User.currentUser.user_name);
-                return data;
-              }).
-              error(function (data, status, headers, config) {
-                User.currentUser = null;
-                console.log('error: ' + data);
-      });
-        //return $http.get('http://localhost/ARideShare/api/user', {params: {user_name : user_name, password : password}})
+      //   $http.get(urlBase, {params: {user_name : user_name, password : password}}).
+      //         success(function(data, status, headers, config) {
+      //           // this callback will be called asynchronously
+      //           // when the response is available
+      //           console.log('SERVICE come hereeee');
+      //           console.log(data);
+      //           User.currentUser = data;
+      //           console.log('SERVICE User.currentUser ='+ User.currentUser.user_name);
+      //           setCurrentUser(User.currentUser.user_name);
+      //           return data;
+      //         }).
+      //         error(function (data, status, headers, config) {
+      //           User.currentUser = null;
+      //           console.log('error: ' + data);
+      // });
                   
     };
 
@@ -74,7 +87,7 @@ angular.module('starter.controllers', [])
     };
 
     setCurrentUser = function(username) {
-        console.log('set curr user :'+ username);
+        console.log('SERVICE set curr user :'+ username);
         $rootScope.currentUser = username;
 
         //User.currentUser = User.findByUsername(username);

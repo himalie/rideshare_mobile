@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory) {
+.controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope) {
 
 
 // Form data for the login modal
@@ -28,19 +28,13 @@ angular.module('starter')
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login ', $scope.loginData);
-    //var login_val = getUserByUserName($scope.loginData.username, $scope.loginData.password);
+    var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+    promise.then(function() {
+        console.log('TTRYY '+ UserFactory.currentUser.first_name);
+        console.log('TTRYY '+ $rootScope.currentUser);
+    });
 
-    // UserFactory.getUser($scope.loginData.username, $scope.loginData.password)
-    //           // then() called when son gets back
-    //           .then(function(data) {
-    //               // promise fulfilled
-    //               console.log(' DATA ' + data.user_name );
-    //           }, function(error) {
-    //               // promise rejected, could log the error with: console.log('error', error);
-    //               console.log(' ERROR'  );
-    //           });
-
-// ---------
+// =============================================================================================
 // UserFactory.getUser($scope.loginData.username, $scope.loginData.password)
 //             .success(function (data, status, headers, config) {
 //                 console.log(' DATA ' + data.user_name );
@@ -49,22 +43,28 @@ angular.module('starter')
 //                 console.log(' ERROR '  );
 //             });
 
+// =============================================================================================
+   // var currentUser = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+
+    // currentUser.then(
+    //   function(data){
+    //     console.log('NEW CONTROLLER ='+ data.user_name);
+    //   },
+    //     function(errorPayLoad){
+    //       console.log('NEW CONTROLLER error');
+    //     });
 
 
-
-
-
-    var currentUser = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
-    //var login_val =User.findByUsername($scope.loginData.username);
-    console.log(" val := "+ currentUser);
-    console.log('user name : ' + UserFactory.currentUser.first_name);
-    if (UserFactory.signedIn()) {
-      console.log(' not undefined!!!!!!!!!'  );
-    }
-    else
-    {
-      console.log('else'  );
-    }
+    // //var login_val =User.findByUsername($scope.loginData.username);
+    // console.log("CONTROLLER val := "+ currentUser);
+    // console.log('CONTROLLERuser name : ' + UserFactory.currentUser.first_name);
+    // if (UserFactory.signedIn()) {
+    //   console.log('CONTROLLER not undefined!!!!!!!!!'  );
+    // }
+    // else
+    // {
+    //   console.log(' CONTROLLERelse'  );
+    // }
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
 
@@ -145,7 +145,7 @@ console.log("beforeeeeeeeee");
 
 })
 
-.controller('RegisterCtrl', function($scope, $ionicLoading, $compile) {
+.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory) {
   //Form data for the register modal
   $scope.registerData = {};
 
