@@ -2,173 +2,48 @@ angular.module('starter')
 
 .controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope) {
 
+    // Form data for the login modal
+    $scope.loginData = {};
 
-// Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    console.log(" ddd "+ UserFactory.currentUser.first_name);
-    getCurrLocation();
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    console.log(" ddd "+ UserFactory.currentUser.first_name);
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login ', $scope.loginData);
-    var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
-    promise.then(function() {
-        console.log('TTRYY '+ UserFactory.currentUser.first_name);
-        console.log('TTRYY '+ $rootScope.currentUser);
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
     });
 
-  // =============================================================================================
-  // UserFactory.getUser($scope.loginData.username, $scope.loginData.password)
-  //             .success(function (data, status, headers, config) {
-  //                 console.log(' DATA ' + data.user_name );
-  //             })
-  //             .error(function (error) {
-  //                 console.log(' ERROR '  );
-  //             });
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function() {
+      console.log(" ddd "+ UserFactory.currentUser.first_name);
+      $scope.getCurrLocation();
+      $scope.modal.hide();
+    };
 
-// =============================================================================================
-   // var currentUser = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+    // Open the login modal
+    $scope.login = function() {
+      console.log(" ddd "+ UserFactory.currentUser.first_name);
+      $scope.modal.show();
+    };
 
-    // currentUser.then(
-    //   function(data){
-    //     console.log('NEW CONTROLLER ='+ data.user_name);
-    //   },
-    //     function(errorPayLoad){
-    //       console.log('NEW CONTROLLER error');
-    //     });
-
-
-    // //var login_val =User.findByUsername($scope.loginData.username);
-    // console.log("CONTROLLER val := "+ currentUser);
-    // console.log('CONTROLLERuser name : ' + UserFactory.currentUser.first_name);
-    // if (UserFactory.signedIn()) {
-    //   console.log('CONTROLLER not undefined!!!!!!!!!'  );
-    // }
-    // else
-    // {
-    //   console.log(' CONTROLLERelse'  );
-    // }
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-
-  };
-
-    // **************************
-    //   $scope.users = [ ];
-
-    //   // get all users
-    //   function getAllUsers() {
-    //     $http.get('http://localhost/api/user').
-    //     success(function(data, status, headers, config) {
-    //       angular.forEach(data, function(data) {
-    //         $scope.users.push(data);
-    //         console.log(" first name : " + data.first_name.trim());
-    //       })
-    //     });
-    //   };
-
-    //   function getUserByUserName(user_name_, password_) { 
-    //     $http.get('http://localhost/ARideShare/api/user', {params: {user_name : user_name_, password : password_}}).
-    //       success(function(data, status, headers, config) {
-    //           $scope.users.push(data);
-    //           console.log(user_name_ + ' , '+ password_);
-    //           console.log(data);
-    //           console.log(" first name : " + data.first_name);
-    //     });
-    //   };
-
-
-    // function getUserById() {
-    //   $http.get('http://localhost/api/user', {params: {id : 1}}).
-    //     success(function(data, status, headers, config) {
-    //         $scope.users.push(data);
-    //         console.log(data);
-    //         console.log(" first name : " + data.first_name.trim());
-    //     });
-    // };
-
-    // function getVehicle() {
-    //   $http.get('http://localhost/api/vehicle', {params: {id : 2}}).
-    //     success(function(data, status, headers, config) {
-    //       angular.forEach(data, function(data) {
-    //         $scope.users.push(data);
-    //         console.log(data);
-    //         console.log(" vehicle_no : " + data.vehicle_no.trim());
-    //     });
-    //   });
-    // };
-
-    // function registerUser() {
-    //   $http.post('http://localhost/ARideShare/api/user', {
-    //     first_name : 'from ionic 1',
-    //     last_name : 'onic again',
-    //     user_name : 'uniq111',
-    //     gender : 'F',
-    //     password : 'ioniccc',
-    //     email : 'ddd',
-    //     location : 'teest'
-    //   }).
-    //   success(function(data, status, headers, config) {
-    //     // this callback will be called asynchronously
-    //     // when the response is available
-    //     console.log(data);
-    //   })
-
-    // };
-
-console.log("beforeeeeeeeee");
-  //registerUser();
-
-  console.log("afterrrrrrrrr");
-  // for testing 
-    //getVehicle();
-    //getUserByUserName();
-   // getUserById();
-    //getAllUsers();
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function() {
+      console.log('Doing login ', $scope.loginData);
+      var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+      promise.then(function() {
+          console.log('User name in Gobal data '+ UserFactory.currentUser.first_name);
+          console.log('User name '+ $rootScope.currentUser);
+      });
+    };
 
     // getting the current location of the user
     $scope.getCurrLocation = function () {
-        var startPos;
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            startPos = position;
-            var lat = startPos.coords.latitude;
-            var longg  = startPos.coords.longitude;
-            console.log('###### '+ lat+ '');
-          }, function(error) {
-            alert("Error occurred. Error code: " + error.code);
-            // error.code can be:
-            //   0: unknown error
-            //   1: permission denied
-            //   2: position unavailable (error response from locaton provider)
-            //   3: timed out
-          });
 
-          navigator.geolocation.watchPosition(function(position) {
-            var currLat = position.coords.latitude;
-            var currLong = position.coords.longitude;            
-          });
-        }
-
-    };
+      var promise = UserFactory.getCurrentLocatoin();
+      promise.then(function() {
+        console.log('POsition lat  '+ $rootScope.position.coords.latitude);
+        console.log('POsition long '+ $rootScope.position.coords.longitude);
+    });
+  };
 
 })
 
@@ -188,8 +63,12 @@ console.log('register');
     // send data to server side for validating and saving 
   };
   function initialize() {
-        var myLatlng = new google.maps.LatLng(7.2964,80.6350);
-        
+    var promise = UserFactory.getCurrentLocatoin();
+      promise.then(function() {
+      console.log();
+        //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
+        var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
+        console.log('^^^^^^^^^^ '+myLatlng);
         var mapOptions = {
           center: myLatlng,
           zoom: 16,
@@ -217,7 +96,11 @@ console.log('register');
         });
 
         $scope.map = map;
-      }
+       });
+      };
+
+
+
       google.maps.event.addDomListener(window, 'load', initialize);
       
       $scope.centerOnMe = function() {
@@ -241,7 +124,7 @@ console.log('register');
       $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
       };
-      //initialize();
+      initialize();
 
   })
 

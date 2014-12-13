@@ -28,45 +28,7 @@ angular.module('starter.controllers', [])
                 console.log('error: ' + data);
                 deferred.reject(data);
       });
-        return deferred.promise;
-
-// =============================
-        // $http.get(urlBase, {params: {user_name : user_name, password : password}})
-        //             .then(function(data, status, headers, config) {
-        //                 if (typeof data.data === 'object') {
-        //                     console.log(' SERVICE data :'+data);
-        //                     User.currentUser = data;
-        //                     console.log('SERVICE User.currentUser.user_name' + User.currentUser.user_name);
-        //                     setCurrentUser(User.currentUser.user_name);
-        //                     return $q.resolve(data.data);
-        //                 } else {
-        //                     // invalid response
-        //                     return $q.reject(data.data);
-        //                 }
-
-        //             }, function(data) {
-        //                 // something went wrong
-        //                 return $q.reject(data.data);
-        //             });
-
-// =====================================================================================
-
-      //   $http.get(urlBase, {params: {user_name : user_name, password : password}}).
-      //         success(function(data, status, headers, config) {
-      //           // this callback will be called asynchronously
-      //           // when the response is available
-      //           console.log('SERVICE come hereeee');
-      //           console.log(data);
-      //           User.currentUser = data;
-      //           console.log('SERVICE User.currentUser ='+ User.currentUser.user_name);
-      //           setCurrentUser(User.currentUser.user_name);
-      //           return data;
-      //         }).
-      //         error(function (data, status, headers, config) {
-      //           User.currentUser = null;
-      //           console.log('error: ' + data);
-      // });
-                  
+      return deferred.promise;                  
     };
 
     User.insertUser = function (user) {
@@ -110,6 +72,41 @@ angular.module('starter.controllers', [])
     User.signedIn = function () {
         console.log(' signedIn');
         return $rootScope.currentUser !== undefined;
+    };
+
+    User.getCurrentLocatoin = function () {
+      var deferred = $q.defer();
+      var startPos;
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            startPos = position;
+            var latitude = startPos.coords.latitude;
+            var longitude  = startPos.coords.longitude;
+            console.log('###### '+ latitude+ '');
+            console.log('###### '+ longitude+ '');
+            $rootScope.position = startPos;
+            deferred.resolve(startPos);
+          }, function(error) {
+            deferred.reject(error);
+            alert("Error occurred. Error code: " + error.code);
+            // error.code can be:
+            //   0: unknown error
+            //   1: permission denied
+            //   2: position unavailable (error response from locaton provider)
+            //   3: timed out
+          });
+
+          navigator.geolocation.watchPosition(function(position) {
+            var currLat = position.coords.latitude;
+            var currLong = position.coords.longitude;  
+            console.log('######@@@ '+ currLat+ '');
+            console.log('######@@@ '+ currLong+ '');   
+             $rootScope.currPosition = position;
+            deferred.resolve(position);       
+          });
+
+        }
+        return deferred.promise;
     };
 
     setCurrentUser = function(username) {
