@@ -16,6 +16,7 @@ angular.module('starter')
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
     console.log(" ddd "+ UserFactory.currentUser.first_name);
+    getCurrLocation();
     $scope.modal.hide();
   };
 
@@ -142,6 +143,32 @@ console.log("beforeeeeeeeee");
     //getUserByUserName();
    // getUserById();
     //getAllUsers();
+
+    // getting the current location of the user
+    $scope.getCurrLocation = function () {
+        var startPos;
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            startPos = position;
+            var lat = startPos.coords.latitude;
+            var longg  = startPos.coords.longitude;
+            console.log('###### '+ lat+ '');
+          }, function(error) {
+            alert("Error occurred. Error code: " + error.code);
+            // error.code can be:
+            //   0: unknown error
+            //   1: permission denied
+            //   2: position unavailable (error response from locaton provider)
+            //   3: timed out
+          });
+
+          navigator.geolocation.watchPosition(function(position) {
+            var currLat = position.coords.latitude;
+            var currLong = position.coords.longitude;            
+          });
+        }
+
+    };
 
 })
 
