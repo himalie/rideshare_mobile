@@ -172,12 +172,16 @@ angular.module('starter')
     { title: 'Cowbell', id: 6 }
   ];
 
+ 
+    var rendererOptions = {
+      draggable: true
+    };
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
     var map;
     var markers = [];
-    function initialize() {      
-        directionsDisplay = new google.maps.DirectionsRenderer();    
+    function initialize() {  
+        directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);    
         //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
         var myLatlng = new google.maps.LatLng(6.9218386,79.8562055);
         console.log('^^^^^^^^^^ '+myLatlng);
@@ -188,18 +192,28 @@ angular.module('starter')
         };
         var map = new google.maps.Map(document.getElementById("map"),
             mapOptions);
+        //display the route
         directionsDisplay.setMap(map);
-        //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-        var compiled = $compile(contentString)($scope);
+        // set the route draggable
+        google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
+          console.log('drag route');
+          console.log(directionsDisplay.getDirections());
+          console.log(directionsDisplay.getDirections().routes[0]);
+          $scope.myroute = directionsDisplay.getDirections();
+          var waypoints = directionsDisplay.directions.routes[0].legs[0].via_waypoint;
+          computeTotalDistance(directionsDisplay.getDirections());
+          //directionsService.route(directionsDisplay.setDirections(null));
+          console.log(waypoints);
+          console.log(waypoints[0].location.D);
+          console.log(waypoints[0].location.k);
 
-        var infowindow = new google.maps.InfoWindow({
-          content: compiled[0]
         });
+
 
         google.maps.event.addListener(map, 'click', function(e) {
          // infowindow.open(map,marker);
-         console.log('**********'+e.latLng);
+         console.log('ggggggggg');
+         console.log(e);
           placeMarker(e.latLng, map);
           if (markers.length ===2)
           {
@@ -230,12 +244,13 @@ angular.module('starter')
 
           }
         });
-        $scope.map = map;       
+        $scope.map = map;               
       };
       function placeMarker(position, map) {
         var marker = new google.maps.Marker({
           position: position,
-          map: map
+          map: map,
+          draggable:true,
         });
         console.log('clicking port ='+ position.lat());
         markers.push(marker);
@@ -246,6 +261,16 @@ angular.module('starter')
              console.log( markers[i].position.lng());
           }
         map.panTo(position);
+      }
+      function computeTotalDistance(result) {
+        var total = 0;
+        var myroute = result.routes[0];
+        for (var i = 0; i < myroute.legs.length; i++) {
+          total += myroute.legs[i].distance.value;
+        }
+        total = total / 1000.0;
+        $scope.totalDistance = total;
+        console.log('distance' + total);
       }
       google.maps.event.addDomListener(window, 'load', initialize);
       
@@ -267,9 +292,6 @@ angular.module('starter')
         });
       };
       
-      $scope.clickTest = function() {
-        alert('Example of infowindow with ng-click')
-      };
       initialize();
 
 })
