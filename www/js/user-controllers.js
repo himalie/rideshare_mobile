@@ -32,12 +32,20 @@ angular.module('starter')
       promise.then(function() {
           console.log('User name in Gobal data '+ UserFactory.currentUser.first_name);
           console.log('User name '+ $rootScope.currentUser);
+          if ($rootScope.currentUser !== undefined)
+          {
+            $scope.modal.hide();       
+            $scope.error_message =''; 
+          }
+          else
+          {
+            $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
+          }
       });
     };
 
     // getting the current location of the user
     $scope.getCurrLocation = function () {
-
       var promise = UserFactory.getCurrentLocatoin();
       promise.then(function() {
         console.log('POsition lat  '+ $rootScope.position.coords.latitude);
@@ -85,19 +93,31 @@ console.log('register');
           content: compiled[0]
         });
 
-        var marker = new google.maps.Marker({
-          position: myLatlng,
-          map: map,
-          title: 'Uluru (Ayers Rock)'
-        });
+        // var marker = new google.maps.Marker({
+        //   position: myLatlng,
+        //   map: map,
+        //   title: 'Uluru (Ayers Rock)'
+        // });
 
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,marker);
+        google.maps.event.addListener(map, 'click', function(e) {
+         // infowindow.open(map,marker);
+         console.log('**********'+e.latLng);
+          placeMarker(e.latLng, map);
+
         });
 
         $scope.map = map;
        });
       };
+
+      function placeMarker(position1, map1) {
+        var marker = new google.maps.Marker({
+          position: position1,
+          map: map1
+        });
+        console.log('clicking port ='+ position1.lat());
+        map1.panTo(position1);
+      }
 
 
 
