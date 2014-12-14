@@ -25,6 +25,7 @@ angular.module('starter.controllers', [])
               }).
               error(function (data, status, headers, config) {
                 User.currentUser = null;
+                $scope.error = error;
                 console.log('error: ' + data);
                 deferred.reject(data);
       });
@@ -35,7 +36,7 @@ angular.module('starter.controllers', [])
 
         var deferred = $q.defer();
 
-         $http.post(urlBase, {
+         return $http.post(urlBase, {
                 first_name : user.firstName,
                 last_name : user.lastName,
                 user_name : user.username,
@@ -58,7 +59,7 @@ angular.module('starter.controllers', [])
                 console.log('error: ' + data);
                 deferred.reject(data);
             });
-              return deferred.promise;
+            //return deferred.promise;
     };
 
     User.updateUser = function (user) {
