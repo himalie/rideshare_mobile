@@ -11,35 +11,36 @@
 		  </label>
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">To</span>
-		    <input type="text" placeholder="Ex: Colombo, Sri Lanka">
+		    <input type="text" ng-model="rideData.toLocation" placeholder="Ex: Colombo, Sri Lanka" >
 		  </label>
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Date</span>
-		    <input type="date" placeholder="01/01/2015">
+		    <input type="date" ng-model="rideData.date" placeholder="01/01/2015" >
 		  </label>
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Time</span>
-		    <input type="time" placeholder="">
+		    <input type="time" placeholder="" ng-model="rideData.startTime">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Available Seats</span>
-		    <input type="number" placeholder="Ex: 2">
+		    <input type="number" ng-model="rideData.availableSeats" placeholder="Ex: 2" >
 		  </label>
 		  <label class="checkbox">Females only
-       		<input type="checkbox">       		
+       		<input type="checkbox" ng-model="rideData.femalesOnly">       		
      	  </label>
      	  <label class="checkbox">Non-smokers
-       		<input type="checkbox">       		
+       		<input type="checkbox" ng-model="rideData.nonSmokers">       		
      	  </label> 
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Comments</span>
-		    <input type="text" placeholder="Ex: Non-smoker">
+		    <input type="text" placeholder="Ex: Non-smoker" ng-model="rideData.comments">
 		  </label>
 		  <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
 		 <!--  <input id="skill" type="range" min="1" max="100" value="0"> -->
 		  <label class="item">
           <button class="button button-block button-positive" type="submit">Add</button>
         </label>
+        
 		</div>
     </form>
   </ion-content>
