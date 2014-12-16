@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
                 deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
-                User.currentUser = null;
+                User.currentUser = undefined;
                 $scope.error = error;
                 console.log('error: ' + data);
                 deferred.reject(data);
@@ -54,7 +54,7 @@ angular.module('starter.controllers', [])
                 deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
-                User.currentUser = null;
+                User.currentUser = undefined;
                 setCurrentUser(User.currentUser.user_name);
                 console.log('error: ' + data);
                 deferred.reject(data);
@@ -120,61 +120,61 @@ angular.module('starter.controllers', [])
 }])
 
 
-.factory('User', function ($rootScope, $http) {
+// .factory('User', function ($rootScope, $http) {
 
-    var User = {
-        currentUser : {},
+//     var User = {
+//         currentUser : {},
 
-        create: function (authUser, username, email) {
+//         create: function (authUser, username, email) {
             
             
-            // insert a record here? like below
+//             // insert a record here? like below
 
-            $http.post('http://localhost/api/user', {
-                first_name : user.first_name,
-                last_name : user.last_name,
-                user_name : user.user_name,
-                gender : user.gender,
-                password : user.password,
-                email : user.email,
-                location : user.location
-            }).
-              success(function(data, status, headers, config) {
-                // this callback will be called asynchronously
-                // when the response is available
-                setCurrentUser(username);
-                console.log(data);
-                return data;
-              })
+//             $http.post('http://localhost/api/user', {
+//                 first_name : user.first_name,
+//                 last_name : user.last_name,
+//                 user_name : user.user_name,
+//                 gender : user.gender,
+//                 password : user.password,
+//                 email : user.email,
+//                 location : user.location
+//             }).
+//               success(function(data, status, headers, config) {
+//                 // this callback will be called asynchronously
+//                 // when the response is available
+//                 setCurrentUser(username);
+//                 console.log(data);
+//                 return data;
+//               })
             
-        },
+//         },
 
 
-        // here is there a problem with semicolons??
+//         // here is there a problem with semicolons??
 
-        findByUsername: function (username) {
-            if (username) {
-                console.log(username);
-               return  $http.get('http://localhost/ARideShare/api/user', {params: {user_name : username}}).
-                  success(function(data, status, headers, config) {
-                      console.log(data);
-                      setCurrentUser(username);
-                    }); 
-                  //return user;
-                }
+//         findByUsername: function (username) {
+//             if (username) {
+//                 console.log(username);
+//                return  $http.get('http://localhost/ARideShare/api/user', {params: {user_name : username}}).
+//                   success(function(data, status, headers, config) {
+//                       console.log(data);
+//                       setCurrentUser(username);
+//                     }); 
+//                   //return user;
+//                 }
             
-        },
+//         },
 
 
-        signedIn: function () {
-            return $rootScope.currentUser !== undefined;
-        }
-    };
+//         signedIn: function () {
+//             return $rootScope.currentUser !== undefined;
+//         }
+//     };
 
-    function setCurrentUser (username) {
-        $rootScope.currentUser = username;
-        User.currentUser = User.findByUsername(username);
-    }
+//     function setCurrentUser (username) {
+//         $rootScope.currentUser = username;
+//         User.currentUser = User.findByUsername(username);
+//     }
     
-    return User;
-});
+//     return User;
+// });

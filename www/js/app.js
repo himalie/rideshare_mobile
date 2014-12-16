@@ -107,8 +107,18 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.ride', {
+      url: "/editride/:rideId/:editable",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/editride.html",
+          controller: 'RideCtrl'
+        }
+      }
+    })
+
     .state('app.single', {
-      url: "/ride/:rideId",
+      url: "/ride/:rideId/:editable",
       views: {
         'menuContent' :{
           templateUrl: "templates/ride.html",

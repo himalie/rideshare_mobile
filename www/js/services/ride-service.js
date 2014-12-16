@@ -9,10 +9,10 @@ angular.module('starter')
 
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
-            console.log(rideData)
-    	   console.log('USER  ' + UserFactory.currentUser.user_id);
-           console.log('scopeeeeeeee='+routeData.startAddress);
-    	   return $http.post(urlBase, {
+          console.log(rideData)
+    	    console.log('USER  ' + UserFactory.currentUser.user_id);
+          console.log('scopeeeeeeee='+routeData.startAddress);
+    	     return $http.post(urlBase, {
                 user_id : UserFactory.currentUser.user_id,
                 from_location: routeData.startAddress,
                 to_location : routeData.endAddress,
@@ -21,6 +21,7 @@ angular.module('starter')
                 start_date: rideData.date,
                 start_time: rideData.startTime,
                 //estimated_end_time: ,
+                status : 'Planned',
                 comments : rideData.comments,
                 start_lattitude : routeData.startLatitude,
                 start_longitude :routeData.startLongitude,
@@ -34,6 +35,7 @@ angular.module('starter')
                 console.log('POST SERVICE='+ Ride.currentRide.ride_id);
               }).
               error(function (data, status, headers, config) {
+                console.log('Ride.currentRide is NULL');
                 Ride.currentRide = null;
                 console.log('error: ' + data);
             });
@@ -47,7 +49,7 @@ angular.module('starter')
 
     Ride.addRideCordinates = function(waypoints) {
         console.log(waypoints)
-    	return $http.post('http://localhost/ARideShare/api/ridecordinates', {
+    	 return $http.post('http://localhost/ARideShare/api/ridecordinates', {
                 ride_id : Ride.currentRide.ride_id,
                 latitude : waypoints.location.k,
                 longitude : waypoints.location.D,
@@ -56,7 +58,7 @@ angular.module('starter')
                 // this callback will be called asynchronously
                 // when the response is available
                 //Ride.rideWaypoints.push(data);
-                Ride.rideWaypoints.push(data);
+                Ride.rideWaypoints= data;
                 console.log('POST cordinates='+ data);
               }).
               error(function (data, status, headers, config) {
@@ -99,10 +101,19 @@ angular.module('starter')
       // });
     };
 
-    Ride.editRide = function(ride){
+    Ride.editRide = function(ride, route){
+     // return $http.put(urlBase + '/'+ride_id_);
+      ride.start_lattitude = route.startLatitude;
+      ride.start_longitude =route.startLongitude;
+      ride.end_latitude =route.endLatitute;
+      ride.end_longitude = route.endLongitude;
+      return $http.put(urlBase+'/' + ride.ride_id_, ride);
+    };
+
+    Ride.editRideWayoints = function(ride){
      // return $http.put(urlBase + '/'+ride_id_);
 
-      return $http.put(urlBase+'/' + ride.ride_id_, ride);
+      return $http.put('http://localhost/ARideShare/api/ridecordinates/' + ride.ride_id_, ride);
     };
 
     Ride.deleteRide = function(ride_id){

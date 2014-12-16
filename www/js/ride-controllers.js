@@ -29,13 +29,16 @@ angular.module('starter')
               var promise_waypoits = RideFactory.addRideCordinates($scope.waypoints[i]);
               promise_waypoits.then(function(){
               console.log('added waypoints');
-              var path = '/app/ride/'+ RideFactory.currentRide.ride_id;
+              console.log(RideFactory.currentRide.ride_id)
+              var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
               $location.path(path);
               });
             }
           }
-          var path = '/app/ride/'+ RideFactory.currentRide.ride_id;
-            $location.path(path);
+          console.log('path = '+ '/app/ride/'+ RideFactory.currentRide.ride_id);
+          console.log(RideFactory.currentRide.ride_id)
+          var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+          $location.path(path);
         });
       }
       else
@@ -69,6 +72,7 @@ angular.module('starter')
     var map;
     var count = 0;
     var markers = [];
+
     function initialize() {  
         directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);    
         //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
@@ -247,18 +251,43 @@ angular.module('starter')
   //   { id: 6, from: 'Katugastota', to: 'Kandy'}
   // ];
 
-   // $scope.map =
+    $scope.rideDetails = {};
+
+    $scope.rideAuthor = RideFactory.currentRide.user_id;
+    $scope.currentUserr = UserFactory.currentUser.user_id;
+    $scope.currentRideId = RideFactory.currentRide.ride_id;
+    // $scope.map =
     $scope.loadRide = function() {
       var ride_id = $stateParams.rideId;
+      var editable = $stateParams.editable;
       console.log(ride_id)
+      console.log(editable)
         if (ride_id !== undefined){
             RideFactory.getRideByRideId(ride_id).then(
               function(data){
-                
+                RideFactory.currentRide = data.data;
                 $scope.rideDetails = data.data;
-                console.log($scope.rideDetails.from_location)
-                console.log($scope.rideDetails);
-                loadMap()
+                console.log(UserFactory.currentUser.user_id)
+                console.log(RideFactory.currentRide.user_id);
+                //loadMap();
+                var rendererOptions = {};
+                // if ((UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) 
+                //     && (RideFactory.currentRide.status === 'Planned') && (editable !== 'false'))
+                //if ((UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) && (editable !=0))
+                 //if ((UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) 
+                 //   &&  (editable !== 'false'))
+                if(editable !== 'false')
+                {
+                  console.log('aaaaaaaaaaa' +rendererOptions)
+                  rendererOptions = {
+
+                    draggable: true
+                  };
+
+                }
+                console.log('loadddddddddd mappppppppppp')
+                loadMap(rendererOptions, editable);
+                //google.maps.event.addDomListener(window, 'load', loadMap);
               },
               function(){
                 alert('error');
@@ -272,10 +301,16 @@ angular.module('starter')
 
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
-    function loadMap (){
-      
-      console.log('ooooooooooooooooo')
-      directionsDisplay = new google.maps.DirectionsRenderer();
+    function loadMap (rendererOptions, editable){
+      alert()
+        
+        // if (rendererOptions !== undefined) {
+        //   console.log('ooooooooooooooooo' +rendererOptions)
+        //   directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+        // }
+        // else {
+        //   directionsDisplay = new google.maps.DirectionsRenderer();
+        // }
         var myLatlng = new google.maps.LatLng($scope.rideDetails.start_lattitude, $scope.rideDetails.start_longitude);
         var mapOptions = {
           center: myLatlng,
@@ -284,66 +319,137 @@ angular.module('starter')
         };
         var map = new google.maps.Map(document.getElementById("map"),
             mapOptions);
+        console.log('LOAD MAPPPP' )
         $scope.map = map; 
-        directionsDisplay.setMap(map);
+       // directionsDisplay.setMap(map);
 
         var startPosition = new google.maps.LatLng($scope.rideDetails.start_lattitude, $scope.rideDetails.start_longitude);
         var endPosition = new google.maps.LatLng($scope.rideDetails.end_latitude, $scope.rideDetails.end_longitude);
         var wypoints = [];
         console.log($scope.rideDetails.RideCordinates);
         console.log(typeof $scope.rideDetails.RideCordinates)
-        //for(var i =0 ; i< $scope.rideDetails.RideCordinates.lenth; i ++)
-      for (key in $scope.rideDetails.RideCordinates) 
-        {
-          //waypoints.push(new google.maps.LatLng($scope.rideDetails.RideCordinates[i].latitude, $scope.rideDetails.RideCordinates[i].longitude);
-            wypoints.push({
-          location:new google.maps.LatLng($scope.rideDetails.RideCordinates[key].latitude, $scope.rideDetails.RideCordinates[key].longitude),
-          stopover:true});
-        }
-        console.log(wypoints);
-        var start_title = $scope.rideDetails.from_location;
-        var end_title = $scope.rideDetails.to_location;
+        // //for(var i =0 ; i< $scope.rideDetails.RideCordinates.lenth; i ++)
+        // for (key in $scope.rideDetails.RideCordinates) {        
+        //   //waypoints.push(new google.maps.LatLng($scope.rideDetails.RideCordinates[i].latitude, $scope.rideDetails.RideCordinates[i].longitude);
+        //     wypoints.push({
+        //   location:new google.maps.LatLng($scope.rideDetails.RideCordinates[key].latitude, $scope.rideDetails.RideCordinates[key].longitude),
+        //   stopover:false});
+        // }
+        // console.log(wypoints);
+        // var start_title = $scope.rideDetails.from_location;
+        // var end_title = $scope.rideDetails.to_location;
 
-        var start = new google.maps.Marker({
-                          position: startPosition,
-                          map: map,
-                          title : start_title
-                        });
-              var end = new google.maps.Marker({
-                          position: endPosition,
-                          map: map,
-                          title : end_title
-                        });
-              var request = {
-                  origin:startPosition,
-                  destination:endPosition,
-                  // if u wanna show waypoints in the route use below code
-                  //waypoints : [{location: new google.maps.LatLng(6.9237284, 79.87322849999998)}],   
-                  waypoints : wypoints,               
-                  travelMode: google.maps.TravelMode.DRIVING
-              };
+        // var start = new google.maps.Marker({
+        //                   position: startPosition,
+        //                   map: map,
+        //                   title : start_title
+        //                 });
+        //       var end = new google.maps.Marker({
+        //                   position: endPosition,
+        //                   map: map,
+        //                   title : end_title
+        //                 });
+        //       var request = {
+        //           origin:startPosition,
+        //           destination:endPosition,
+        //           // if u wanna show waypoints in the route use below code
+        //           //waypoints : [{location: new google.maps.LatLng(6.9237284, 79.87322849999998)}],   
+        //           waypoints : wypoints,               
+        //           travelMode: google.maps.TravelMode.DRIVING
+        //       };
           
-          directionsService.route(request, function(response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                  directionsDisplay.setDirections(response);
-                  var route_names = directionsDisplay.getDirections();
-                  console.log(route_names);
+        //   directionsService.route(request, function(response, status) {
+        //         if (status == google.maps.DirectionsStatus.OK) {
+        //           directionsDisplay.setDirections(response);
+        //           var route_names = directionsDisplay.getDirections();
+        //           console.log(route_names);
                 
-                  console.log('ddddddddddddddddddddddddddddssssssssssss');
-                  //console.log(route_names.destination.D);
-                  //console.log(route_names[0].legs[0].end_address);
-                }
-              });
+        //           console.log('ddddddddddddddddddddddddddddssssssssssss');
+        //         }
+        //       });
         $scope.map = map; 
-    };
+        //directionsDisplay.setMap(map);
 
+        // if ((rendererOptions !== undefined) && (editable !== 'false')) {
+        //   google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
+        //     var result = directionsDisplay.getDirections();
+
+        //     var myroute = result.routes[0];
+        //     $scope.startLatitude = myroute.legs[0].start_location.k;
+        //     $scope.startLongitude = myroute.legs[0].start_location.D;
+        //     $scope.endLatitute = myroute.legs[0].end_location.k;
+        //     $scope.endLongitude = myroute.legs[0].end_location.D;
+
+        //     $scope.editRouteData = {startLatitude: myroute.legs[0].start_location.k, 
+        //                             startLongitude : myroute.legs[0].start_location.D, 
+        //                             endLatitude: myroute.legs[0].end_location.k, 
+        //                             endLongitude: myroute.legs[0].end_location.D};
+        //     var wypoints_edited = [];
+        //     console.log('my routeeeeeeeeeee')
+        //     console.log(myroute)
+        //     for (var i = 0; i < myroute.legs[0].via_waypoint.length; i++) {
+
+        //       wypoints_edited.push({
+        //       location:new google.maps.LatLng(myroute.legs[0].via_waypoint[i].location.k, myroute.legs[0].via_waypoint[i].location.D),
+        //       stopover:true});
+        //     }
+
+        //     $scope.waypoints = directionsDisplay.directions.routes[0].legs[0].via_waypoint;
+        //     console.log(wypoints_edited)
+        //   });
+        // }
+
+    };
+    google.maps.event.addDomListener(window, 'load', loadMap);
     $scope.editRide = function() {
+      console.log(RideFactory.currentRide.user_id)
+      console.log(RideFactory.currentRide.ride_id)
+      console.log($scope.startLatitude)
+
+      console.log($scope.startLatitude)
+      console.log('ggggggggg')
+      //$scope.editRouteData = {startLatitude: $scope.startLatitude, startLongitude : $scope.startLongitude, endLatitude: $scope.endLatitute, endLongitude: $scope.startLatitude};
+      console.log($scope.editRouteData)
       if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
+        var promise =RideFactory.editRide($scope.rideDetails, $scope.editRouteData);
+        promise.then(function(){
+          console.log('edited data')
+          if ($scope.waypoints !== null)
+          {
+
+              for(var i= 0; i<$scope.waypoints.length ; i++){
+                  var promise_waypoits = RideFactory.editRideWayoints($scope.waypoints[i]);
+                  promise_waypoits.then(function(){
+                  console.log('updated waypoints');
+                  console.log(RideFactory.currentRide.ride_id)
+                  var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+                  $location.path(path);
+                  });
+              }
+
+          }
+          var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+          $location.path(path);
+        });
 
       }
       else {
         $scope.error_message = 'you do not have the permission to edit this Ride information';
       }
 
+    };
+
+    $scope.deleteRide = function (){
+      var Id = $stateParams.rideId;
+      console.log($stateParams.rideId)
+      if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
+        var promise = RideFactory.deleteRide(Id);
+          promise.then(function(){
+          console.log('deleted data')
+        });
+      }
+      else {
+        $scope.error_message = 'you do not have the permission to edit this Ride information';
+      }
     };
 })
