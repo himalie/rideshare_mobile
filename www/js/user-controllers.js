@@ -162,23 +162,26 @@ angular.module('starter')
   ];
 })
 
-// .controller('AddRideCtrl', function($scope, $ionicLoading, $compile, $rootScope, RideFactory) {
 
-//   $scope.addRide = function(){
-//     var promise = RideFactory.addRide();
-//     promise.then(function(){
-//       console.log('added ride to db');
-//     });
-//   };
-//     var rendererOptions = {
-//       draggable: true
-//     };
+.controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+
+// .controller('RideCtrl', function($scope, $ionicLoading, $compile, RideFactory, $rootScope){  
+//   // A single ride
+//     $scope.rideData = {};
+//     $scope.fromLocationMap = 'kandy';
+//     $scope.toLocationMap = 'colombo';
+//     $scope.availableSeats = 4;
+//     $scope.rideStatus = 'planned';
+//     //RideFactory.loadRideRoute;
+
 //     var directionsDisplay;
 //     var directionsService = new google.maps.DirectionsService();
 //     var map;
-//     var markers = [];
-//     function initialize() {  
-//         directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);    
+//     function initialize() {
+    
+//       console.log();
 //         //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
 //         var myLatlng = new google.maps.LatLng(6.9218386,79.8562055);
 //         console.log('^^^^^^^^^^ '+myLatlng);
@@ -189,97 +192,34 @@ angular.module('starter')
 //         };
 //         var map = new google.maps.Map(document.getElementById("map"),
 //             mapOptions);
-//         //display the route
-//         directionsDisplay.setMap(map);
-//         // set the route draggable
-//         google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
-//           console.log('drag route');
-//           console.log(directionsDisplay.getDirections());
-//           console.log(directionsDisplay.getDirections().routes[0]);
-//           $scope.myroute = directionsDisplay.getDirections();
-//           console.log(directionsDisplay.getDirections().routes[0].legs[0].start_address);
-//           console.log(directionsDisplay.getDirections().routes[0].legs[0].end_address);
-//           var waypoints = directionsDisplay.directions.routes[0].legs[0].via_waypoint;
-//           computeTotalDistance(directionsDisplay.getDirections());
-//           //directionsService.route(directionsDisplay.setDirections(null));
-//           console.log(waypoints);
-//           console.log(waypoints[0].location.D);
-//           console.log(waypoints[0].location.k);
-
-//         });
         
+//         //Marker + infowindow + angularjs compiled ng-click
+//         var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+//         var compiled = $compile(contentString)($scope);
 
-
+//         var infowindow = new google.maps.InfoWindow({
+//           content: compiled[0]
+//         });
 
 //         google.maps.event.addListener(map, 'click', function(e) {
 //          // infowindow.open(map,marker);
-//          console.log('ggggggggg');
-//          console.log(e);
+//          console.log('**********'+e.latLng);
 //           placeMarker(e.latLng, map);
-//           if (markers.length ===2)
-//           {
-//             var fromLocation = new google.maps.LatLng(markers[0].position.lat(),markers[0].position.lng());
-//             var toLocation = new google.maps.LatLng(markers[1].position.lat(),markers[1].position.lng());
-//             console.log('come ');
-//               console.log(markers[0].position.lat());
-//               console.log(markers[0].position.lng());
-              
-//               var start = new google.maps.Marker({
-//                           position: markers[0].position,
-//                           map: map
-//                         });
-//               var end = new google.maps.Marker({
-//                           position: markers[1].position,
-//                           map: map
-//                         });
-//               var request = {
-//                   origin:fromLocation,
-//                   destination:toLocation,
-//                   // if u wanna show waypoints in the route use below code
-//                   //waypoints : [{location: new google.maps.LatLng(6.9237284, 79.87322849999998)}],                  
-//                   travelMode: google.maps.TravelMode.DRIVING
-//               };
-//               directionsService.route(request, function(response, status) {
-//                 if (status == google.maps.DirectionsStatus.OK) {
-//                   console.log('wwwwwwwwwwwwwwwww');
-//                   directionsDisplay.setDirections(response);
-//                   var route_names = directionsDisplay.getDirections();
-//                   console.log(response);
-//                   console,log(route_names[0].legs[0].start_address);
-//                   console,log(route_names[0].legs[0].end_address);
-//                 }
-//               });
 
-//           }
 //         });
-//         $scope.map = map;               
+//         $scope.map = map;       
 //       };
-//       function placeMarker(position, map) {
+//       function placeMarker(position1, map1) {
 //         var marker = new google.maps.Marker({
-//           position: position,
-//           map: map,
-//           draggable:true,
+//           position: position1,
+//           map: map1
 //         });
-//         console.log('clicking port ='+ position.lat());
-//         markers.push(marker);
-//         console.log(marker);
-//          for (var i = 0; i < markers.length; i++) {
-//              //markers[i].setMap(map);
-//              console.log( markers[i].position.lat());
-//              console.log( markers[i].position.lng());
-//           }
-//         map.panTo(position);
+//         console.log('clicking port ='+ position1.lat());
+//         map1.panTo(position1);
 //       }
-//       function computeTotalDistance(result) {
-//         var total = 0;
-//         var myroute = result.routes[0];
-//         for (var i = 0; i < myroute.legs.length; i++) {
-//           total += myroute.legs[i].distance.value;
-//         }
-//         total = total / 1000.0;
-//         $scope.totalDistance = total;
-//         console.log('distance' + total);
-//       }
+
+
+
 //       google.maps.event.addDomListener(window, 'load', initialize);
       
 //       $scope.centerOnMe = function() {
@@ -300,96 +240,15 @@ angular.module('starter')
 //         });
 //       };
       
+//       $scope.clickTest = function() {
+//         alert('Example of infowindow with ng-click')
+//       };
 //       initialize();
 
 // })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
-
-.controller('RideCtrl', function($scope, $ionicLoading, $compile, RideFactory, $rootScope){  
-  // A single ride
-    $scope.rideData = {};
-    $scope.fromLocationMap = 'kandy';
-    $scope.toLocationMap = 'colombo';
-    $scope.availableSeats = 4;
-    $scope.rideStatus = 'planned';
-    //RideFactory.loadRideRoute;
-
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    var map;
-    function initialize() {
-    
-      console.log();
-        //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
-        var myLatlng = new google.maps.LatLng(6.9218386,79.8562055);
-        console.log('^^^^^^^^^^ '+myLatlng);
-        var mapOptions = {
-          center: myLatlng,
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
-        
-        //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-        var compiled = $compile(contentString)($scope);
-
-        var infowindow = new google.maps.InfoWindow({
-          content: compiled[0]
-        });
-
-        google.maps.event.addListener(map, 'click', function(e) {
-         // infowindow.open(map,marker);
-         console.log('**********'+e.latLng);
-          placeMarker(e.latLng, map);
-
-        });
-        $scope.map = map;       
-      };
-      function placeMarker(position1, map1) {
-        var marker = new google.maps.Marker({
-          position: position1,
-          map: map1
-        });
-        console.log('clicking port ='+ position1.lat());
-        map1.panTo(position1);
-      }
-
-
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-      
-      $scope.centerOnMe = function() {
-        if(!$scope.map) {
-          return;
-        }
-
-        $scope.loading = $ionicLoading.show({
-          content: 'Getting current location...',
-          showBackdrop: false
-        });
-
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          $scope.loading.hide();
-        }, function(error) {
-          alert('Unable to get location: ' + error.message);
-        });
-      };
-      
-      $scope.clickTest = function() {
-        alert('Example of infowindow with ng-click')
-      };
-      initialize();
-
-})
-
 // Rideshare logic, the controller first.
-.controller('RidesCtrl', function($scope) {
+.controller('RidesCtrl', function($scope, RideFactory, $rootScope ) {
   $scope.rides = [
     { id: 1, from: 'Gampola', to: 'Kandy'},
     { id: 2, from: 'Peradeniya', to: 'Kandy'},

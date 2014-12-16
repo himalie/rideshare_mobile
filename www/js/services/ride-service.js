@@ -38,6 +38,11 @@ angular.module('starter')
                 console.log('error: ' + data);
             });
         }
+        else
+        {
+
+            return false;
+        }
     };
 
     Ride.addRideCordinates = function(waypoints) {
@@ -51,6 +56,7 @@ angular.module('starter')
                 // this callback will be called asynchronously
                 // when the response is available
                 //Ride.rideWaypoints.push(data);
+                Ride.rideWaypoints.push(data);
                 console.log('POST cordinates='+ data);
               }).
               error(function (data, status, headers, config) {
@@ -77,19 +83,46 @@ angular.module('starter')
       });
     };
 
-    Ride.getRideById = function(ride_id_){
+    Ride.getRideByRideId = function(ride_id_){
 
-        return $http.get(urlBase, {params: {ride_id : ride_id_}})
-        .success(function(data, status, headers, config) {
-                console.log(data);
-                Ride.currentRide = data;
-              }).
-              error(function (data, status, headers, config) {
-                Ride.currentRide = null;
-                $scope.error = error;
-                console.log('error: ' + data);
-      });
+        return $http.get(urlBase + '/'+ride_id_);
+      //   return $http.get(urlBase + '/'+ride_id_) 
+      //   .success(function(data, status, headers, config) {
+      //           //console.log(data);
+      //           console.log('get worked');
+      //           Ride.currentRide = data;
+      //         }).
+      //         error(function (data, status, headers, config) {
+      //           Ride.currentRide = null;
+      //           $scope.error = error;
+      //           console.log('error: ' + data);
+      // });
     };
+
+    Ride.editRide = function(ride){
+     // return $http.put(urlBase + '/'+ride_id_);
+
+      return $http.put(urlBase+'/' + ride.ride_id_, ride);
+    };
+
+    Ride.deleteRide = function(ride_id){
+      return $http.delete(urlBase +'/' + ride_id);
+    };
+
+// no need to fetch waypoints separately.. it is automatically fetched when u fetch Ride information
+    // Ride.getWaypoints = function(ride_id_) {
+    //     return $http.get('http://localhost/ARideShare/api/ridecordinates/'+ride_id_)
+    //     .success(function(data, status, headers, config) {
+    //             console.log(data);
+    //             console.log('get worked');
+    //             Ride.waypoints = data;
+    //           }).
+    //           error(function (data, status, headers, config) {
+    //             Ride.waypoints = null;
+    //             $scope.error = error;
+    //             console.log('error: ' + data);
+    //   });
+    // };
 
     return Ride;
 }])
