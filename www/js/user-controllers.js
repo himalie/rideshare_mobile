@@ -167,88 +167,9 @@ angular.module('starter')
 })
 
 
-// .controller('RideCtrl', function($scope, $ionicLoading, $compile, RideFactory, $rootScope){  
-//   // A single ride
-//     $scope.rideData = {};
-//     $scope.fromLocationMap = 'kandy';
-//     $scope.toLocationMap = 'colombo';
-//     $scope.availableSeats = 4;
-//     $scope.rideStatus = 'planned';
-//     //RideFactory.loadRideRoute;
-
-//     var directionsDisplay;
-//     var directionsService = new google.maps.DirectionsService();
-//     var map;
-//     function initialize() {
-    
-//       console.log();
-//         //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
-//         var myLatlng = new google.maps.LatLng(6.9218386,79.8562055);
-//         console.log('^^^^^^^^^^ '+myLatlng);
-//         var mapOptions = {
-//           center: myLatlng,
-//           zoom: 16,
-//           mapTypeId: google.maps.MapTypeId.ROADMAP
-//         };
-//         var map = new google.maps.Map(document.getElementById("map"),
-//             mapOptions);
-        
-//         //Marker + infowindow + angularjs compiled ng-click
-//         var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-//         var compiled = $compile(contentString)($scope);
-
-//         var infowindow = new google.maps.InfoWindow({
-//           content: compiled[0]
-//         });
-
-//         google.maps.event.addListener(map, 'click', function(e) {
-//          // infowindow.open(map,marker);
-//          console.log('**********'+e.latLng);
-//           placeMarker(e.latLng, map);
-
-//         });
-//         $scope.map = map;       
-//       };
-//       function placeMarker(position1, map1) {
-//         var marker = new google.maps.Marker({
-//           position: position1,
-//           map: map1
-//         });
-//         console.log('clicking port ='+ position1.lat());
-//         map1.panTo(position1);
-//       }
-
-
-
-//       google.maps.event.addDomListener(window, 'load', initialize);
-      
-//       $scope.centerOnMe = function() {
-//         if(!$scope.map) {
-//           return;
-//         }
-
-//         $scope.loading = $ionicLoading.show({
-//           content: 'Getting current location...',
-//           showBackdrop: false
-//         });
-
-//         navigator.geolocation.getCurrentPosition(function(pos) {
-//           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-//           $scope.loading.hide();
-//         }, function(error) {
-//           alert('Unable to get location: ' + error.message);
-//         });
-//       };
-      
-//       $scope.clickTest = function() {
-//         alert('Example of infowindow with ng-click')
-//       };
-//       initialize();
-
-// })
 
 // Rideshare logic, the controller first.
-.controller('RidesCtrl', function($scope, RideFactory, $rootScope ) {
+.controller('RidesCtrl', function($scope, $ionicModal, $ionicLoading, $compile, $rootScope, RideFactory, $location, UserFactory) {
   $scope.rides = [
     { id: 1, from: 'Gampola', to: 'Kandy'},
     { id: 2, from: 'Peradeniya', to: 'Kandy'},
@@ -257,5 +178,30 @@ angular.module('starter')
     { id: 5, from: 'Katugastota', to: 'Kurunegala'},
     { id: 6, from: 'Katugastota', to: 'Kandy'}
   ];
+
+  $scope.currentRideId = RideFactory.currentRide.ride_id;
+  $scope.currentUserr = UserFactory.currentUser.user_id;
+  $scope.allRider = {};
+
+  $scope.getAllRides = function(){
+
+    var promise = RideFactory.getAllRides();
+    if (promise){
+      promise.then(function() {
+        console.log(RideFactory.allRides.length);
+        for(var i= 0; i<RideFactory.allRides.length ; i++){
+          console.log( RideFactory.allRides[i].from_location)
+          $scope.rides[i] = {id : RideFactory.allRides[i].ride_id,
+                            from : RideFactory.allRides[i].from_location,
+                            to : RideFactory.allRides[i].to_location}
+        }
+
+      });
+    }
+    else {
+        $scope.error_message = 'some things wrong';
+    }
+    };
+    $scope.getAllRides();
 
 })

@@ -6,6 +6,7 @@ angular.module('starter')
     var Ride = {};
     Ride.currentRide = {};
     Ride.rideWaypoints = {};
+    Ride.allRides = {};
 
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
@@ -100,6 +101,21 @@ angular.module('starter')
       });
     };
 
+    Ride.getAllRides = function(){
+        return $http.get(urlBase) 
+        .success(function(data, status, headers, config) {
+              console.log(data.data)
+              //console.log(data)
+                Ride.allRides = data;
+                console.log(Ride.allRides)
+              }).
+              error(function (data, status, headers, config) {
+                 Ride.allRides = null;
+                $scope.error = error;
+                console.log('error: ' + data);
+      });
+    };
+
     Ride.editRide = function(ride, route){
      // return $http.put(urlBase + '/'+ride_id_);
      console.log(route);
@@ -124,8 +140,11 @@ angular.module('starter')
     };
 
     Ride.deleteWaypoints = function(ride_id){
+      console.log('DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
       return $http.delete('http://localhost/ARideShare/api/ridecordinates/' + ride_id);
     };
+
+
 
 // no need to fetch waypoints separately.. it is automatically fetched when u fetch Ride information
     // Ride.getWaypoints = function(ride_id_) {
