@@ -170,14 +170,16 @@ angular.module('starter')
 
 // Rideshare logic, the controller first.
 .controller('RidesCtrl', function($scope, $ionicModal, $ionicLoading, $compile, $rootScope, RideFactory, $location, UserFactory) {
-  $scope.rides = [
-    { id: 1, from: 'Gampola', to: 'Kandy'},
-    { id: 2, from: 'Peradeniya', to: 'Kandy'},
-    { id: 3, from: 'Pilimatalawa', to: 'Kandy'},
-    { id: 4, from: 'Gampola', to: 'Colombo'},
-    { id: 5, from: 'Katugastota', to: 'Kurunegala'},
-    { id: 6, from: 'Katugastota', to: 'Kandy'}
-  ];
+  // $scope.rides = [
+  //   { id: 1, from: 'Gampola', to: 'Kandy'},
+  //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
+  //   { id: 3, from: 'Pilimatalawa', to: 'Kandy'},
+  //   { id: 4, from: 'Gampola', to: 'Colombo'},
+  //   { id: 5, from: 'Katugastota', to: 'Kurunegala'},
+  //   { id: 6, from: 'Katugastota', to: 'Kandy'}
+  // ];
+
+  $scope.rides = {};
 
   $scope.currentRideId = RideFactory.currentRide.ride_id;
   $scope.currentUserr = UserFactory.currentUser.user_id;
