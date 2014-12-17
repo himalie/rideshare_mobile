@@ -5,6 +5,7 @@
   <ion-content class="has-header" style= "height:100%;width:100%">
     <form ng-submit="editRide()" ng-init="loadRide()">
       <div class="list">
+      
         <button class="button button-block button-positive" type="submit" ng-click="editRide()">Update</button>
 
         <label class="item item-input item-stacked-label">
@@ -15,10 +16,10 @@
           <span class="input-label">To</span>
           <input type="text" ng-model="rideDetails.to_location" placeholder={{rideDetails.to_location}} >
         </label>
-        <label class="item item-input item-stacked-label">
+        <!-- <label class="item item-input item-stacked-label">
           <span class="input-label">Date</span>
           <input type="date" ng-model="rideDetails.start_date" placeholder={{rideDetails.start_date}} >
-        </label>
+        </label> -->
         <label class="item item-input item-stacked-label">
           <span class="input-label">Time</span>
           <input type="time" ng-model="rideDetails.start_time" placeholder={{rideDetails.start_time}} >
@@ -27,22 +28,19 @@
           <span class="input-label">Available Seats</span>
           <input type="number" ng-model="rideDetails.available_seats" placeholder={{rideDetails.available_seats}} >
         </label>
-        <label class="checkbox">Females only
-            <!-- <input type="checkbox" ng-model="rideDetails.femalesOnly">  -->          
+        <!-- <label class="checkbox">Females only
+            <input type="checkbox" ng-model="rideDetails.femalesOnly">           
           </label>
           <label class="checkbox">Non-smokers
-            <!-- <input type="checkbox" ng-model="rideDetails.nonSmokers">    -->       
+            <input type="checkbox" ng-model="rideDetails.nonSmokers">          
           </label> 
         <label class="item item-input item-stacked-label">
           <span class="input-label">Comments</span>
-          <!-- <input type="text" placeholder="Ex: Non-smoker" ng-model="rideDetails.comments"> -->
-        </label>
+          <input type="text" placeholder="Ex: Non-smoker" ng-model="rideDetails.comments">
+        </label> -->
         <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
 
-       <!--  <input id="skill" type="range" min="1" max="100" value="0"> -->
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Add</button>
-        </label>
+
         
       </div>
     </form>

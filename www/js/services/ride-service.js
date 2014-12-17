@@ -110,14 +110,21 @@ angular.module('starter')
       return $http.put(urlBase+'/' + ride.ride_id_, ride);
     };
 
-    Ride.editRideWayoints = function(ride){
+    Ride.editRideWayoints = function(waypoint, ride_id_){
      // return $http.put(urlBase + '/'+ride_id_);
+     console.log('inside editRideWayoints')
+     console.log(waypoint)
+     //console.log(ride.ride_id_)
 
-      return $http.put('http://localhost/ARideShare/api/ridecordinates/' + ride.ride_id_, ride);
+      return $http.put('http://localhost/ARideShare/api/ridecordinates/' + ride_id_, ride);
     };
 
     Ride.deleteRide = function(ride_id){
       return $http.delete(urlBase +'/' + ride_id);
+    };
+
+    Ride.deleteWaypoints = function(ride_id){
+      return $http.delete('http://localhost/ARideShare/api/ridecordinates/' + ride_id);
     };
 
 // no need to fetch waypoints separately.. it is automatically fetched when u fetch Ride information

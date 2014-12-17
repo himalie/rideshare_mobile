@@ -30,11 +30,12 @@ angular.module('starter')
               var promise_waypoits = RideFactory.addRideCordinates($scope.waypoints[i]);
               promise_waypoits.then(function(){
               console.log('added waypoints');
-              $scope.currentRideId = RideFactory.currentRide.ride_id;
-              var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
-              $location.path(path);
+              
               });
             }
+            $scope.currentRideId = RideFactory.currentRide.ride_id;
+            var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+            $location.path(path);
           }
           $scope.currentRideId = RideFactory.currentRide.ride_id;
           var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
@@ -251,7 +252,11 @@ angular.module('starter')
                 RideFactory.currentRide = data.data;
                 $scope.rideDetails = data.data;
                 console.log($scope.rideDetails)
+                console.log('date and time')
+                console.log($scope.rideDetails.start_date)
+                console.log($scope.rideDetails.start_time)
                 console.log(RideFactory.currentRide.user_id);
+                console.log(UserFactory.currentUser.user_id);
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
@@ -364,7 +369,7 @@ angular.module('starter')
               });
         $scope.map = map; 
         directionsDisplay.setMap(map);
-
+        console.log($scope.waypoints)
         if ((rendererOptions !== undefined) && (editable !== 'false')) {
           google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
             var result = directionsDisplay.getDirections();
@@ -393,6 +398,7 @@ angular.module('starter')
 
           });
         }
+        console.log($scope.waypoints)
 
     };
     //google.maps.event.addDomListener(window, 'load', loadMap);
@@ -405,33 +411,64 @@ angular.module('starter')
 
       $scope.editRouteData = {startLatitude: $scope.startLatitude, startLongitude : $scope.startLongitude, endLatitude: $scope.endLatitute, endLongitude: $scope.endLongitude};
 
-      if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
+     // if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
+        console.log($scope.rideDetails.RideCordinates.length)
+        console.log($scope.waypoints.length)
+        var delete_waypoints = false;
+        if (($scope.rideDetails.RideCordinates.length === $scope.waypoints.length) ) {
+          for (var i = 0; i < $scope.rideDetails.RideCordinates.length; i++) {
+            console.log($scope.rideDetails.RideCordinates[i].latitude)
+            console.log($scope.waypoints[i].location.k)
+            console.log($scope.rideDetails.RideCordinates[i].longitude)
+            console.log($scope.waypoints[i].location.D)
+            if (($scope.rideDetails.RideCordinates[i].latitude !== $scope.waypoints[i].location.k)
+                 ||($scope.rideDetails.RideCordinates[i].longitude !== $scope.waypoints[i].location.D)) {
+              $scope.rideDetails.RideCordinates[i].latitude = $scope.waypoints[i].location.k;
+              $scope.rideDetails.RideCordinates[i].longitude = $scope.waypoints[i].location.D;
+              console.log('DATA ADDED!!')
+            }
+
+          }
+        }
+        else
+        {
+          console.log('nothing for now')
+          delete_waypoints = true;
+          // here try to delete the records and then call insert again for waypoints
+        }
+
+
 
         var promise =RideFactory.editRide($scope.rideDetails, $scope.editRouteData);
         promise.then(function(){
-          console.log('edited data')
-
+          console.log('edited data 111111111111111111111111111')
+console.log($scope.waypoints)
           if ($scope.waypoints !== null)
           {
-
+            console.log('edited data 2222222222222222222222')
+            console.log($scope.waypoints.length)
+            if (delete_waypoints === true){
+              var promise = RideFactory.deleteWaypoints($scope.rideDetails.ride_id);
               for(var i= 0; i<$scope.waypoints.length ; i++){
-                  var promise_waypoits = RideFactory.editRideWayoints($scope.waypoints[i]);
-                  promise_waypoits.then(function(){
+                var waypoint_edit = {ride_id : $scope.rideDetails.ride_id, latitude :$scope.waypoints[i].location.k, longitude: $scope.waypoints[i].location.D}
+                  var promise_waypoits = RideFactory.addRideCordinates($scope.waypoints[i]);
+                  // promise_waypoits.then(function(){
 
-                  var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
-                  $location.path(path);
-                  });
+                  
+                  // });
               }
-
+            }
+              var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+                  $location.path(path);
           }
           var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
           $location.path(path);
         });
 
-      }
-      else {
-        $scope.error_message = 'you do not have the permission to edit this Ride information';
-      }
+      // }
+      // else {
+      //   $scope.error_message = 'you do not have the permission to edit this Ride information';
+      // }
 
     };
 
