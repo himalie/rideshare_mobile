@@ -17,11 +17,11 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Date</span>
-          <input type="date" ng-model="rideData.start_date" placeholder="rideData.start_date" >
+          <input type="date" ng-model="rideData.start_date" placeholder={{rideData.start_date}} >
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Time</span>
-          <input type="time" placeholder="rideData.start_time" ng-model="rideData.start_time">
+          <input type="time" placeholder={{rideData.start_time}} ng-model="rideData.start_time">
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Available Seats</span>
@@ -38,6 +38,7 @@
           <input type="text" placeholder="Ex: Non-smoker" ng-model="rideData.comments">
         </label>
         <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
+
        <!--  <input id="skill" type="range" min="1" max="100" value="0"> -->
         <label class="item">
           <button class="button button-block button-positive" type="submit">Add</button>

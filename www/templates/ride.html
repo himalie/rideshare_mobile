@@ -12,7 +12,7 @@
         <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide">Join</button>
         <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="removeRide">Remove from ride</button>
        ride auth {{rideAuthor}}
-: current user
+        : current user
         {{currentUserr}}
         : currentRideId {{currentRideId}}
  
@@ -27,6 +27,16 @@
   <div class="row">
     <span class="col col-20">Available seats :</span>
     <span class="col" ng-model="rideDetails.to_location" >{{rideDetails.available_seats}}</span>
+  </div>
+
+   <div class="row">
+    <span class="col col-20">Start Date :</span>
+    <span class="col" ng-model="rideDetails.to_location" >{{rideDetails.start_date}}</span>
+  </div>
+
+   <div class="row">
+    <span class="col col-20">Start Time :</span>
+    <span class="col" ng-model="rideDetails.to_location" >{{rideDetails.start_time}}</span>
   </div>
   <div class="row">
     <span class="col col-20">Current status of the ride:</span>

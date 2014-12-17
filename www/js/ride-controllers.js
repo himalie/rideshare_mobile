@@ -321,17 +321,18 @@ angular.module('starter')
         //for(var i =0 ; i< $scope.rideDetails.RideCordinates.lenth; i ++)
         for (key in $scope.rideDetails.RideCordinates) {        
           //waypoints.push(new google.maps.LatLng($scope.rideDetails.RideCordinates[i].latitude, $scope.rideDetails.RideCordinates[i].longitude);
+            console.log('coming in to add cordinates!!!!')
             wypoints.push({
           location:new google.maps.LatLng($scope.rideDetails.RideCordinates[key].latitude, $scope.rideDetails.RideCordinates[key].longitude),
           stopover:false});
         }
         console.log('WAYPOINTS =')
-        console.log(startPosition)
+        console.log(wypoints)
         console.log(endPosition)
 
         var start_title = $scope.rideDetails.from_location;
         var end_title = $scope.rideDetails.to_location;
-        console.log(wypoints.lenth)
+        //console.log(wypoints.lenth)
         var start = new google.maps.Marker({
                           position: startPosition,
                           map: map,
@@ -397,7 +398,7 @@ angular.module('starter')
     //google.maps.event.addDomListener(window, 'load', loadMap);
     $scope.editRide = function() {
       console.log(RideFactory.currentRide.user_id)
-      console.log(RideFactory.currentRide.user_id)
+      console.log(UserFactory.currentUser.user_id)
       console.log(RideFactory.currentRide.ride_id)
 
 
