@@ -17,25 +17,25 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Date</span>
-          <input type="date" ng-model="rideData.start_date" placeholder={{rideData.start_date}} >
+          <input type="date" ng-model="rideDetails.start_date" placeholder={{rideDetails.start_date}} >
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Time</span>
-          <input type="time" placeholder={{rideData.start_time}} ng-model="rideData.start_time">
+          <input type="time" ng-model="rideDetails.start_time" placeholder={{rideDetails.start_time}} >
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Available Seats</span>
           <input type="number" ng-model="rideDetails.available_seats" placeholder={{rideDetails.available_seats}} >
         </label>
         <label class="checkbox">Females only
-            <input type="checkbox" ng-model="rideData.femalesOnly">           
+            <!-- <input type="checkbox" ng-model="rideDetails.femalesOnly">  -->          
           </label>
           <label class="checkbox">Non-smokers
-            <input type="checkbox" ng-model="rideData.nonSmokers">          
+            <!-- <input type="checkbox" ng-model="rideDetails.nonSmokers">    -->       
           </label> 
         <label class="item item-input item-stacked-label">
           <span class="input-label">Comments</span>
-          <input type="text" placeholder="Ex: Non-smoker" ng-model="rideData.comments">
+          <!-- <input type="text" placeholder="Ex: Non-smoker" ng-model="rideDetails.comments"> -->
         </label>
         <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
 
