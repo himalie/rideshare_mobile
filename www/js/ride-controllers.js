@@ -441,12 +441,9 @@ angular.module('starter')
 
         var promise =RideFactory.editRide($scope.rideDetails, $scope.editRouteData);
         promise.then(function(){
-          console.log('edited data 111111111111111111111111111')
-console.log($scope.waypoints)
           if ($scope.waypoints !== null)
           {
-            console.log('edited data 2222222222222222222222')
-            console.log($scope.waypoints.length)
+
             if (delete_waypoints === true){
               var promise = RideFactory.deleteWaypoints($scope.rideDetails.ride_id);
               for(var i= 0; i<$scope.waypoints.length ; i++){
@@ -476,9 +473,12 @@ console.log($scope.waypoints)
       var Id = $stateParams.rideId;
       console.log($stateParams.rideId)
       if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
+        alert('are you sure u want to delete the ride?')
         var promise = RideFactory.deleteRide(Id);
           promise.then(function(){
-          console.log('deleted data')
+          console.log('deleted data');
+          var path = '/app/findride/';
+          $location.path(path);
         });
       }
       else {
