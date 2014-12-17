@@ -10,8 +10,7 @@ angular.module('starter')
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
           console.log(rideData)
-    	    console.log('USER  ' + UserFactory.currentUser.user_id);
-          console.log('scopeeeeeeee='+routeData.startAddress);
+
     	     return $http.post(urlBase, {
                 user_id : UserFactory.currentUser.user_id,
                 from_location: routeData.startAddress,
@@ -37,7 +36,7 @@ angular.module('starter')
               error(function (data, status, headers, config) {
                 console.log('Ride.currentRide is NULL');
                 Ride.currentRide = null;
-                console.log('error: ' + data);
+
             });
         }
         else
@@ -75,7 +74,7 @@ angular.module('starter')
 
         return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
         .success(function(data, status, headers, config) {
-                console.log(data);
+ 
                 Ride.currentRide = data;
               }).
               error(function (data, status, headers, config) {
@@ -86,26 +85,27 @@ angular.module('starter')
     };
 
     Ride.getRideByRideId = function(ride_id_){
-
-        return $http.get(urlBase + '/'+ride_id_);
-      //   return $http.get(urlBase + '/'+ride_id_) 
-      //   .success(function(data, status, headers, config) {
-      //           //console.log(data);
-      //           console.log('get worked');
-      //           Ride.currentRide = data;
-      //         }).
-      //         error(function (data, status, headers, config) {
-      //           Ride.currentRide = null;
-      //           $scope.error = error;
-      //           console.log('error: ' + data);
-      // });
+      console.log('getting data' + urlBase);
+        //return $http.get(urlBase + '/'+ride_id_);
+        return $http.get(urlBase + '/'+ride_id_) 
+        .success(function(data, status, headers, config) {
+                //console.log(data);
+                console.log('get worked');
+                Ride.currentRide = data;
+              }).
+              error(function (data, status, headers, config) {
+                Ride.currentRide = null;
+                $scope.error = error;
+                console.log('error: ' + data);
+      });
     };
 
     Ride.editRide = function(ride, route){
      // return $http.put(urlBase + '/'+ride_id_);
+     console.log(route);
       ride.start_lattitude = route.startLatitude;
       ride.start_longitude =route.startLongitude;
-      ride.end_latitude =route.endLatitute;
+      ride.end_latitude =route.endLatitude;
       ride.end_longitude = route.endLongitude;
       return $http.put(urlBase+'/' + ride.ride_id_, ride);
     };

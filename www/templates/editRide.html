@@ -3,49 +3,49 @@
     <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="has-header" style= "height:100%;width:100%">
-    <form >
+    <form ng-submit="editRide()" ng-init="loadRide()">
       <div class="list">
         <button class="button button-block button-positive" type="submit" ng-click="editRide()">Update</button>
 
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">From</span>
-        <input type="text" placeholder={{rideDetails.from_location}} ng-model="rideDetails.from_location">
-      </label>
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">To</span>
-        <input type="text" ng-model="rideDetails.to_location" placeholder={{rideDetails.to_location}} >
-      </label>
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">Date</span>
-        <input type="date" ng-model="rideData.date" placeholder="01/01/2015" >
-      </label>
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">Time</span>
-        <input type="time" placeholder="" ng-model="rideData.startTime">
-      </label>
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">Available Seats</span>
-        <input type="number" ng-model="rideDetails.available_seats" placeholder={{rideDetails.available_seats}} >
-      </label>
-      <label class="checkbox">Females only
-          <input type="checkbox" ng-model="rideData.femalesOnly">           
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">From</span>
+          <input type="text" placeholder={{rideDetails.from_location}} ng-model="rideDetails.from_location">
         </label>
-        <label class="checkbox">Non-smokers
-          <input type="checkbox" ng-model="rideData.nonSmokers">          
-        </label> 
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">Comments</span>
-        <input type="text" placeholder="Ex: Non-smoker" ng-model="rideData.comments">
-      </label>
-      <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
-     <!--  <input id="skill" type="range" min="1" max="100" value="0"> -->
-      <label class="item">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">To</span>
+          <input type="text" ng-model="rideDetails.to_location" placeholder={{rideDetails.to_location}} >
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Date</span>
+          <input type="date" ng-model="rideData.start_date" placeholder="rideData.start_date" >
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Time</span>
+          <input type="time" placeholder="rideData.start_time" ng-model="rideData.start_time">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Available Seats</span>
+          <input type="number" ng-model="rideDetails.available_seats" placeholder={{rideDetails.available_seats}} >
+        </label>
+        <label class="checkbox">Females only
+            <input type="checkbox" ng-model="rideData.femalesOnly">           
+          </label>
+          <label class="checkbox">Non-smokers
+            <input type="checkbox" ng-model="rideData.nonSmokers">          
+          </label> 
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Comments</span>
+          <input type="text" placeholder="Ex: Non-smoker" ng-model="rideData.comments">
+        </label>
+        <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
+       <!--  <input id="skill" type="range" min="1" max="100" value="0"> -->
+        <label class="item">
           <button class="button button-block button-positive" type="submit">Add</button>
         </label>
         
-    </div>
+      </div>
     </form>
-     <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
+     <!-- <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div> -->
 
   </ion-content>
 </ion-view>
