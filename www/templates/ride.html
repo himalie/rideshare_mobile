@@ -6,16 +6,19 @@
 
     <form ng-init="loadRide()">
       <div class="list">
-        
+        <div class="row">
         <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})">Edit</button>
         <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">Delete</button>
+      </div>
+      <div class="row">
         <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">Join</button>
         <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">Leave Ride</button>
-       ride auth {{rideAuthor}}
-        : current user
-        {{currentUserr}}
-        : currentRideId {{currentRideId}}
- 
+      </div>
+      <div class="row">
+        <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">View Passengers</button>
+      </div>
+
+  
   <div class="row">
   	<span class="col col-20">From:</span>
   	<span class="col" ng-model="rideDetails.from_location" >{{rideDetails.from_location}}</span>

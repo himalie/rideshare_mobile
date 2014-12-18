@@ -220,14 +220,7 @@ angular.module('starter')
 
 // Rideshare logic, the controller first.
 .controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation) {
-  // $scope.rides = [
-  //   { id: 1, from: 'Gampola', to: 'Kandy'},
-  //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
-  //   { id: 3, from: 'Pilimatalawa', to: 'Kandy'},
-  //   { id: 4, from: 'Gampola', to: 'Colombo'},
-  //   { id: 5, from: 'Katugastota', to: 'Kurunegala'},
-  //   { id: 6, from: 'Katugastota', to: 'Kandy'}
-  // ];
+
 
     $scope.rideDetails = {};
     $scope.reservationData = {};
@@ -236,6 +229,7 @@ angular.module('starter')
 
     $scope.rideAuthor = RideFactory.currentRide.user_id;
     $scope.currentUserr = UserFactory.currentUser.user_id;
+    //$scope.currentRider = Reservation.currentRes.user_id;
     
     // **********************************************************
     // Form data for the login modal
@@ -361,7 +355,7 @@ angular.module('starter')
 
     // ******************************************************
 
-    // $scope.map =
+
     $scope.loadRide = function() {
       var ride_id = $stateParams.rideId;
       var editable = $stateParams.editable;
@@ -414,6 +408,7 @@ angular.module('starter')
 
 
 
+    // this function is used to load the map details on the page. It uses route information saved in the database
     function loadMap (rendererOptions, editable){
       //alert()
         
@@ -517,7 +512,8 @@ angular.module('starter')
 
 
     };
-    //google.maps.event.addDomListener(window, 'load', loadMap);
+    
+    // the user who entered the Ride can edit ride information
     $scope.editRide = function() {
 
       $scope.editRouteData = {startLatitude: $scope.startLatitude, startLongitude : $scope.startLongitude, endLatitude: $scope.endLatitute, endLongitude: $scope.endLongitude};
@@ -578,6 +574,7 @@ angular.module('starter')
 
     };
 
+    // theuser who enteres the Ride can delete the ride
     $scope.deleteRide = function (){
       var Id = $stateParams.rideId;
       console.log($stateParams.rideId)
@@ -596,6 +593,7 @@ angular.module('starter')
     };
 
 
+    // show the dialog to enter joining position once the user joins a ride
     $scope.joinRide = function(){
       if (UserFactory.signedIn()) { 
         $scope.modalPosition.show();
@@ -606,13 +604,15 @@ angular.module('starter')
 
     };
 
+    // a passenger can join a ride 
     $scope.insertRider = function(){
       console.log($scope.reservationPosition)
       if (UserFactory.signedIn()) { 
         //var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
         var promise = Reservation.joinRide($scope.reservationPosition);
          promise.then(function(){
-          console.log('added riderrrrrrrrrrrrrrrrrrrrrrrr')
+
+          $scope.currentRider = Reservation.currentRes.user_id;
           $scope.rideDetails.available_seats = $scope.rideDetails.available_seats - 1 ;
           var promise1 = RideFactory.editRide($scope.rideDetails);
           promise1.then(function(){
@@ -632,4 +632,20 @@ angular.module('starter')
 
     };
 
+    // a passenger can leave a Ride that he/she has joined
+    $scope.leaveRide = function(){
+      if (UserFactory.signedIn()) {
+        var promise = Reservation.leaveRide(RideFactory.currentRide.ride_id, UserFactory.currentUser.user_id);
+
+        promise.then(function(){
+          $scope.rideDetails.available_seats = $scope.rideDetails.available_seats + 1 ;
+
+          var promise1 = RideFactory.editRide($scope.rideDetails);
+
+          promise1.then(function(){
+            $scope.currentRideId = RideFactory.currentRide.ride_id;
+          });
+        });
+      }
+    };
 })

@@ -5,9 +5,6 @@
   <ion-content class="has-header" style= "height:100%;width:100%">
     <form  ng-init="loadRide()">
       <div class="list">
-      {{rideDetails.start_date | date:'medium'}}
-      {{valueD}}
-      ddddddddd
         <button class="button button-block button-positive" type="submit" ng-click="editRide()">Update</button>
 
         <label class="item item-input item-stacked-label">
@@ -17,14 +14,6 @@
         <label class="item item-input item-stacked-label">
           <span class="input-label">To</span>
           <input type="text" ng-model="rideDetails.to_location" placeholder={{rideDetails.to_location}} >
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Date</span>
-          <input type="date" ng-model="rideDetails.start_date" placeholder={{rideDetails.start_date | date:'medium'}} >
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Date</span>
-          <input type="date" ng-model="rideDetails.start_date" placeholder={{rideDetails.start_date | date:'medium'}}>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Date</span>
