@@ -219,7 +219,7 @@ angular.module('starter')
 })
 
 // Rideshare logic, the controller first.
-.controller('RideCtrl', function($scope, $ionicLoading, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation) {
+.controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation) {
   // $scope.rides = [
   //   { id: 1, from: 'Gampola', to: 'Kandy'},
   //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
@@ -232,15 +232,92 @@ angular.module('starter')
     $scope.rideDetails = {};
     $scope.reservationData = {};
 
-  $scope.valueD = "fdfdfdfd";
+    $scope.valueD = "fdfdfdfd";
 
     $scope.rideAuthor = RideFactory.currentRide.user_id;
     $scope.currentUserr = UserFactory.currentUser.user_id;
     
+    // **********************************************************
+    // Form data for the login modal
+     $scope.reservationPosition = {};
+     var markers = [];
+    // // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/joinride.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modalPosition = modal;
+    });
+
+    $scope.closePositionMarker = function() {
+      console.log(" ddd "+ UserFactory.currentUser.first_name);
+      $scope.modalPosition.hide();
+    };
+
+    var directionsDisplay2;
+    var directionsService2 = new google.maps.DirectionsService();
+
+    var loadPositionMap = function () {
+
+    };
+
+    $scope.loadPositionMarker = function(){
+        var promise = UserFactory.getCurrentLocatoin();
+
+        promise.then(function() {
+          console.log();
+          var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
+          directionsDisplay2 = new google.maps.DirectionsRenderer();
+          var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("map_position"),
+              mapOptions);        
+          google.maps.event.addListener(map, 'click', function(e) {
+            placeMarkerPosition(e.latLng, map);
+
+          });
+
+          $scope.map_position = map;
+          directionsDisplay2.setMap(map);
+       });
+
+    };
+    function placeMarkerPosition(position, map) {
+      //var markerId = getMarkerUniqueId(position.lat(), position.lng());
+        var marker = new google.maps.Marker({
+          position: position,
+          map: map,
+          //id : markerId
+        });
+        deleteMarkers();
+        markers.push(marker);
+        console.log('clicking port ='+ position.lat());
+        map.panTo(position);
+        bindMarkerEvents(marker);
+      }
+
+      function deleteMarkers() {
+          for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
+
+      var bindMarkerEvents = function(marker) {
+          google.maps.event.addListener(marker, "rightclick", function (point) {
+            deleteMarkers();  
+          });
+      };
+
+    // ******************************************************
+
     // $scope.map =
     $scope.loadRide = function() {
       var ride_id = $stateParams.rideId;
       var editable = $stateParams.editable;
+      
       $scope.currentRideId = ride_id;
 
         if (ride_id !== undefined){
@@ -470,11 +547,10 @@ angular.module('starter')
       }
     };
 
-    $scope.joinRide = function(ride_id_, user_id_){
+    $scope.joinRide = function(){
       //$scope.reservationData.start_lattitude = 
       //$scope.reservationData.end_lattitude =
-      console.log(ride_id_)
-      console.log(user_id_)
+
       console.log(UserFactory.currentUser.user_id)
       console.log($scope.rideDetails.ride_id)
       if (UserFactory.signedIn()) { 
@@ -485,11 +561,19 @@ angular.module('starter')
           var promise1 = RideFactory.editRide($scope.rideDetails);
           promise1.then(function(){
             console.log('reduced seats') 
+            console.log(RideFactory.currentRide.ride_id)
+            $scope.currentRideId = RideFactory.currentRide.ride_id;
+
+            $scope.modalPosition.show();
           });
          });
       }
+      else
+      {
+        $scope.modal.show();
+
+      }
 
     };
-
 
 })
