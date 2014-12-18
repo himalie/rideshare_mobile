@@ -340,8 +340,8 @@ angular.module('starter')
         deleteMarkers();
         markers.push(marker);
         $scope.reservationPosition = {latitude : markers[0].position.k, longitude : markers[0].position.D};
-        console.log(position);
-        map.panTo(position);
+        console.log($scope.reservationPosition);
+        //map.panTo(position);
         bindMarkerEvents(marker);
       }
 
@@ -607,12 +607,12 @@ angular.module('starter')
     };
 
     $scope.insertRider = function(){
-
+      console.log($scope.reservationPosition)
       if (UserFactory.signedIn()) { 
         //var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
         var promise = Reservation.joinRide($scope.reservationPosition);
          promise.then(function(){
-
+          console.log('added riderrrrrrrrrrrrrrrrrrrrrrrr')
           $scope.rideDetails.available_seats = $scope.rideDetails.available_seats - 1 ;
           var promise1 = RideFactory.editRide($scope.rideDetails);
           promise1.then(function(){
@@ -620,7 +620,7 @@ angular.module('starter')
             console.log(RideFactory.currentRide.ride_id)
             $scope.currentRideId = RideFactory.currentRide.ride_id;
 
-            $scope.modalPosition.show();
+            $scope.modalPosition.hide();
           });
          });
       }

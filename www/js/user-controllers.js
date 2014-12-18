@@ -55,7 +55,7 @@ angular.module('starter')
 
 })
 
-.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory, $rootScope) {
+.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory, $rootScope, $location) {
   //Form data for the register modal
   $scope.registerData = {};
   console.log('register');
@@ -67,6 +67,8 @@ angular.module('starter')
     promise.then(function() {
         console.log(' POST '+ UserFactory.currentUser.first_name);
         console.log('POST  '+ $rootScope.currentUser);
+        var path = '/app/findride/';
+        $location.path(path)
     });
     // send data to server side for validating and saving 
   };
