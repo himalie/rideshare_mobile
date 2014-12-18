@@ -10,7 +10,6 @@ angular.module('starter')
 
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
-          console.log(rideData)
 
     	     return $http.post(urlBase, {
                 user_id : UserFactory.currentUser.user_id,
@@ -32,10 +31,8 @@ angular.module('starter')
                 // this callback will be called asynchronously
                 // when the response is available
                 Ride.currentRide = data;
-                console.log('POST SERVICE='+ Ride.currentRide.ride_id);
               }).
               error(function (data, status, headers, config) {
-                console.log('Ride.currentRide is NULL');
                 Ride.currentRide = null;
 
             });
@@ -48,7 +45,6 @@ angular.module('starter')
     };
 
     Ride.addRideCordinates = function(waypoints) {
-        console.log(waypoints)
     	 return $http.post('http://localhost/ARideShare/api/ridecordinates', {
                 ride_id : Ride.currentRide.ride_id,
                 latitude : waypoints.location.k,
@@ -59,7 +55,6 @@ angular.module('starter')
                 // when the response is available
                 //Ride.rideWaypoints.push(data);
                 Ride.rideWaypoints= data;
-                console.log('POST cordinates='+ data);
               }).
               error(function (data, status, headers, config) {
                 
@@ -104,10 +99,8 @@ angular.module('starter')
     Ride.getAllRides = function(){
         return $http.get(urlBase) 
         .success(function(data, status, headers, config) {
-              console.log(data.data)
               //console.log(data)
                 Ride.allRides = data;
-                console.log(Ride.allRides)
               }).
               error(function (data, status, headers, config) {
                  Ride.allRides = null;
@@ -118,19 +111,19 @@ angular.module('starter')
 
     Ride.editRide = function(ride, route){
      // return $http.put(urlBase + '/'+ride_id_);
-     console.log(route);
-      ride.start_lattitude = route.startLatitude;
-      ride.start_longitude =route.startLongitude;
-      ride.end_latitude =route.endLatitude;
-      ride.end_longitude = route.endLongitude;
+     if (route !== undefined)
+     {
+        ride.start_lattitude = route.startLatitude;
+        ride.start_longitude =route.startLongitude;
+        ride.end_latitude =route.endLatitude;
+        ride.end_longitude = route.endLongitude;
+      }
+      console.log('COME HERE FOR EDITING ONCEEEEE')
       return $http.put(urlBase+'/' + ride.ride_id_, ride);
     };
 
     Ride.editRideWayoints = function(waypoint, ride_id_){
      // return $http.put(urlBase + '/'+ride_id_);
-     console.log('inside editRideWayoints')
-     console.log(waypoint)
-     //console.log(ride.ride_id_)
 
       return $http.put('http://localhost/ARideShare/api/ridecordinates/' + ride_id_, ride);
     };
@@ -140,7 +133,6 @@ angular.module('starter')
     };
 
     Ride.deleteWaypoints = function(ride_id){
-      console.log('DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
       return $http.delete('http://localhost/ARideShare/api/ridecordinates/' + ride_id);
     };
 

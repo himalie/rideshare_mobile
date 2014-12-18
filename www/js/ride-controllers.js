@@ -2,16 +2,16 @@ angular.module('starter')
 
 .controller('AddRideCtrl', function($scope, $ionicModal, $ionicLoading, $compile, $rootScope, RideFactory, $location, UserFactory) {
 
-  $scope.rides = [
-    { id: 1, from: 'Gampola', to: 'Kandy'},
-    { id: 2, from: 'Peradeniya', to: 'Kandy'},
-    { id: 3, from: 'Pilimatalawa', to: 'Kandy'},
-    { id: 4, from: 'Gampola', to: 'Colombo'},
-    { id: 5, from: 'Katugastota', to: 'Kurunegala'},
-    { id: 6, from: 'Katugastota', to: 'Kandy'}
-  ];
+  // $scope.rides = [
+  //   { id: 1, from: 'Gampola', to: 'Kandy'},
+  //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
+  //   { id: 3, from: 'Pilimatalawa', to: 'Kandy'},
+  //   { id: 4, from: 'Gampola', to: 'Colombo'},
+  //   { id: 5, from: 'Katugastota', to: 'Kurunegala'},
+  //   { id: 6, from: 'Katugastota', to: 'Kandy'}
+  // ];
 
-
+    
     $scope.rideData = {};
     $scope.currentRideId = RideFactory.currentRide.ride_id;
     $scope.currentUserr = UserFactory.currentUser.user_id;
@@ -20,16 +20,13 @@ angular.module('starter')
       var promise = RideFactory.addRide($scope.rideData, $scope);
       if (promise)
       {
-        promise.then(function(){
-          console.log('added ride to db');
+        promise.then(function(){          
           if ($scope.waypoints !== undefined)
           {
-            console.log('have way points');
 
             for(var i= 0; i<$scope.waypoints.length ; i++){
               var promise_waypoits = RideFactory.addRideCordinates($scope.waypoints[i]);
               promise_waypoits.then(function(){
-              console.log('added waypoints');
               
               });
             }
@@ -184,8 +181,6 @@ angular.module('starter')
           delete markers[markerId]; // delete marker instance from markers object
       };
 
-
-
       function computeTotalDistance(result) {
         var total = 0;
         var myroute = result.routes[0];
@@ -215,6 +210,8 @@ angular.module('starter')
           alert('Unable to get location: ' + error.message);
         });
       };
+
+      
       
       initialize();
 
@@ -222,7 +219,7 @@ angular.module('starter')
 })
 
 // Rideshare logic, the controller first.
-.controller('RideCtrl', function($scope, $ionicLoading, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory) {
+.controller('RideCtrl', function($scope, $ionicLoading, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation) {
   // $scope.rides = [
   //   { id: 1, from: 'Gampola', to: 'Kandy'},
   //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
@@ -233,6 +230,9 @@ angular.module('starter')
   // ];
 
     $scope.rideDetails = {};
+    $scope.reservationData = {};
+
+  $scope.valueD = "fdfdfdfd";
 
     $scope.rideAuthor = RideFactory.currentRide.user_id;
     $scope.currentUserr = UserFactory.currentUser.user_id;
@@ -242,8 +242,7 @@ angular.module('starter')
       var ride_id = $stateParams.rideId;
       var editable = $stateParams.editable;
       $scope.currentRideId = ride_id;
-      console.log(ride_id)
-      console.log(editable)
+
         if (ride_id !== undefined){
 
 
@@ -251,12 +250,6 @@ angular.module('starter')
               function(data){
                 RideFactory.currentRide = data.data;
                 $scope.rideDetails = data.data;
-                console.log($scope.rideDetails)
-                console.log('date and time')
-                console.log($scope.rideDetails.start_date)
-                console.log($scope.rideDetails.start_time)
-                console.log(RideFactory.currentRide.user_id);
-                console.log(UserFactory.currentUser.user_id);
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
@@ -326,14 +319,12 @@ angular.module('starter')
         //for(var i =0 ; i< $scope.rideDetails.RideCordinates.lenth; i ++)
         for (key in $scope.rideDetails.RideCordinates) {        
           //waypoints.push(new google.maps.LatLng($scope.rideDetails.RideCordinates[i].latitude, $scope.rideDetails.RideCordinates[i].longitude);
-            console.log('coming in to add cordinates!!!!')
+
             wypoints.push({
           location:new google.maps.LatLng($scope.rideDetails.RideCordinates[key].latitude, $scope.rideDetails.RideCordinates[key].longitude),
           stopover:false});
         }
-        console.log('WAYPOINTS =')
-        console.log(wypoints)
-        console.log(endPosition)
+
 
         var start_title = $scope.rideDetails.from_location;
         var end_title = $scope.rideDetails.to_location;
@@ -369,11 +360,11 @@ angular.module('starter')
               });
         $scope.map = map; 
         directionsDisplay.setMap(map);
-        console.log($scope.waypoints)
+
         if ((rendererOptions !== undefined) && (editable !== 'false')) {
           google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
             var result = directionsDisplay.getDirections();
-            console.log('coming to direction changed!!!!!!!')
+
             var myroute = result.routes[0];
             $scope.startLatitude = myroute.legs[0].start_location.k;
             $scope.startLongitude = myroute.legs[0].start_location.D;
@@ -386,7 +377,7 @@ angular.module('starter')
                                     endLongitude: myroute.legs[0].end_location.D};
             var wypoints_edited = [];
 
-            console.log(myroute.legs[0].via_waypoint.length)
+
             for (var i = 0; i < myroute.legs[0].via_waypoint.length; i++) {
 
               wypoints_edited.push({
@@ -398,34 +389,26 @@ angular.module('starter')
 
           });
         }
-        console.log($scope.waypoints)
+
 
     };
     //google.maps.event.addDomListener(window, 'load', loadMap);
     $scope.editRide = function() {
-      console.log(RideFactory.currentRide.user_id)
-      console.log(UserFactory.currentUser.user_id)
-      console.log(RideFactory.currentRide.ride_id)
-
-
 
       $scope.editRouteData = {startLatitude: $scope.startLatitude, startLongitude : $scope.startLongitude, endLatitude: $scope.endLatitute, endLongitude: $scope.endLongitude};
 
      // if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
-        console.log($scope.rideDetails.RideCordinates.length)
-        console.log($scope.waypoints.length)
+
         var delete_waypoints = false;
         if (($scope.rideDetails.RideCordinates.length === $scope.waypoints.length) ) {
           for (var i = 0; i < $scope.rideDetails.RideCordinates.length; i++) {
-            console.log($scope.rideDetails.RideCordinates[i].latitude)
-            console.log($scope.waypoints[i].location.k)
-            console.log($scope.rideDetails.RideCordinates[i].longitude)
-            console.log($scope.waypoints[i].location.D)
+
             if (($scope.rideDetails.RideCordinates[i].latitude !== $scope.waypoints[i].location.k)
                  ||($scope.rideDetails.RideCordinates[i].longitude !== $scope.waypoints[i].location.D)) {
-              $scope.rideDetails.RideCordinates[i].latitude = $scope.waypoints[i].location.k;
-              $scope.rideDetails.RideCordinates[i].longitude = $scope.waypoints[i].location.D;
+              //$scope.rideDetails.RideCordinates[i].latitude = $scope.waypoints[i].location.k;
+              //$scope.rideDetails.RideCordinates[i].longitude = $scope.waypoints[i].location.D;
               console.log('DATA ADDED!!')
+              delete_waypoints = true;
             }
 
           }
@@ -440,6 +423,7 @@ angular.module('starter')
 
 
         var promise =RideFactory.editRide($scope.rideDetails, $scope.editRouteData);
+        console.log('COME HERE AFTER EDITING ONCEEEEE')
         promise.then(function(){
           if ($scope.waypoints !== null)
           {
@@ -485,4 +469,27 @@ angular.module('starter')
         $scope.error_message = 'you do not have the permission to edit this Ride information';
       }
     };
+
+    $scope.joinRide = function(ride_id_, user_id_){
+      //$scope.reservationData.start_lattitude = 
+      //$scope.reservationData.end_lattitude =
+      console.log(ride_id_)
+      console.log(user_id_)
+      console.log(UserFactory.currentUser.user_id)
+      console.log($scope.rideDetails.ride_id)
+      if (UserFactory.signedIn()) { 
+        var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
+         promise.then(function(){
+          console.log('joined rideeeeeeeeeeee') 
+          $scope.rideDetails.available_seats = $scope.rideDetails.available_seats - 1 ;
+          var promise1 = RideFactory.editRide($scope.rideDetails);
+          promise1.then(function(){
+            console.log('reduced seats') 
+          });
+         });
+      }
+
+    };
+
+
 })

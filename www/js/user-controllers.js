@@ -192,7 +192,6 @@ angular.module('starter')
       promise.then(function() {
         console.log(RideFactory.allRides.length);
         for(var i= 0; i<RideFactory.allRides.length ; i++){
-          console.log( RideFactory.allRides[i].from_location)
           $scope.rides[i] = {id : RideFactory.allRides[i].ride_id,
                             from : RideFactory.allRides[i].from_location,
                             to : RideFactory.allRides[i].to_location}

@@ -9,8 +9,8 @@
         
         <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})">Edit</button>
         <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">Delete</button>
-        <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide">Join</button>
-        <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="removeRide">Remove from ride</button>
+        <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">Join</button>
+        <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">Leave Ride</button>
        ride auth {{rideAuthor}}
         : current user
         {{currentUserr}}
