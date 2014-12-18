@@ -276,10 +276,56 @@ angular.module('starter')
               mapOptions);        
           google.maps.event.addListener(map, 'click', function(e) {
             placeMarkerPosition(e.latLng, map);
-
+             console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            console.log(markers[0].position.D)
+            console.log(markers[0].position.k)
           });
 
           $scope.map_position = map;
+          directionsDisplay2.setMap(map);
+
+          // start the route
+          var startPosition = new google.maps.LatLng($scope.rideDetails.start_lattitude, $scope.rideDetails.start_longitude);
+          var endPosition = new google.maps.LatLng($scope.rideDetails.end_latitude, $scope.rideDetails.end_longitude);
+          var wypoints = [];
+
+          for (key in $scope.rideDetails.RideCordinates) {        
+
+              wypoints.push({
+            location:new google.maps.LatLng($scope.rideDetails.RideCordinates[key].latitude, $scope.rideDetails.RideCordinates[key].longitude),
+            stopover:false});
+          }
+          var start_title = $scope.rideDetails.from_location;
+          var end_title = $scope.rideDetails.to_location;
+          //console.log(wypoints.lenth)
+          var start = new google.maps.Marker({
+                            position: startPosition,
+                            map: map,
+                            title : start_title
+                          });
+          var end = new google.maps.Marker({
+                          position: endPosition,
+                          map: map,
+                          title : end_title
+                        });
+              
+          var request = {
+                      origin:startPosition,
+                      destination:endPosition,
+                      // if u wanna show waypoints in the route use below code
+                      //waypoints : [{location: new google.maps.LatLng(6.9237284, 79.87322849999998)}],   
+                      waypoints : wypoints,               
+                      travelMode: google.maps.TravelMode.DRIVING
+                  };
+            
+
+          directionsService2.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                  directionsDisplay2.setDirections(response);
+               }
+            });
+
+           $scope.map_position = map;
           directionsDisplay2.setMap(map);
        });
 
@@ -293,7 +339,8 @@ angular.module('starter')
         });
         deleteMarkers();
         markers.push(marker);
-        console.log('clicking port ='+ position.lat());
+        $scope.reservationPosition = {latitude : markers[0].position.k, longitude : markers[0].position.D};
+        console.log(position);
         map.panTo(position);
         bindMarkerEvents(marker);
       }
@@ -303,6 +350,7 @@ angular.module('starter')
           markers[i].setMap(null);
         }
         markers = [];
+        $scope.reservationPosition = undefined;
       }
 
       var bindMarkerEvents = function(marker) {
@@ -547,16 +595,24 @@ angular.module('starter')
       }
     };
 
-    $scope.joinRide = function(){
-      //$scope.reservationData.start_lattitude = 
-      //$scope.reservationData.end_lattitude =
 
-      console.log(UserFactory.currentUser.user_id)
-      console.log($scope.rideDetails.ride_id)
+    $scope.joinRide = function(){
       if (UserFactory.signedIn()) { 
-        var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
+        $scope.modalPosition.show();
+      }
+      else{
+        $scope.modal.show();
+      }
+
+    };
+
+    $scope.insertRider = function(){
+
+      if (UserFactory.signedIn()) { 
+        //var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
+        var promise = Reservation.joinRide($scope.reservationPosition);
          promise.then(function(){
-          console.log('joined rideeeeeeeeeeee') 
+
           $scope.rideDetails.available_seats = $scope.rideDetails.available_seats - 1 ;
           var promise1 = RideFactory.editRide($scope.rideDetails);
           promise1.then(function(){
