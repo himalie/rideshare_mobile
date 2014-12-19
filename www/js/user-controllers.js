@@ -237,7 +237,7 @@ angular.module('starter')
   //   { id: 6, from: 'Katugastota', to: 'Kandy'}
   // ];
 
-  $scope.rides = {};
+  $scope.rides = [];
 
   $scope.currentRideId = RideFactory.currentRide.ride_id;
   $scope.currentUserr = UserFactory.currentUser.user_id;
