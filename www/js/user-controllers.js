@@ -75,14 +75,12 @@ angular.module('starter')
 
   $scope.loadUser = function(){
     var user_id_ = $stateParams.userId;
-    if(user_id_ === undefined)
-    {
+    if(user_id_ === undefined){
       user_id_ = UserFactory.currentUser.user_id;
       $scope.userDetails = UserFactory.currentUser;
+      //$scope.userDetails.gender.trim();
     }
-    else
-    {
-      console.log('qqqqqqqqqqqqqqqqqqqqq'+ user_id_)
+    else{
       var promise = UserFactory.getUserById(user_id_);
       promise.then(function(data){
         $scope.userDetails = data.data;

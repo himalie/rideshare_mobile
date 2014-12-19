@@ -416,7 +416,7 @@ angular.module('starter')
               function(data){
                 RideFactory.currentRide = data.data;
                 $scope.rideDetails = data.data;
-                console.log($scope.rideDetails.User.first_name)
+                console.log($scope.rideDetails)
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
@@ -525,6 +525,22 @@ angular.module('starter')
         $scope.map = map; 
         directionsDisplay.setMap(map);
 
+
+
+        if(UserFactory.currentUser.user_id === $scope.rideDetails.user_id){
+          //***************************
+          console.log('*********************1111111111111111*************************')
+          for (key in $scope.rideDetails.RiderInfoes) {  
+            var pLatlng = new google.maps.LatLng($scope.rideDetails.RiderInfoes[key].start_latitude,$scope.rideDetails.RiderInfoes[key].start_longitude);
+
+            placePassengerMarker(pLatlng, map, ($scope.rideDetails.RiderInfoes[key].User.first_name+ ' '+ $scope.rideDetails.RiderInfoes[key].User.last_name));
+
+            console.log('******************22222222*****************************')
+          }
+        }
+        console.log('************************333333333333****************************')
+        //$scope.map = map;
+
         if ((rendererOptions !== undefined) && (editable !== 'false')) {
           google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
             var result = directionsDisplay.getDirections();
@@ -556,6 +572,17 @@ angular.module('starter')
 
 
     };
+
+     function placePassengerMarker(position, map, title) {
+        //var markerId = getMarkerUniqueId(position.lat(), position.lng());
+        var marker = new google.maps.Marker({
+          position: position,
+          map: map,
+          title : title
+          //draggable:true,
+          //id: 'marker_' + markerId
+        });
+      }
     
     // the user who entered the Ride can edit ride information
     $scope.editRide = function() {
