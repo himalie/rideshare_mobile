@@ -30,8 +30,9 @@ angular.module('starter.controllers', [])
               }).
               error(function (data, status, headers, config) {
                 User.currentUser = undefined;
-                $scope.error = error;
+                //$scope.error = error;
                 console.log('error: ' + data);
+                console.log(data.data)
                 deferred.reject(data);
       });
       return deferred.promise;                  

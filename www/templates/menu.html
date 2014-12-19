@@ -32,9 +32,17 @@
         <ion-item nav-clear menu-close href="#/app/settings">
           Settings
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/user">
-          User (for testing)
+        <ion-item nav-clear menu-close ui-sref="app.edituser({ userId: userDetails.user_id})">
+          Edit User Profile
         </ion-item>
+        <ion-item nav-clear menu-close ui-sref="app.user({ userId: userDetails.user_id})">
+      <!--   <ion-item nav-clear menu-close ui-sref="app.user({ userId: userDetails.user_id})"> -->
+          View User Profile 
+        </ion-item>
+        <ion-item nav-clear menu-close ng-click="logOut()">
+          Sign Out
+        </ion-item>
+
       </ion-list>
     </ion-content>
 

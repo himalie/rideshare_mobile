@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope, $stateParams) {
+.controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope, $stateParams, $location, $ionicPopup) {
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -34,6 +34,7 @@ angular.module('starter')
           console.log('User name '+ $rootScope.currentUser);
           if ($rootScope.currentUser !== undefined)
           {
+            $scope.userDetails = UserFactory.currentUser;
             $scope.modal.hide();       
             $scope.error_message =''; 
           }
@@ -42,6 +43,28 @@ angular.module('starter')
             $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
           }
       });
+    };
+
+    $scope.logOut = function (){
+      console.log('dddddddddddddslfjladjkflakddddddddddddddddd')
+      $ionicPopup.confirm({
+                title: "Sign Out",
+                content: "Are you sure you want to sign out?"
+              })
+              .then(function(result) {
+                 console.log('ddddddddgggggggggggggggggggggggggggggggddddd')
+                if(result) {
+                   console.log('dsssssssssssssssssssssssdd')
+                    $scope.loginData = undefined;
+                    $scope.currentUser = undefined;
+                    $scope.userDetails = undefined;
+                    var path = '/app/findride/' ;
+                    $location.path(path);
+                  }
+                });
+
+
+      
     };
 
     // getting the current location of the user
@@ -53,20 +76,45 @@ angular.module('starter')
     });
   };
 
-  $scope.userDetails = {};
+  $scope.userDetails = UserFactory.currentUser;
 
   $scope.loadUser = function(){
     var user_id_ = $stateParams.userId;
-    console.log('qqqqqqqqqqqqqqqqqqqqq'+ user_id_)
-    var promise = UserFactory.getUserById(user_id_);
-    promise.then(function(data){
-      $scope.userDetails = data.data;
-      console.log($scope.userDetails);
+    if(user_id_ === undefined)
+    {
+      user_id_ = UserFactory.currentUser.user_id;
+      $scope.userDetails = UserFactory.currentUser;
+    }
+    else
+    {
+      console.log('qqqqqqqqqqqqqqqqqqqqq'+ user_id_)
+      var promise = UserFactory.getUserById(user_id_);
+      promise.then(function(data){
+        $scope.userDetails = data.data;
+        console.log($scope.userDetails);
 
-    });
+      });
+    }
+  };
+
+  $scope.editUser = function(){
+    if(UserFactory.signedIn()){
+      var promise = UserFactory.updateUser($scope.userDetails);
+      promise.then(function(){
+        console.log('data edited');
+        console.log(UserFactory.currentUser.user_id)
+        var path = '/app/user/' + UserFactory.currentUser.user_id;
+        $location.path(path);
+      });
+    }
+    else{
+      $scope.modal.show();
+    }
   };
 
 })
+
+
 
 .controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory, $rootScope, $location) {
   //Form data for the register modal

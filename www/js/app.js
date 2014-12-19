@@ -130,15 +130,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
-    // .state('app.user', {
-    //   url: "/joinride/:rideId/:editable",
-    //   views: {
-    //     'menuContent' :{
-    //       templateUrl: "templates/viewprofile.html",
-    //       controller: 'UserCtrl'
-    //     }
-    //   }
-    // })
+    .state('app.edituser', {
+      url: "/edituser/:rideId",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/editprofile.html",
+          controller: 'UserCtrl'
+        }
+      }
+    })
 
     .state('app.single', {
       url: "/ride/:rideId/:editable",
