@@ -45,6 +45,10 @@
     <span class="col col-20">Current status of the ride:</span>
     <span class="col" ng-model="rideDetails" >{{rideDetails.status}}</span>
   </div>
+  <div class="row">
+    <span class="col col-20">Ride Owner</span>
+    <span class="col" ng-model="rideDetails.User" ui-sref="app.user({ userId: rideDetails.User.user_id})">{{rideDetails.User.first_name}} &nbsp; {{rideDetails.User.last_name}}</span>
+  </div>
 
     <div>
      <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
