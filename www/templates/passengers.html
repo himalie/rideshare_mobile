@@ -16,9 +16,13 @@
       <ion-item ng-repeat="passenger in ridePassengers" ng-click="closeViewPassengers()"  ui-sref="app.user({ userId: {{passenger.user_id}}})" >
       <a class="item item-avatar" >
         <img src="">
+        <div class="row">
          <span><b>{{passenger.first_name}}</b>&nbsp; <b>{{passenger.last_name}}</b></span>
-         {{passenger.user_id}}
-         <span>{{passenger.telephone}}</span>
+         </div>
+          <div class="row">
+         <span>{{passenger.tel_no}}</span>
+         <span>{{passenger.start_location}}</span>
+       </div>
        </a>
       </ion-item>
 

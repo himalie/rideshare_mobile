@@ -1,16 +1,6 @@
 angular.module('starter')
 
 .controller('AddRideCtrl', function($scope, $ionicModal, $ionicLoading, $compile, $rootScope, RideFactory, $location, UserFactory) {
-
-  // $scope.rides = [
-  //   { id: 1, from: 'Gampola', to: 'Kandy'},
-  //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
-  //   { id: 3, from: 'Pilimatalawa', to: 'Kandy'},
-  //   { id: 4, from: 'Gampola', to: 'Colombo'},
-  //   { id: 5, from: 'Katugastota', to: 'Kurunegala'},
-  //   { id: 6, from: 'Katugastota', to: 'Kandy'}
-  // ];
-
     
     $scope.rideData = {};
     $scope.currentRideId = RideFactory.currentRide.ride_id;
@@ -219,7 +209,7 @@ angular.module('starter')
 })
 
 // Rideshare logic, the controller first.
-.controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation) {
+.controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation, $ionicPopup) {
 
 
     $scope.rideDetails = {};
@@ -232,7 +222,7 @@ angular.module('starter')
     //$scope.currentRider = Reservation.currentRes.user_id;
     
     // *********************Methods used for Passenger activitites*************************************
-    // Form data for the login modal
+
      $scope.reservationPosition = {};
      var markers = [];
     // Create a modal to fetch passenger pick up position
@@ -372,28 +362,37 @@ angular.module('starter')
         console.log('view passengerrrrrrrrrrrsssssssssssss')
         promise.then(function(){
           console.log('before loop')
-          console.log(RideFactory.passengers.length)
+          console.log(RideFactory.passengers)
           var ii=0;
           for(var i= 0; i<RideFactory.passengers.length ; i++){
             console.log('loooopppppppppp' + i)
             console.log(RideFactory.passengers[i].user_id)
             var id_ = RideFactory.passengers[i].ride_id;
-            var promise1 = UserFactory.getUserById(RideFactory.passengers[i].user_id);
+            //var promise1 = UserFactory.getUserById(RideFactory.passengers[i].user_id);
 
-             promise1.then(function(data){
+             //promise1.then(function(data){
 
-                $scope.ridePassengers[ii] = {id : ii,
+                // $scope.ridePassengers[ii] = {id : ii,
+                //                           ride_id : id_,
+                //                           user_id : data.data.user_id,
+                //                           user_name : data.data.user_name,
+                //                           first_name : data.data.first_name,
+                //                           last_name : data.data.last_name,
+                //                           tel_no : data.data.telephone,
+                //                           start_location : data.data.start_location};
+                  $scope.ridePassengers[ii] = {id : ii,
                                           ride_id : id_,
-                                          user_id : data.data.user_id,
-                                          user_name : data.data.user_name,
-                                          first_name : data.data.first_name,
-                                          last_name : data.data.last_name,
-                                          tel_no : data.data.telephone,
-                                          start_location : data.data.start_location};
+                                          user_id : RideFactory.passengers[i].User.user_id,
+                                          user_name : RideFactory.passengers[i].User.user_name,
+                                          first_name : RideFactory.passengers[i].User.first_name,
+                                          last_name : RideFactory.passengers[i].User.last_name,
+                                          tel_no : RideFactory.passengers[i].User.telephone,
+                                          start_location : RideFactory.passengers[i].User.location};
+
                 ii = ii + 1;
                 console.log($scope.ridePassengers[ii])
             //   //$scope.ridePassengers.push(ride_id : RideFactory.passengers[0].ride_id);
-             });
+            // });
           }  
           console.log($scope.ridePassengers);
           $scope.modalPassengers.show();
@@ -417,16 +416,13 @@ angular.module('starter')
               function(data){
                 RideFactory.currentRide = data.data;
                 $scope.rideDetails = data.data;
+                console.log($scope.rideDetails.User.first_name)
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
                 //loadMap();
                 var rendererOptions = {};
-                // if ((UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) 
-                //     && (RideFactory.currentRide.status === 'Planned') && (editable !== 'false'))
-                //if ((UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) && (editable !=0))
-                 //if ((UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) 
-                 //   &&  (editable !== 'false'))
+
                 if(editable !== 'false')
                 {
 
@@ -627,16 +623,31 @@ angular.module('starter')
       var Id = $stateParams.rideId;
       console.log($stateParams.rideId)
       if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
-        alert('are you sure u want to delete the ride?')
-        var promise = RideFactory.deleteRide(Id);
-          promise.then(function(){
-          console.log('deleted data');
-          var path = '/app/findride/';
-          $location.path(path);
-        });
+        $ionicPopup.confirm({
+                title: "Delete Ride",
+                content: "Are you sure you want to delete this ride?"
+              })
+              .then(function(result) {
+                if(result) {
+                    var promise = RideFactory.deleteRide(Id);
+                    promise.then(function(){
+                    console.log('deleted data');
+                    var path = '/app/findride/';
+                    $location.path(path);
+                  });
+                }
+              });
       }
       else {
         $scope.error_message = 'you do not have the permission to edit this Ride information';
+        $ionicPopup.alert({
+           title: 'Delete!',
+           template: 'You dont have permission to delete ride information'
+         });
+         alertPopup.then(function(res) {
+           console.log('You dont have permission to delete ride information');
+       });
+
       }
     };
 

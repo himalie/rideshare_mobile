@@ -46,15 +46,12 @@ angular.module('starter')
     };
 
     $scope.logOut = function (){
-      console.log('dddddddddddddslfjladjkflakddddddddddddddddd')
       $ionicPopup.confirm({
                 title: "Sign Out",
                 content: "Are you sure you want to sign out?"
               })
               .then(function(result) {
-                 console.log('ddddddddgggggggggggggggggggggggggggggggddddd')
                 if(result) {
-                   console.log('dsssssssssssssssssssssssdd')
                     $scope.loginData = undefined;
                     $scope.currentUser = undefined;
                     $scope.userDetails = undefined;
@@ -62,9 +59,7 @@ angular.module('starter')
                     $location.path(path);
                   }
                 });
-
-
-      
+  
     };
 
     // getting the current location of the user
