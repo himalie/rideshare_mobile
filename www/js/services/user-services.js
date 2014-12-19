@@ -7,8 +7,13 @@ angular.module('starter.controllers', [])
 
     User.currentUser = {};
 
-    User.getUsers = function () {
-        return $http.get(urlBase);
+    // User.getUser = function () {
+    //     return $http.get(urlBase);
+    // };
+
+    User.getUserById = function (user_id_) {
+        console.log('gggggggggggggggggggggggggggg')
+        return $http.get(urlBase, {params: {user_id : user_id_} });
     };
 
     User.getUser = function (user_name, password) {

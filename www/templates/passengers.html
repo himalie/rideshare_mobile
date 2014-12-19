@@ -1,0 +1,37 @@
+<div class="modal">
+  <ion-header-bar>
+    <h1 class="title">Passengers</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeViewPassengers()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="savePosition()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">{{error_message}}</span>
+        </label>
+        
+    <ion-list class="lightblue">
+      <ion-item ng-repeat="passenger in ridePassengers" ng-click="closeViewPassengers()"  ui-sref="app.user({ userId: {{passenger.user_id}}})" >
+      <a class="item item-avatar" >
+        <img src="">
+         <span><b>{{passenger.first_name}}</b>&nbsp; <b>{{passenger.last_name}}</b></span>
+         {{passenger.user_id}}
+         <span>{{passenger.telephone}}</span>
+       </a>
+      </ion-item>
+
+      <!-- <div class="list">
+
+      <a class="item item-avatar" href="#">
+        <img src="venkman.jpg">
+        <h2>Venkman</h2>
+        <p>Back off, man. I'm a scientist.</p>
+      </a>
+    </div> -->
+    </ion-list>
+      </div>
+    </form>
+  </ion-content>
+</div>

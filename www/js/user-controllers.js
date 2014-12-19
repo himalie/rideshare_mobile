@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope) {
+.controller('UserCtrl', function($scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope, $stateParams) {
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -50,6 +50,19 @@ angular.module('starter')
       promise.then(function() {
         console.log('POsition lat  '+ $rootScope.position.coords.latitude);
         console.log('POsition long '+ $rootScope.position.coords.longitude);
+    });
+  };
+
+  $scope.userDetails = {};
+
+  $scope.loadUser = function(){
+    var user_id_ = $stateParams.userId;
+    console.log('qqqqqqqqqqqqqqqqqqqqq'+ user_id_)
+    var promise = UserFactory.getUserById(user_id_);
+    promise.then(function(data){
+      $scope.userDetails = data.data;
+      console.log($scope.userDetails);
+
     });
   };
 

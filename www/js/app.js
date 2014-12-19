@@ -111,7 +111,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     })
 
     .state('app.user', {
-      url: "/user",
+      url: "/user/:userId",
       views: {
         'menuContent' :{
           templateUrl: "templates/user.html",
@@ -129,6 +129,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+
+    // .state('app.user', {
+    //   url: "/joinride/:rideId/:editable",
+    //   views: {
+    //     'menuContent' :{
+    //       templateUrl: "templates/viewprofile.html",
+    //       controller: 'UserCtrl'
+    //     }
+    //   }
+    // })
 
     .state('app.single', {
       url: "/ride/:rideId/:editable",

@@ -231,11 +231,11 @@ angular.module('starter')
     $scope.currentUserr = UserFactory.currentUser.user_id;
     //$scope.currentRider = Reservation.currentRes.user_id;
     
-    // **********************************************************
+    // *********************Methods used for Passenger activitites*************************************
     // Form data for the login modal
      $scope.reservationPosition = {};
      var markers = [];
-    // // Create the login modal that we will use later
+    // Create a modal to fetch passenger pick up position
     $ionicModal.fromTemplateUrl('templates/joinride.html', {
       scope: $scope
     }).then(function(modal) {
@@ -324,6 +324,7 @@ angular.module('starter')
        });
 
     };
+
     function placeMarkerPosition(position, map) {
       //var markerId = getMarkerUniqueId(position.lat(), position.lng());
         var marker = new google.maps.Marker({
@@ -337,21 +338,68 @@ angular.module('starter')
         console.log($scope.reservationPosition);
         //map.panTo(position);
         bindMarkerEvents(marker);
-      }
+    };
 
-      function deleteMarkers() {
-          for (var i = 0; i < markers.length; i++) {
+    function deleteMarkers() {
+        for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
         }
         markers = [];
         $scope.reservationPosition = undefined;
-      }
+    };
 
-      var bindMarkerEvents = function(marker) {
+    var bindMarkerEvents = function(marker) {
           google.maps.event.addListener(marker, "rightclick", function (point) {
             deleteMarkers();  
           });
-      };
+    };
+
+    $ionicModal.fromTemplateUrl('templates/passengers.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modalPassengers = modal;
+    });
+
+    $scope.closeViewPassengers = function() {
+      $scope.modalPassengers.hide();
+    };
+
+
+    $scope.ridePassengers =[];
+    $scope.viewPassengers = function(){
+      if (UserFactory.signedIn()){
+        var promise = RideFactory.viewPassengers(RideFactory.currentRide.ride_id);
+        console.log('view passengerrrrrrrrrrrsssssssssssss')
+        promise.then(function(){
+          console.log('before loop')
+          console.log(RideFactory.passengers.length)
+          var ii=0;
+          for(var i= 0; i<RideFactory.passengers.length ; i++){
+            console.log('loooopppppppppp' + i)
+            console.log(RideFactory.passengers[i].user_id)
+            var id_ = RideFactory.passengers[i].ride_id;
+            var promise1 = UserFactory.getUserById(RideFactory.passengers[i].user_id);
+
+             promise1.then(function(data){
+
+                $scope.ridePassengers[ii] = {id : ii,
+                                          ride_id : id_,
+                                          user_id : data.data.user_id,
+                                          user_name : data.data.user_name,
+                                          first_name : data.data.first_name,
+                                          last_name : data.data.last_name,
+                                          tel_no : data.data.telephone,
+                                          start_location : data.data.start_location};
+                ii = ii + 1;
+                console.log($scope.ridePassengers[ii])
+            //   //$scope.ridePassengers.push(ride_id : RideFactory.passengers[0].ride_id);
+             });
+          }  
+          console.log($scope.ridePassengers);
+          $scope.modalPassengers.show();
+        });
+      }
+    };
 
     // ******************************************************
 

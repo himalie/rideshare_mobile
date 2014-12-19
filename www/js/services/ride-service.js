@@ -7,6 +7,7 @@ angular.module('starter')
     Ride.currentRide = {};
     Ride.rideWaypoints = {};
     Ride.allRides = {};
+    Ride.passengers = {};
 
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
@@ -67,17 +68,21 @@ angular.module('starter')
     };
 
     Ride.getRideByUser = function(){
-
-        return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
+      var deferred = $q.defer();
+        $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
         .success(function(data, status, headers, config) {
  
-                Ride.currentRide = data;
+                Ride.currentRide = data.data;
+                console.log(Ride.currentRide)
+                deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
                 Ride.currentRide = null;
                 $scope.error = error;
                 console.log('error: ' + data);
+                deferred.reject(data);
       });
+      return deferred.promise;         
     };
 
     Ride.getRideByRideId = function(ride_id_){
@@ -136,6 +141,19 @@ angular.module('starter')
       return $http.delete('http://localhost/ARideShare/api/ridecordinates/' + ride_id);
     };
 
+    Ride.viewPassengers = function(ride_id_){
+      return $http.get('http://localhost/ARideShare/api/riderinfo/', {params: {ride_id : ride_id_}})
+        .success(function(data, status, headers, config){
+          Ride.passengers = data;
+          console.log(data)
+        }).
+        error(function(data, status, headers, console){
+          Ride.passengers = undefined;
+          //$scope.error = error
+
+        });
+
+    };
 
 
 // no need to fetch waypoints separately.. it is automatically fetched when u fetch Ride information

@@ -1,5 +1,30 @@
-<!-- just for testing how to access the Json service -->
+<ion-view title="User" ng-init="loadUser()">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header" style= "height:100%;width:100%">
 
+    <form ng-init="">
+      <div class="list">
+        <div class="row">
+          <span class="col">Name</span>
+         <span class="col"  ><b>{{userDetails.first_name}} &nbsp; {{userDetails.last_name}} </b></span> 
+        </div>
+        <div class="row">
+          <span class="col">Last Name</span>
+         <span class="col" ng-model="userDetails.last_name" >{{userDetails.last_name}}</span>
+        </div>
+        <div class="row">
+          <span class="col">Telephone :</span>
+          <span class="col" ng-model="userDetails.telephone" >{{userDetails.telephone}}</span>
+        </div>
+      </div>
+  </form>
+</ion-content>
+</ion-view>
+
+
+<!-- 
 <ion-view title="User">
 <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
@@ -20,3 +45,4 @@
         
   </ion-content>
 </ion-view>
+ --> 
