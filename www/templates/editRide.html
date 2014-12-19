@@ -9,23 +9,23 @@
 
         <label class="item item-input item-stacked-label">
           <span class="input-label">From</span>
-          <input type="text" placeholder={{rideDetails.from_location}} ng-model="rideDetails.from_location">
+          <input type="text" value={{rideDetails.from_location}} ng-model="rideDetails.from_location">
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">To</span>
-          <input type="text" ng-model="rideDetails.to_location" placeholder={{rideDetails.to_location}} >
+          <input type="text" ng-model="rideDetails.to_location" value={{rideDetails.to_location}} >
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Date</span>
-          <input type="date" ng-model="rideDetails.start_date" placeholder={{rideDetails.start_date | date:'medium'}} >
+          <input type="date" ng-model="rideDetails.start_date" value={{rideDetails.start_date | date:'medium'}} >
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Time</span>
-          <input type="time" ng-model="rideDetails.start_time" placeholder={{rideDetails.start_time}} >
+          <input type="time" ng-model="rideDetails.start_time" value={{rideDetails.start_time}} >
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Available Seats</span>
-          <input type="number" ng-model="rideDetails.available_seats" placeholder={{rideDetails.available_seats}} >
+          <input type="number" ng-model="rideDetails.available_seats" value={{rideDetails.available_seats}} >
         </label>
         <!-- <label class="checkbox">Females only
             <input type="checkbox" ng-model="rideDetails.femalesOnly">           
