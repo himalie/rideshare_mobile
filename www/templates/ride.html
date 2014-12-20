@@ -2,59 +2,89 @@
   <ion-nav-buttons side="left">
     <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
+   <ion-nav-buttons side="right">
+    <button menu-toggle="right"class="button button-icon ion-more" ng-click="popover.show($event)"></button>
+  </ion-nav-buttons>
+<script id="ride.html" type="text/ng-template">
+    <ion-popover-view>
+      <ion-content>
+          <div class="list">
+            <a class="item" ng-show="rideAuthor==currentUserr" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})" >
+              Edit
+            </a>
+            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">
+              Delete
+            </a>
+            <a class="item" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">
+              Join
+            </a>
+            <a class="item" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">
+              Leave ride
+            </a>
+            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">
+              View Passengers
+            </a>
+            
+          </div>
+        </ion-content>
+    </ion-popover-view>
+  </script>
+
   <ion-content class="has-header" style= "height:100%;width:100%">
 
     <form ng-init="loadRide()">
       <div class="list">
-        <div class="row">
+        <!-- <div class="row">
         <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})">Edit</button>
         <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">Delete</button>
-      </div>
-      <div class="row">
-        <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">Join</button>
-        <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">Leave Ride</button>
-      </div>
-      <div class="row">
-        <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">View Passengers</button>
-      </div>
+        </div>
+        <div class="row">
+          <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">Join</button>
+          <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">Leave Ride</button>
+        </div>
+        <div class="row">
+          <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">View Passengers</button>
+        </div> -->
 
   
-  <div class="row">
-  	<span class="col col-20">From:</span>
-  	<span class="col" ng-model="rideDetails.from_location" >{{rideDetails.from_location}}</span>
-  </div>
-  <div class="row">
-    <span class="col col-20">To:</span>
-    <span class="col" ng-model="rideDetails.to_location" >{{rideDetails.to_location}}</span>
-  </div>
-  <div class="row">
-    <span class="col col-20">Available seats :</span>
-    <span class="col" ng-model="rideDetails.available_seats" >{{rideDetails.available_seats}}</span>
-  </div>
+        <div class="row">
+        	<span class="col col-20">From:</span>
+        	<span class="col" ng-model="rideDetails.from_location" >{{rideDetails.from_location}}</span>
+        </div>
+        <div class="row">
+          <span class="col col-20">To:</span>
+          <span class="col" ng-model="rideDetails.to_location" >{{rideDetails.to_location}}</span>
+        </div>
+        <div class="row">
+          <span class="col col-20">Available seats :</span>
+          <span class="col" ng-model="rideDetails.available_seats" >{{rideDetails.available_seats}}</span>
+        </div>
 
-   <div class="row">
-    <span class="col col-20">Start Date :</span>
-    <span class="col" ng-model="rideDetails.start_date" >{{rideDetails.start_date}}</span>
-  </div>
+         <div class="row">
+          <span class="col col-20">Start Date :</span>
+          <span class="col" ng-model="rideDetails.start_date" >{{rideDetails.start_date}}</span>
+        </div>
 
-   <div class="row">
-    <span class="col col-20">Start Time :</span>
-    <span class="col" ng-model="rideDetails.start_time" >{{rideDetails.start_time}}</span>
-  </div>
-  <div class="row">
-    <span class="col col-20">Current status of the ride:</span>
-    <span class="col" ng-model="rideDetails" >{{rideDetails.status}}</span>
-  </div>
-  <div class="row">
-    <span class="col col-20">Ride Owner</span>
-    <a class="col" ng-model="rideDetails.User" ui-sref="app.user({ userId: rideDetails.User.user_id})">{{rideDetails.User.first_name}} &nbsp; {{rideDetails.User.last_name}}</a>
-  </div>
+         <div class="row">
+          <span class="col col-20">Start Time :</span>
+          <span class="col" ng-model="rideDetails.start_time" >{{rideDetails.start_time}}</span>
+        </div>
+        <div class="row">
+          <span class="col col-20">Current status of the ride:</span>
+          <span class="col" ng-model="rideDetails" >{{rideDetails.status}}</span>
+        </div>
+        <div class="row">
+          <span class="col col-20">Ride Owner</span>
+          <a class="col" ng-model="rideDetails.User" ui-sref="app.user({ userId: rideDetails.User.user_id})">{{rideDetails.User.first_name}} &nbsp; {{rideDetails.User.last_name}}</a>
+        </div>
 
-    <div>
-     <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
-    </div>
-    </div>
+        <div>
+        <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
+        </div>
+      </div>
     </form>
 
   </ion-content>
+
+
 </ion-view>

@@ -209,7 +209,7 @@ angular.module('starter')
 })
 
 // Rideshare logic, the controller first.
-.controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation, $ionicPopup) {
+.controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation, $ionicPopup, $ionicPopover) {
 
 
     $scope.rideDetails = {};
@@ -220,6 +220,38 @@ angular.module('starter')
     $scope.rideAuthor = RideFactory.currentRide.user_id;
     $scope.currentUserr = UserFactory.currentUser.user_id;
     //$scope.currentRider = Reservation.currentRes.user_id;
+
+
+
+
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    $ionicPopover.fromTemplateUrl('ride.html', {
+      scope: $scope,
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+  $scope.openPopover = function($event) {
+    $scope.popover.show($event);
+  };
+
+  $scope.closePopover = function() {
+    $scope.popover.hide();
+  };
+  //Cleanup the popover when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.popover.remove();
+  });
+  // Execute action on hide popover
+  $scope.$on('popover.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove popover
+  $scope.$on('popover.removed', function() {
+    // Execute action
+  });
+
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     // *********************Methods used for Passenger activitites*************************************
 
