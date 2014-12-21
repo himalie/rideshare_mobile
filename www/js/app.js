@@ -105,7 +105,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       views: {
         'menuContent' :{
           templateUrl: "templates/settings.html",
-          controller: 'SettingsCtrl'
+          controller: 'UserCtrl'
+          //controller : 'UserCtrl
         }
       }
     })
