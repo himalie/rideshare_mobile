@@ -7,9 +7,6 @@ angular.module('starter.controllers', [])
 
     User.currentUser = {};
 
-    // User.getUser = function () {
-    //     return $http.get(urlBase);
-    // };
 
     User.getUserById = function (user_id_) {
         console.log('gggggggggggggggggggggggggggg')
@@ -124,63 +121,3 @@ angular.module('starter.controllers', [])
     };
     return User;
 }])
-
-
-// .factory('User', function ($rootScope, $http) {
-
-//     var User = {
-//         currentUser : {},
-
-//         create: function (authUser, username, email) {
-            
-            
-//             // insert a record here? like below
-
-//             $http.post('http://localhost/api/user', {
-//                 first_name : user.first_name,
-//                 last_name : user.last_name,
-//                 user_name : user.user_name,
-//                 gender : user.gender,
-//                 password : user.password,
-//                 email : user.email,
-//                 location : user.location
-//             }).
-//               success(function(data, status, headers, config) {
-//                 // this callback will be called asynchronously
-//                 // when the response is available
-//                 setCurrentUser(username);
-//                 console.log(data);
-//                 return data;
-//               })
-            
-//         },
-
-
-//         // here is there a problem with semicolons??
-
-//         findByUsername: function (username) {
-//             if (username) {
-//                 console.log(username);
-//                return  $http.get('http://localhost/ARideShare/api/user', {params: {user_name : username}}).
-//                   success(function(data, status, headers, config) {
-//                       console.log(data);
-//                       setCurrentUser(username);
-//                     }); 
-//                   //return user;
-//                 }
-            
-//         },
-
-
-//         signedIn: function () {
-//             return $rootScope.currentUser !== undefined;
-//         }
-//     };
-
-//     function setCurrentUser (username) {
-//         $rootScope.currentUser = username;
-//         User.currentUser = User.findByUsername(username);
-//     }
-    
-//     return User;
-// });
