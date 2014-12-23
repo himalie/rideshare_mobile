@@ -52,9 +52,14 @@ angular.module('starter')
               })
               .then(function(result) {
                 if(result) {
-                    $scope.loginData = undefined;
-                    $scope.currentUser = undefined;
-                    $scope.userDetails = undefined;
+                    $scope.loginData = null;
+                    $scope.currentUser = null;
+                    $scope.userDetails = null;
+                    UserFactory.currentUser = null;
+                   // $scope.userDetails.user_id = undefined;
+                    console.log($scope.userDetails)
+                    console.log('ooooooooooooooooooooooooooooooooooo')
+                    //console.log( $scope.userDetails.user_id)
                     var path = '/app/findride/' ;
                     $location.path(path);
                   }
@@ -240,25 +245,52 @@ angular.module('starter')
   $scope.currentRideId = RideFactory.currentRide.ride_id;
   $scope.currentUserr = UserFactory.currentUser.user_id;
   $scope.allRider = {};
+  $scope.userRides = {};
 
-  $scope.getAllRides = function(){
+    $scope.getAllRides = function(){
 
-    var promise = RideFactory.getAllRides();
-    if (promise){
-      promise.then(function() {
-        console.log(RideFactory.allRides.length);
-        for(var i= 0; i<RideFactory.allRides.length ; i++){
-          $scope.rides[i] = {id : RideFactory.allRides[i].ride_id,
-                            from : RideFactory.allRides[i].from_location,
-                            to : RideFactory.allRides[i].to_location}
-        }
+      var promise = RideFactory.getAllRides();
+      if (promise){
+        promise.then(function() {
+          console.log(RideFactory.allRides.length);
+          for(var i= 0; i<RideFactory.allRides.length ; i++){
+            $scope.rides[i] = {id : RideFactory.allRides[i].ride_id,
+                              from : RideFactory.allRides[i].from_location,
+                              to : RideFactory.allRides[i].to_location}
+          }
 
-      });
-    }
-    else {
+        });
+      }
+      else {
         $scope.error_message = 'some things wrong';
-    }
+      }
     };
+
     $scope.getAllRides();
+
+    $scope.getUserRides = function(){
+      var promise = RideFactory.getRidesByUser();
+      console.log(RideFactory.userRides)
+      console.log(promise)
+      if (promise) {
+        promise.then(function(){
+          for(var i= 0; i<RideFactory.userRides.length ; i++){
+            $scope.userRides[i] = {id : RideFactory.userRides[i].ride_id,
+                              from : RideFactory.userRides[i].from_location,
+                              to : RideFactory.userRides[i].to_location,
+                              seats : RideFactory.userRides[i].available_seats,
+                              start_date : RideFactory.userRides[i].start_date,
+                              start_time : RideFactory.userRides[i].start_time,
+                              state : RideFactory.userRides[i].state};
+          }
+        });
+      }
+
+    };
+
+    $scope.getPassengerRides = function(){
+
+
+    };
 
 })

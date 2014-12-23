@@ -2,12 +2,16 @@ angular.module('starter')
 
 .factory('RideFactory', ['$http', '$rootScope', '$q', 'UserFactory', function($http, $rootScope, $q, UserFactory) {
 
-	var urlBase = 'http://localhost/ARideShare/api/ride';
+	var urlBase = 'http://localhost/api/ride';
+  var waypoint_url = 'http://localhost/api/ridecordinates/';
+  var rider_url = 'http://localhost/api/riderinfo/';
+  //var urlBase = 'http://localhost/ARideShare/api/ride';
     var Ride = {};
     Ride.currentRide = {};
     Ride.rideWaypoints = {};
     Ride.allRides = {};
     Ride.passengers = {};
+    Ride.userRides = {};
 
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
@@ -46,7 +50,7 @@ angular.module('starter')
     };
 
     Ride.addRideCordinates = function(waypoints) {
-    	 return $http.post('http://localhost/ARideShare/api/ridecordinates', {
+    	 return $http.post(waypoint_url, {
                 ride_id : Ride.currentRide.ride_id,
                 latitude : waypoints.location.k,
                 longitude : waypoints.location.D,
@@ -67,22 +71,25 @@ angular.module('starter')
     	 
     };
 
-    Ride.getRideByUser = function(){
-      var deferred = $q.defer();
-        $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
-        .success(function(data, status, headers, config) {
- 
-                Ride.currentRide = data.data;
-                console.log(Ride.currentRide)
-                deferred.resolve(data);
-              }).
-              error(function (data, status, headers, config) {
-                Ride.currentRide = null;
-                $scope.error = error;
-                console.log('error: ' + data);
-                deferred.reject(data);
-      });
-      return deferred.promise;         
+    Ride.getRidesByUser = function(){
+     // var deferred = $q.defer();
+     console.log(UserFactory.currentUser.user_id);
+      return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}});
+      
+      //   $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
+      //   .success(function(data, status, headers, config) {
+      //           console.log(data.data)
+      //           Ride.userRides = data.data;
+      //           console.log(Ride.userRides)
+      //           deferred.resolve(data);
+      //         }).
+      //         error(function (data, status, headers, config) {
+      //           Ride.userRides = null;
+      //           $scope.error = error;
+      //           console.log('error: ' + data);
+      //           deferred.reject(data);
+      // });
+      // return deferred.promise;         
     };
 
     Ride.getRideByRideId = function(ride_id_){
@@ -130,7 +137,7 @@ angular.module('starter')
     Ride.editRideWayoints = function(waypoint, ride_id_){
      // return $http.put(urlBase + '/'+ride_id_);
 
-      return $http.put('http://localhost/ARideShare/api/ridecordinates/' + ride_id_, ride);
+      return $http.put(waypoint_url + ride_id_, ride);
     };
 
     Ride.deleteRide = function(ride_id){
@@ -138,11 +145,11 @@ angular.module('starter')
     };
 
     Ride.deleteWaypoints = function(ride_id){
-      return $http.delete('http://localhost/ARideShare/api/ridecordinates/' + ride_id);
+      return $http.delete(waypoint_url + ride_id);
     };
 
     Ride.viewPassengers = function(ride_id_){
-      return $http.get('http://localhost/ARideShare/api/riderinfo/', {params: {ride_id : ride_id_}})
+      return $http.get(rider_url, {params: {ride_id : ride_id_}})
         .success(function(data, status, headers, config){
           Ride.passengers = data;
           console.log(data)
@@ -154,22 +161,6 @@ angular.module('starter')
         });
 
     };
-
-
-// no need to fetch waypoints separately.. it is automatically fetched when u fetch Ride information
-    // Ride.getWaypoints = function(ride_id_) {
-    //     return $http.get('http://localhost/ARideShare/api/ridecordinates/'+ride_id_)
-    //     .success(function(data, status, headers, config) {
-    //             console.log(data);
-    //             console.log('get worked');
-    //             Ride.waypoints = data;
-    //           }).
-    //           error(function (data, status, headers, config) {
-    //             Ride.waypoints = null;
-    //             $scope.error = error;
-    //             console.log('error: ' + data);
-    //   });
-    // };
 
     return Ride;
 }])

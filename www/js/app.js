@@ -81,6 +81,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.managerides', {
+      url: "/managerides",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/managerides.html",
+          controller: 'RidesCtrl'
+        }
+      }
+    })
+
     .state('app.register', {
       url: "/register",
       views: {

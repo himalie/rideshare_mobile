@@ -1,0 +1,33 @@
+<ion-view title="Rides" ng-init="getUserRides()">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <form >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">{{error_message}}</span>
+        </label>
+        
+        <ion-list class="lightblue">
+          <ion-item ng-repeat="ride in userRides" >
+          <a class="item item-avatar" >
+            <img src="">
+            <div class="row">
+             <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
+            </div>
+            <div class="row">
+             <span>{{ride.start_date}}</span> &nbsp; &nbsp;
+             <span>{{ride.start_time}}</span>
+            </div>
+            <div class="row">
+             <span>{{ride.state}}</span> &nbsp; &nbsp;
+             <span>Available seats : {{ride.seats}}</span>
+            </div>
+           </a>
+          </ion-item>
+        </ion-list>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

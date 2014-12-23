@@ -2,7 +2,8 @@ angular.module('starter.controllers', [])
 
 .factory('UserFactory', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
 
-    var urlBase = 'http://localhost/ARideShare/api/user';
+    var urlBase = 'http://localhost/api/user';
+    //var urlBase = 'http://localhost/ARideShare/api/user';
     var User = {};
 
     User.currentUser = {};

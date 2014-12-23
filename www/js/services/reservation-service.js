@@ -4,8 +4,10 @@ angular.module('starter')
 .factory('Reservation', ['$http', '$rootScope', '$q', 'UserFactory', 'RideFactory', function($http, $rootScope, $q, UserFactory, RideFactory) {
 
 
-var urlBase = 'http://localhost/ARideShare/api/riderinfo';
+var urlBase = 'http://localhost/api/riderinfo';
+//var urlBase = 'http://localhost/ARideShare/api/riderinfo';
 var Reservation = {};
+
 console.log('wwwwwwwwddddddddddddddddddddwwwwwwwwwww')
 
 
