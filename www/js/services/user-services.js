@@ -7,33 +7,38 @@ angular.module('starter.controllers', [])
 
     User.currentUser = {};
 
-    // fetch user details by user_id
+
     User.getUserById = function (user_id_) {
+        console.log('gggggggggggggggggggggggggggg')
         return $http.get(urlBase, {params: {user_id : user_id_} });
     };
 
-    // validate user login
     User.getUser = function (user_name, password) {
+        console.log('come here');
         
         var deferred = $q.defer();
         $http.get(urlBase, {params: {user_name : user_name, password : password}})
         .success(function(data, status, headers, config) {
                 console.log(data);
                 User.currentUser = data;
+                console.log('SERVICE User.currentUser ='+ User.currentUser.user_name);
                 setCurrentUser(User.currentUser.user_name);
                 deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
                 User.currentUser = undefined;
+                //$scope.error = error;
+                console.log('error: ' + data);
+                console.log(data.data)
                 deferred.reject(data);
       });
       return deferred.promise;                  
     };
 
-    // register user - add a user record
     User.insertUser = function (user) {
 
         var deferred = $q.defer();
+
          return $http.post(urlBase, {
                 first_name : user.firstName,
                 last_name : user.lastName,
@@ -73,7 +78,6 @@ angular.module('starter.controllers', [])
         return $rootScope.currentUser !== undefined;
     };
 
-    // get current location of the logged in user
     User.getCurrentLocatoin = function () {
       var deferred = $q.defer();
       var startPos;
@@ -82,6 +86,8 @@ angular.module('starter.controllers', [])
             startPos = position;
             var latitude = startPos.coords.latitude;
             var longitude  = startPos.coords.longitude;
+            console.log('###### '+ latitude+ '');
+            console.log('###### '+ longitude+ '');
             $rootScope.position = startPos;
             deferred.resolve(startPos);
           }, function(error) {
@@ -99,7 +105,7 @@ angular.module('starter.controllers', [])
             var currLong = position.coords.longitude;  
             console.log('######@@@ '+ currLat+ '');
             console.log('######@@@ '+ currLong+ '');   
-            $rootScope.currPosition = position;
+             $rootScope.currPosition = position;
             deferred.resolve(position);       
           });
 
@@ -107,11 +113,11 @@ angular.module('starter.controllers', [])
         return deferred.promise;
     };
 
-    // set current user name in the rootScope
     setCurrentUser = function(username) {
         console.log('SERVICE set curr user :'+ username);
         $rootScope.currentUser = username;
 
+        //User.currentUser = User.findByUsername(username);
     };
     return User;
 }])
