@@ -12,6 +12,7 @@ angular.module('starter')
     Ride.allRides = {};
     Ride.passengers = {};
     Ride.userRides = {};
+    Ride.passengerRides = {};
 
     Ride.addRide = function (rideData, routeData) {
         if (UserFactory.signedIn()) { 
@@ -90,6 +91,13 @@ angular.module('starter')
       //           deferred.reject(data);
       // });
       // return deferred.promise;         
+    };
+
+    // fetch the rides that the logged in user has joined
+    Ride.getJoinedRidesByUser = function(){
+      console.log('sssssssssssssssssssrrrrrrrrrrrrrrrssssssssssssssss')
+      return $http.get(rider_url, {params: {user_id : UserFactory.currentUser.user_id}});
+
     };
 
     Ride.getRideByRideId = function(ride_id_){

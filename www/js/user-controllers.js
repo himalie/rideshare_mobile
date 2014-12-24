@@ -21,7 +21,7 @@ angular.module('starter')
 
     // Open the login modal
     $scope.login = function() {
-      console.log(" ddd "+ UserFactory.currentUser.first_name);
+      //console.log(" ddd "+ UserFactory.currentUser.first_name);
       $scope.modal.show();
     };
 
@@ -246,6 +246,7 @@ angular.module('starter')
   $scope.currentUserr = UserFactory.currentUser.user_id;
   $scope.allRider = {};
   $scope.userRides = {};
+  $scope.joinedRides = {};
 
     $scope.getAllRides = function(){
 
@@ -266,14 +267,17 @@ angular.module('starter')
       }
     };
 
-    $scope.getAllRides();
+    //$scope.getAllRides();
 
     $scope.getUserRides = function(){
       var promise = RideFactory.getRidesByUser();
-      console.log(RideFactory.userRides)
-      console.log(promise)
+      //console.log(RideFactory.userRides)
+      //console.log(promise)
       if (promise) {
-        promise.then(function(){
+        promise.then(function(data){
+          RideFactory.userRides = data.data;
+          console.log(RideFactory.userRides)
+          console.log(RideFactory.userRides.length)
           for(var i= 0; i<RideFactory.userRides.length ; i++){
             $scope.userRides[i] = {id : RideFactory.userRides[i].ride_id,
                               from : RideFactory.userRides[i].from_location,
@@ -288,9 +292,26 @@ angular.module('starter')
 
     };
 
+    
     $scope.getPassengerRides = function(){
-
+      console.log('sssssssssssssssssssssssssssssssssss');
+      var promise = RideFactory.getJoinedRidesByUser();
+      if (promise){
+        promise.then(function(data){
+          RideFactory.passengerRides = data.data;
+           console.log(RideFactory.passengerRides.length)
+          for(var i= 0; i<RideFactory.passengerRides.length ; i++){
+            $scope.joinedRides[i] = {id : RideFactory.passengerRides[i].Ride.ride_id,
+                              from : RideFactory.passengerRides[i].Ride.from_location,
+                              to : RideFactory.passengerRides[i].Ride.to_location,
+                              seats : RideFactory.passengerRides[i].Ride.available_seats,
+                              start_date : RideFactory.passengerRides[i].Ride.start_date,
+                              start_time : RideFactory.passengerRides[i].Ride.start_time,
+                              state : RideFactory.passengerRides[i].Ride.state};
+          }
+        });
+      }
 
     };
-
+    //$scope.getPassengerRides();
 })

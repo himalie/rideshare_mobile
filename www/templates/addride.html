@@ -5,6 +5,10 @@
   <ion-content class="has-header">
     <form ng-submit="addRide()">
     	<div class="list">
+    		<label class="item">
+	          <button class="button button-block button-positive" type="submit">Add</button>
+	        </label>
+        
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">From</span>
 		    <input type="text" placeholder="Ex: Kandy, Sri Lanka" ng-model="rideData.fromLocation">
@@ -37,9 +41,7 @@
 		  </label>
 		  <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
 		 <!--  <input id="skill" type="range" min="1" max="100" value="0"> -->
-		  <label class="item">
-          <button class="button button-block button-positive" type="submit">Add</button>
-        </label>
+		  
         
 		</div>
     </form>
