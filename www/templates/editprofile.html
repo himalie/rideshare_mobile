@@ -7,7 +7,6 @@
     <form ng-init="">
       <div class="list">
       	<button class="button button-block button-positive" type="submit" ng-click="editUser()">Update</button>
-
         <label class="item item-input item-stacked-label">
           <span class="input-label">Username</span>
           <br>
@@ -22,8 +21,6 @@
           <span class="input-label">Last Name</span>
           <input type="text" ng-model="userDetails.last_name" value={{userDetails.last_name}}>
         </label>
-
-       
         <label class="item item-input item-select">
             <div class="input-label">
               Gender
@@ -34,8 +31,8 @@
             </select>
           </label>
          <div >
-              <input type="radio" ng-model="userDetails.gender" value="{{userDetails.gender}}">Female
-              <input type="radio" ng-model="userDetails.gender" value="{{userDetails.gender}}">Male
+            <input type="radio" ng-model="userDetails.gender" value="">Female
+            <input type="radio" ng-model="userDetails.gender" value="{{userDetails.gender}}">Male
         </div>
         <label class="item item-input item-stacked-label">
           <span class="input-label">E mail</span>
