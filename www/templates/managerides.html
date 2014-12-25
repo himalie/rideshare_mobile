@@ -10,7 +10,7 @@
         </label>
         ¬¬¬¬¬¬¬¬ Rides Owned ¬¬¬¬¬¬¬¬¬  
         <ion-list class="lightblue" ng-init="getUserRides()">
-          <ion-item ng-repeat="ride in userRides" >
+          <ion-item ng-repeat="ride in userRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
             <a class="item item-avatar" >
               <img src="">
               <div class="row">
@@ -31,7 +31,7 @@
       ¬¬¬¬¬¬¬¬ Rides Joined ¬¬¬¬¬¬¬¬¬
       <div class="list">
         <ion-list class="lightblue" ng-init="getPassengerRides()">
-          <ion-item ng-repeat="ride in joinedRides" >
+          <ion-item ng-repeat="ride in joinedRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
             <a class="item item-avatar" >
               <img src="">
               <div class="row">
