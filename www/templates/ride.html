@@ -15,6 +15,12 @@
             <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">
               Delete
             </a>
+            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="startRide()">
+              Start Journey
+            </a>
+            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="endRide()">
+              End Journey
+            </a>
             <a class="item" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">
               Join
             </a>
