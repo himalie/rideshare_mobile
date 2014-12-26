@@ -1,4 +1,4 @@
-<ion-view title="Rides" >
+<ion-view title="Rides" ng-init="loggedIn()">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
@@ -21,7 +21,7 @@
                <span>{{ride.start_time}}</span>
               </div>
               <div class="row">
-               <span><b>{{ride.status}}</b></span>
+               <span><b>{{ride.state}}</b></span>&nbsp; &nbsp;
                <span>Available seats : {{ride.seats}}</span>
               </div>
             </a>
@@ -42,7 +42,7 @@
                <span>{{ride.start_time}}</span>
               </div>
               <div class="row">
-               <span><b>{{ride.status}}</b></span>
+               <span><b>{{ride.state}}</b></span>&nbsp; &nbsp;
                <span>Available seats : {{ride.seats}}</span>
               </div>
             </a>

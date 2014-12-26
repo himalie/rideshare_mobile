@@ -15,22 +15,24 @@
             <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">
               Delete
             </a>
-            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="startRide()">
+            <a class="item" ng-show="rideAuthor==currentUserr && status==statusP" type="submit" ng-click="startRide()">
               Start Journey
             </a>
-            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="endRide()">
+            <a class="item" ng-show="rideAuthor==currentUserr && status ==statusS" type="submit" ng-click="endRide()">
               End Journey
             </a>
-            <a class="item" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">
+            <a class="item" ng-show="rideAuthor!=currentUserr && rstatus ==statusP" type="submit" ng-click="joinRide()">
               Join
             </a>
-            <a class="item" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">
+            <a class="item" type="submit" ng-click="joinRide()">
+              Join
+            </a>
+            <a class="item" ng-show="rideAuthor!=currentUserr && status ==statusP" type="submit" ng-click="leaveRide()">
               Leave ride
             </a>
             <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">
               View Passengers
             </a>
-            
           </div>
         </ion-content>
     </ion-popover-view>
@@ -40,18 +42,6 @@
 
     <form ng-init="loadRide()">
       <div class="list">
-        <!-- <div class="row">
-        <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})">Edit</button>
-        <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">Delete</button>
-        </div>
-        <div class="row">
-          <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="joinRide()">Join</button>
-          <button class="button button-block button-positive" ng-show="rideAuthor!=currentUserr" type="submit" ng-click="leaveRide()">Leave Ride</button>
-        </div>
-        <div class="row">
-          <button class="button button-block button-positive" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">View Passengers</button>
-        </div> -->
-
   
         <div class="row">
         	<span class="col col-20">From:</span>

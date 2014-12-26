@@ -25,6 +25,15 @@ angular.module('starter')
       $scope.modal.show();
     };
 
+
+    $scope.sendSMS = function(){
+      alert('dddddddddd')
+      console.log('send smsssssss')
+       SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
+
+    };
+
+
     // Perform the login action when the user submits the login form
     $scope.doLogin = function() {
       console.log('Doing login ', $scope.loginData);
@@ -248,6 +257,12 @@ angular.module('starter')
   $scope.userRides = {};
   $scope.joinedRides = {};
 
+  $scope.loggedIn = function(){
+    if(!UserFactory.signedIn()){
+      $scope.modal.show();
+    }
+  };
+
     $scope.getAllRides = function(){
 
       var promise = RideFactory.getAllRides();
@@ -285,14 +300,14 @@ angular.module('starter')
                               seats : RideFactory.userRides[i].available_seats,
                               start_date : RideFactory.userRides[i].start_date,
                               start_time : RideFactory.userRides[i].start_time,
-                              state : RideFactory.userRides[i].state};
+                              state : RideFactory.userRides[i].status};
           }
         });
       }
 
     };
 
-    
+
     $scope.getPassengerRides = function(){
       console.log('sssssssssssssssssssssssssssssssssss');
       var promise = RideFactory.getJoinedRidesByUser();
@@ -307,7 +322,7 @@ angular.module('starter')
                               seats : RideFactory.passengerRides[i].Ride.available_seats,
                               start_date : RideFactory.passengerRides[i].Ride.start_date,
                               start_time : RideFactory.passengerRides[i].Ride.start_time,
-                              state : RideFactory.passengerRides[i].Ride.state};
+                              state : RideFactory.passengerRides[i].Ride.status};
           }
         });
       }

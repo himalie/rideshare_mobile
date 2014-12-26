@@ -120,6 +120,13 @@ angular.module('starter')
 
                 }
               });
+              for (var i = 0; i < markers.length; i++) {
+                //var marker = markers[i];
+                console.log('oooooooooooooooooopppppppppppppppppjjjjjjjjjjjjjjjjjjjjjjjjppppppppppppppp')
+                console.log(marker);
+                markers[i].setMap(null);
+
+          }
 
           }
         });
@@ -219,6 +226,10 @@ angular.module('starter')
 
     $scope.rideAuthor = RideFactory.currentRide.user_id;
     $scope.currentUserr = UserFactory.currentUser.user_id;
+    $scope.statusP = "Planned";
+    $scope.statusS = "Started";
+    $scope.statusC = "Completed";
+    $scope.status = RideFactory.currentRide.status;
     //$scope.currentRider = Reservation.currentRes.user_id;
 
 
@@ -452,6 +463,8 @@ angular.module('starter')
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
+                $scope.status = RideFactory.currentRide.status.trim();
+                console.log($scope.status)
                 //loadMap();
                 var rendererOptions = {};
 
