@@ -691,7 +691,7 @@ angular.module('starter')
                     var promise = RideFactory.deleteRide(Id);
                     promise.then(function(){
                     console.log('deleted data');
-                    var path = '/app/findride/';
+                    var path = '/app/managerides/';
                     $location.path(path);
                   });
                 }
@@ -765,5 +765,27 @@ angular.module('starter')
           });
         });
       }
+    };
+
+    $scope.startRide = function(){
+      $scope.rideDetails.status = 'Started';
+      var promise =RideFactory.editRide($scope.rideDetails);
+      promise.then(function(){
+        console.log('started ride');
+        $scope.closePopover();
+        // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+        // $location.path(path);
+      });
+    };
+
+    $scope.endRide = function(){
+      $scope.rideDetails.status = 'Completed';
+      var promise =RideFactory.editRide($scope.rideDetails);
+      promise.then(function(){
+        console.log('completed ride');
+        $scope.closePopover();
+        // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
+        // $location.path(path);
+      });
     };
 })
