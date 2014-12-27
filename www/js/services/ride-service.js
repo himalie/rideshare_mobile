@@ -2,10 +2,10 @@ angular.module('starter')
 
 .factory('RideFactory', ['$http', '$rootScope', '$q', 'UserFactory', function($http, $rootScope, $q, UserFactory) {
 
-	var urlBase = 'http://localhost/api/ride';
+	//var urlBase = 'http://localhost/api/ride';
   var waypoint_url = 'http://localhost/api/ridecordinates/';
   var rider_url = 'http://localhost/api/riderinfo/';
-  //var urlBase = 'http://localhost/ARideShare/api/ride';
+  var urlBase = 'http://localhost/ARideShare/api/ride';
     var Ride = {};
     Ride.currentRide = {};
     Ride.rideWaypoints = {};
@@ -139,7 +139,8 @@ angular.module('starter')
         ride.end_longitude = route.endLongitude;
       }
       console.log('COME HERE FOR EDITING ONCEEEEE')
-      return $http.put(urlBase+'/' + ride.ride_id_, ride);
+      console.log(ride.ride_id)
+      return $http.put(urlBase+'/' + ride.ride_id, ride);
     };
 
     Ride.editRideWayoints = function(waypoint, ride_id_){

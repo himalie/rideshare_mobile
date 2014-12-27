@@ -21,10 +21,7 @@
             <a class="item" ng-show="rideAuthor==currentUserr && status ==statusS" type="submit" ng-click="endRide()">
               End Journey
             </a>
-            <a class="item" ng-show="rideAuthor!=currentUserr && rstatus ==statusP" type="submit" ng-click="joinRide()">
-              Join
-            </a>
-            <a class="item" type="submit" ng-click="joinRide()">
+            <a class="item" ng-show="rideAuthor!=currentUserr && status ==statusP" type="submit" ng-click="joinRide()">
               Join
             </a>
             <a class="item" ng-show="rideAuthor!=currentUserr && status ==statusP" type="submit" ng-click="leaveRide()">
@@ -42,7 +39,7 @@
 
     <form ng-init="loadRide()">
       <div class="list">
-  
+    ion-backspace-outline
         <div class="row">
         	<span class="col col-20">From:</span>
         	<span class="col" ng-model="rideDetails.from_location" >{{rideDetails.from_location}}</span>

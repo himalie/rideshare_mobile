@@ -658,7 +658,7 @@ angular.module('starter')
         }
 
 
-
+        console.log($scope.rideDetails)
         var promise =RideFactory.editRide($scope.rideDetails, $scope.editRouteData);
         console.log('COME HERE AFTER EDITING ONCEEEEE')
         promise.then(function(){
@@ -785,11 +785,21 @@ angular.module('starter')
       var promise =RideFactory.editRide($scope.rideDetails);
       promise.then(function(){
         console.log('started ride');
+        console.log($scope.rideDetails)
+        SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
         $scope.closePopover();
         // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
         // $location.path(path);
       });
     };
+
+
+    // $scope.sendSMS = function(){
+    //   alert('dddddddddd')
+    //   console.log('send smsssssss')
+    //    SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
+
+    // };
 
     $scope.endRide = function(){
       $scope.rideDetails.status = 'Completed';

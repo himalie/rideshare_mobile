@@ -26,14 +26,6 @@ angular.module('starter')
     };
 
 
-    $scope.sendSMS = function(){
-      alert('dddddddddd')
-      console.log('send smsssssss')
-       SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
-
-    };
-
-
     // Perform the login action when the user submits the login form
     $scope.doLogin = function() {
       console.log('Doing login ', $scope.loginData);
