@@ -1,52 +1,53 @@
 <ion-side-menus>
 
-  <ion-side-menu-content>
-    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
-      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-  </ion-side-menu-content>
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+            <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back
+            </ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-side-menu-content>
 
 
-  <ion-side-menu side="left">
-    <!-- banner -->
-    <header class="bar bar-header bar-stable">
-      <h1 class="title">Menu</h1>
-    </header>
+    <ion-side-menu side="left">
+        <!-- banner -->
+        <header class="bar bar-header bar-stable">
+            <h1 class="title">Menu</h1>
+        </header>
 
-    <!-- menu options --> 
-      <ion-content class="has-header content-stable">
-      <ion-list>
-       <ion-item nav-clear menu-close ng-click="login()" >
-          Login
-        </ion-item>
-         <ion-item nav-clear menu-close href="#/app/register"  >
-          Register
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/findride">
-          Find Ride
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/addride">
-          Add a Ride
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/managerides">
-          Manage rides
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/settings">
-          Settings
-        </ion-item>
-        <!-- <ion-item nav-clear menu-close ui-sref="app.user({ userId: userDetails.user_id})">
-          View User Profile 
-        </ion-item>
-        <ion-item nav-clear menu-close ui-sref="app.edituser({ userId: userDetails.user_id})">
-          Edit User Profile
-        </ion-item>  -->       
-        <!-- <ion-item nav-clear menu-close ng-click="logOut()">
-          Sign Out
-        </ion-item> -->
+        <!-- menu options -->
+        <ion-content class="has-header content-stable">
+            <ion-list>
+                <ion-item nav-clear menu-close ng-click="login()">
+                    Login
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/register">
+                    Register
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/findride">
+                    Find Ride
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/addride">
+                    Add a Ride
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/managerides">
+                    Manage rides
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/settings">
+                    Settings
+                </ion-item>
+                <!-- <ion-item nav-clear menu-close ui-sref="app.user({ userId: userDetails.user_id})">
+                  View User Profile
+                </ion-item>
+                <ion-item nav-clear menu-close ui-sref="app.edituser({ userId: userDetails.user_id})">
+                  Edit User Profile
+                </ion-item>  -->
+                <!-- <ion-item nav-clear menu-close ng-click="logOut()">
+                  Sign Out
+                </ion-item> -->
 
-      </ion-list>
-    </ion-content>
+            </ion-list>
+        </ion-content>
 
-  </ion-side-menu>
+    </ion-side-menu>
 </ion-side-menus>

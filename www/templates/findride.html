@@ -4,14 +4,13 @@
   </ion-nav-buttons>
   
   <ion-content class="has-header">
-
-    <div class="bar bar-header item-input-inset">
+    <div class="bar bar-header item-input-inset search-bar">
       <label class="item-input-wrapper">
         <i class="icon ion-ios7-search placeholder-icon"></i>
         <input type="search" placeholder="Search" ng-model="searchText">
       </label>
-      <button class="button button-clear">
-        Cancel
+      <button class="button button-icon icon ion-backspace-outline">
+
       </button>
     </div>
     <ion-list class="lightblue" ng-init="getAllRides()">
