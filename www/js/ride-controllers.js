@@ -120,13 +120,17 @@ angular.module('starter')
 
                 }
               });
-              for (var i = 0; i < markers.length; i++) {
-                //var marker = markers[i];
-                console.log('oooooooooooooooooopppppppppppppppppjjjjjjjjjjjjjjjjjjjjjjjjppppppppppppppp')
-                console.log(marker);
-                markers[i].setMap(null);
+              // // First, remove any existing markers from the map.
+              // console.log('lengthhhhhhhhhhhhhhhhhhhhhhh')
+              // console.log(markers.length)
+              // for (var i = 0; i < markers.length; i++) {
+              //   console.log(markers[i])
+              //   markers[i].setMap(null);
+              // }
 
-          }
+              // // Now, clear the array itself.
+              // markers = [];
+              // console.log(markers)
 
           }
         });
@@ -140,14 +144,14 @@ angular.module('starter')
         var marker = new google.maps.Marker({
           position: position,
           map: map,
-          draggable:true,
+          //draggable:true,
           //id: 'marker_' + markerId
         });
 
 
-        //markers[markerId] = marker; // cache marker in markers object
-        //count ++;
-        //bindMarkerEvents(marker);
+       // markers[markerId] = marker; // cache marker in markers object
+       // count ++;
+        bindMarkerEvents(marker);
 
         //console.log(markers[markerId]);
 
@@ -166,9 +170,10 @@ angular.module('starter')
         map.panTo(position);
       }
       var bindMarkerEvents = function(marker) {
-          google.maps.event.addListener(marker, "rightclick", function (point) {
+          google.maps.event.addListener(marker, "dblclick", function (point) {
               var markerId = getMarkerUniqueId(point.latLng.lat(), point.latLng.lng()); // get marker id by using clicked point's coordinate
               var marker = markers[markerId]; // find marker
+              console.log('double clickkkkk')
               removeMarker(marker, markerId); // remove it
               count = count -1;
           });
@@ -224,12 +229,18 @@ angular.module('starter')
 
     $scope.valueD = "fdfdfdfd";
 
-    $scope.rideAuthor = RideFactory.currentRide.user_id;
+    $scope.rideAuthor = undefined;
+    $scope.status = undefined;
+    if(RideFactory.currentRide !== undefined) {
+      $scope.rideAuthor = RideFactory.currentRide.user_id;
+      $scope.status = RideFactory.currentRide.status;
+    }
+
     $scope.currentUserr = UserFactory.currentUser.user_id;
     $scope.statusP = "Planned";
     $scope.statusS = "Started";
     $scope.statusC = "Completed";
-    $scope.status = RideFactory.currentRide.status;
+    
     //$scope.currentRider = Reservation.currentRes.user_id;
 
 
@@ -242,27 +253,27 @@ angular.module('starter')
       $scope.popover = popover;
     });
 
-  $scope.openPopover = function($event) {
-    $scope.popover.show($event);
-  };
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
 
-  $scope.closePopover = function() {
-    $scope.popover.hide();
-  };
-  //Cleanup the popover when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.popover.remove();
-  });
-  // Execute action on hide popover
-  $scope.$on('popover.hidden', function() {
-    // Execute action
-  });
-  // Execute action on remove popover
-  $scope.$on('popover.removed', function() {
-    // Execute action
-  });
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.popover.remove();
+    });
+    // Execute action on hide popover
+    $scope.$on('popover.hidden', function() {
+      // Execute action
+    });
+    // Execute action on remove popover
+    $scope.$on('popover.removed', function() {
+      // Execute action
+    });
 
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     // *********************Methods used for Passenger activitites*************************************
 
@@ -382,7 +393,7 @@ angular.module('starter')
     };
 
     var bindMarkerEvents = function(marker) {
-          google.maps.event.addListener(marker, "rightclick", function (point) {
+          google.maps.event.addListener(marker, "dblclick", function (point) {
             deleteMarkers();  
           });
     };
@@ -463,7 +474,7 @@ angular.module('starter')
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
-               //$scope.status = RideFactory.currentRide.status.trim();
+                $scope.status = RideFactory.currentRide.status.trim();
                 console.log($scope.status)
                 //loadMap();
                 var rendererOptions = {};
@@ -704,6 +715,7 @@ angular.module('starter')
                     var promise = RideFactory.deleteRide(Id);
                     promise.then(function(){
                     console.log('deleted data');
+                    delete RideFactory.currentRide;
                     var path = '/app/managerides/';
                     $location.path(path);
                   });
@@ -786,6 +798,13 @@ angular.module('starter')
       promise.then(function(){
         console.log('started ride');
         console.log($scope.rideDetails)
+        var message = 'The ride from '+ $scope.rideDetails.from_location.trim() +' to '+ $scope.rideDetails.to_location.trim() + ' started now.';
+        console.log(message)
+        for (var i =0; i < $scope.rideDetails.RiderInfoes.length; i++){
+          SMS.sendSMS($scope.rideDetails.RiderInfoes[i].User.telephone.trim(), message, function(){}, function(str){alert(str);});
+        }
+
+
         SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
         $scope.closePopover();
         // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;

@@ -43,10 +43,10 @@ angular.module('starter')
           {
             console.log('coming heeeeeeeeeeeeeeeee')
             $scope.userDetails = UserFactory.currentUser;
-            //$scope.modal.hide();    
-            var path = '/app/managerides/' ;
+            $scope.modal.hide();    
+            //var path = '/app/managerides/' ;
 
-            $location.path(path);   
+            //$location.path(path);   
             console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa')
             //$scope.error_message =''; 
           }
@@ -257,7 +257,11 @@ angular.module('starter')
 
   $scope.rides = [];
 
-  $scope.currentRideId = RideFactory.currentRide.ride_id;
+
+  $scope.currentRideId = undefined;
+  if(RideFactory.currentRide !== undefined) {
+    $scope.currentRideId = RideFactory.currentRide.ride_id;
+  }
   $scope.currentUserr = UserFactory.currentUser.user_id;
   $scope.allRider = {};
   $scope.userRides = {};
