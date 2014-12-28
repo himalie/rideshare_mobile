@@ -1,4 +1,4 @@
-<ion-view title="Rides" ng-init="loggedIn()">
+<ion-view title="Rides" >
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
@@ -11,8 +11,7 @@
         ¬¬¬¬¬¬¬¬ Rides Owned ¬¬¬¬¬¬¬¬¬  
         <ion-list class="lightblue" ng-init="getUserRides()">
           <ion-item ng-repeat="ride in userRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
-            <a class="item item-avatar" >
-              <img src="">
+            <a class="item" >
               <div class="row">
                <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
               </div>
@@ -33,7 +32,6 @@
         <ion-list class="lightblue" ng-init="getPassengerRides()">
           <ion-item ng-repeat="ride in joinedRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
             <a class="item item-avatar" >
-              <img src="">
               <div class="row">
                <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
               </div>

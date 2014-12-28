@@ -7,15 +7,21 @@ angular.module('starter')
 
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
+      scope: $scope,
+      //animation: 'slide-in-up',
+      focusFirstInput: true
     }).then(function(modal) {
       $scope.modal = modal;
     });
+    // //Be sure to cleanup the modal by removing it from the DOM
+    // $scope.$on('$destroy', function() {
+    //   $scope.modal.remove();
+    // });
 
     // Triggered in the login modal to close it
     $scope.closeLogin = function() {
       console.log(" ddd "+ UserFactory.currentUser.first_name);
-      $scope.getCurrLocation();
+      //$scope.getCurrLocation();
       $scope.modal.hide();
     };
 
@@ -35,9 +41,14 @@ angular.module('starter')
           console.log('User name '+ $rootScope.currentUser);
           if ($rootScope.currentUser !== undefined)
           {
+            console.log('coming heeeeeeeeeeeeeeeee')
             $scope.userDetails = UserFactory.currentUser;
-            $scope.modal.hide();       
-            $scope.error_message =''; 
+            //$scope.modal.hide();    
+            var path = '/app/managerides/' ;
+
+            $location.path(path);   
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa')
+            //$scope.error_message =''; 
           }
           else
           {
@@ -71,48 +82,48 @@ angular.module('starter')
     // getting the current location of the user
     $scope.getCurrLocation = function () {
       var promise = UserFactory.getCurrentLocatoin();
-      promise.then(function() {
-        console.log('POsition lat  '+ $rootScope.position.coords.latitude);
-        console.log('POsition long '+ $rootScope.position.coords.longitude);
-    });
-  };
-
-  $scope.userDetails = UserFactory.currentUser;
-
-  $scope.loadUser = function(){
-    var user_id_ = $stateParams.userId;
-    if(user_id_ === undefined){
-      user_id_ = UserFactory.currentUser.user_id;
-      $scope.userDetails = UserFactory.currentUser;
-      //$scope.userDetails.gender.trim();
-    }
-    else{
-      var promise = UserFactory.getUserById(user_id_);
-      promise.then(function(data){
-        if($scope.userDetails.user_id !== data.data.user_id) {
-          console.log('fetching hereeeeeeeeeeeeeeee')
-          $scope.userDetails = data.data;
-          console.log($scope.userDetails);
-        }
+        promise.then(function() {
+          console.log('POsition lat  '+ $rootScope.position.coords.latitude);
+          console.log('POsition long '+ $rootScope.position.coords.longitude);
       });
-    }
-  };
+    };
 
-  $scope.editUser = function(){
-    if(UserFactory.signedIn()){
-      console.log($scope.userDetails)
-      var promise = UserFactory.updateUser($scope.userDetails);
-      promise.then(function(){
-        console.log('data edited');
-        console.log(UserFactory.currentUser.user_id)
-        var path = '/app/user/' + UserFactory.currentUser.user_id;
-        $location.path(path);
-      });
-    }
-    else{
-      $scope.modal.show();
-    }
-  };
+    $scope.userDetails = UserFactory.currentUser;
+
+    $scope.loadUser = function(){
+      var user_id_ = $stateParams.userId;
+      if(user_id_ === undefined){
+        user_id_ = UserFactory.currentUser.user_id;
+        $scope.userDetails = UserFactory.currentUser;
+        //$scope.userDetails.gender.trim();
+      }
+      else{
+        var promise = UserFactory.getUserById(user_id_);
+        promise.then(function(data){
+          if($scope.userDetails.user_id !== data.data.user_id) {
+            console.log('fetching hereeeeeeeeeeeeeeee')
+            $scope.userDetails = data.data;
+            console.log($scope.userDetails);
+          }
+        });
+      }
+    };
+
+    $scope.editUser = function(){
+      if(UserFactory.signedIn()){
+        console.log($scope.userDetails)
+        var promise = UserFactory.updateUser($scope.userDetails);
+        promise.then(function(){
+          console.log('data edited');
+          console.log(UserFactory.currentUser.user_id)
+          var path = '/app/user/' + UserFactory.currentUser.user_id;
+          $location.path(path);
+        });
+      }
+      else{
+        $scope.modal.show();
+      }
+    };
 
 })
 
@@ -234,7 +245,7 @@ angular.module('starter')
 
 
 // Rideshare logic, the controller first.
-.controller('RidesCtrl', function($scope, $ionicModal, $ionicLoading, $compile, $rootScope, RideFactory, $location, UserFactory) {
+.controller('RidesCtrl', function($scope,$state,$stateParams, $ionicModal, $ionicLoading, $compile, $rootScope, RideFactory, $location, UserFactory) {
   // $scope.rides = [
   //   { id: 1, from: 'Gampola', to: 'Kandy'},
   //   { id: 2, from: 'Peradeniya', to: 'Kandy'},
@@ -252,11 +263,82 @@ angular.module('starter')
   $scope.userRides = {};
   $scope.joinedRides = {};
 
-  $scope.loggedIn = function(){
+// -------------------------
+// Form data for the login modal
+    $scope.loginData = {};
+
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $scope,
+      //animation: 'slide-in-up',
+      focusFirstInput: true
+    }).then(function(modal) {
+      console.log('login THEN')
+      $scope.loginmodal = modal;
+
+      loggedIn();
+
+    });
+    // //Be sure to cleanup the modal by removing it from the DOM
+    // $scope.$on('$destroy', function() {
+    //   $scope.modal.remove();
+    // });
+
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function() {
+      console.log(" ddd "+ UserFactory.currentUser.first_name);
+      //$scope.getCurrLocation();
+      $scope.loginmodal.hide();
+    };
+
+    // Open the login modal
+    $scope.login = function() {
+      //console.log(" ddd "+ UserFactory.currentUser.first_name);
+      $scope.loginmodal.show();
+    };
+
+
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function() {
+      console.log('Doing login ', $scope.loginData);
+      var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+      promise.then(function() {
+          console.log('User name in Gobal data '+ UserFactory.currentUser.first_name);
+          console.log('User name '+ $rootScope.currentUser);
+          if ($rootScope.currentUser !== undefined)
+          {
+            console.log('coming heeeeeeeeeeeeeeeee')
+            $scope.userDetails = UserFactory.currentUser;
+            $scope.loginmodal.hide();
+            
+            $state.transitionTo($state.current, $stateParams, {
+                reload: true,
+                inherit: false,
+                notify: true
+            });
+          }
+          else
+          {
+            $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
+          }
+      });
+    };
+
+
+
+
+
+
+// -------------------------------------
+  var loggedIn = function(){
     if(!UserFactory.signedIn()){
-      $scope.modal.show();
+      console.log('Should pop up login dialog here 11')
+      console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
+      $scope.loginmodal.show();
     }
   };
+
+
 
     $scope.getAllRides = function(){
 
@@ -300,7 +382,9 @@ angular.module('starter')
         });
       }
       else {
-        $scope.modal.show();
+        //UserFactory.login();
+        //$scope.modal.show();
+        console.log('Should pop up login dialog here')
       }
 
     };

@@ -129,9 +129,9 @@ angular.module('starter')
                 Ride.allRides = data;
               }).
               error(function (data, status, headers, config) {
-                 Ride.allRides = null;
-                $scope.error = error;
-                console.log('error: ' + data);
+                Ride.allRides = null;
+                $scope.error = data.data;
+                console.log('error: ' + $scope.error);
       });
     };
 
