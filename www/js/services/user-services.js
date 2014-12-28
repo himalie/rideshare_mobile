@@ -2,8 +2,9 @@ angular.module('starter.controllers', [])
 
 .factory('UserFactory', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
 
-    //var urlBase = 'http://localhost/api/user';
-    var urlBase = 'http://localhost/ARideShare/api/user';
+
+    var urlBase = 'http://localhost/api/user';
+    //var urlBase = 'http://localhost/ARideShare/api/user';
     var User = {};
 
     User.currentUser = {};
@@ -67,7 +68,28 @@ angular.module('starter.controllers', [])
     };
 
     User.updateUser = function (user) {
-        return $http.put(urlBase + '/' + user.user_id, user);
+        //return $http.put(urlBase + '/' + user.user_id, user);
+
+
+
+        var deferred = $q.defer();
+        $http.put(urlBase + '/' + user.user_id, user)
+        .success(function(data, status, headers, config) {
+                console.log(data);
+                User.currentUser = user;
+                console.log('success');
+
+                deferred.resolve(data);
+              }).
+              error(function (data, status, headers, config) {
+
+                //$scope.error = error;
+                console.log('error: ' );
+                console.log(data)
+                console.log(headers)
+                deferred.reject(data);
+      });
+      return deferred.promise; 
     };
 
     User.deleteUser = function (id) {

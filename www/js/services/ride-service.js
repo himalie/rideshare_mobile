@@ -2,10 +2,10 @@ angular.module('starter')
 
 .factory('RideFactory', ['$http', '$rootScope', '$q', 'UserFactory', function($http, $rootScope, $q, UserFactory) {
 
-	//var urlBase = 'http://localhost/api/ride';
+	var urlBase = 'http://localhost/api/ride';
   var waypoint_url = 'http://localhost/api/ridecordinates/';
   var rider_url = 'http://localhost/api/riderinfo/';
-  var urlBase = 'http://localhost/ARideShare/api/ride';
+  //var urlBase = 'http://localhost/ARideShare/api/ride';
     var Ride = {};
     Ride.currentRide = {};
     Ride.rideWaypoints = {};
@@ -75,7 +75,13 @@ angular.module('starter')
     Ride.getRidesByUser = function(){
      // var deferred = $q.defer();
      console.log(UserFactory.currentUser.user_id);
+     if (UserFactory.currentUser.user_id !== undefined){
       return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}});
+     }
+     else {
+      return false;
+     }
+      
       
       //   $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
       //   .success(function(data, status, headers, config) {

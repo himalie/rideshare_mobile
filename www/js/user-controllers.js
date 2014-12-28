@@ -89,15 +89,18 @@ angular.module('starter')
     else{
       var promise = UserFactory.getUserById(user_id_);
       promise.then(function(data){
-        $scope.userDetails = data.data;
-        console.log($scope.userDetails);
-
+        if($scope.userDetails.user_id !== data.data.user_id) {
+          console.log('fetching hereeeeeeeeeeeeeeee')
+          $scope.userDetails = data.data;
+          console.log($scope.userDetails);
+        }
       });
     }
   };
 
   $scope.editUser = function(){
     if(UserFactory.signedIn()){
+      console.log($scope.userDetails)
       var promise = UserFactory.updateUser($scope.userDetails);
       promise.then(function(){
         console.log('data edited');
@@ -295,6 +298,9 @@ angular.module('starter')
                               state : RideFactory.userRides[i].status};
           }
         });
+      }
+      else {
+        $scope.modal.show();
       }
 
     };

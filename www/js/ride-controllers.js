@@ -463,7 +463,7 @@ angular.module('starter')
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
-                $scope.status = RideFactory.currentRide.status.trim();
+               //$scope.status = RideFactory.currentRide.status.trim();
                 console.log($scope.status)
                 //loadMap();
                 var rendererOptions = {};
