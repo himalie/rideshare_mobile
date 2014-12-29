@@ -1,49 +1,54 @@
 <ion-view title="Ride" ng-init="loadRide()">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-  <ion-content class="has-header" style= "height:100%;width:100%">
-    <form  ng-init="loadRide()">
-      <div class="list">
-        <button class="button button-block button-positive" type="submit" ng-click="editRide()">Update</button>
+    <form ng-init="loadRide()">
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon ion-checkmark-round" type="submit" ng-click="editRide()"></button>
+        </ion-nav-buttons>
+        <ion-content class="has-header" style="height:100%;width:100%">
 
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">From</span>
-          <input type="text" value={{rideDetails.from_location}} ng-model="rideDetails.from_location">
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">To</span>
-          <input type="text" ng-model="rideDetails.to_location" value={{rideDetails.to_location}} >
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Date</span>
-          <input type="date" ng-model="rideDetails.start_date" value={{rideDetails.start_date | date:'medium'}} >
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Time</span>
-          <input type="time" ng-model="rideDetails.start_time" value={{rideDetails.start_time}} >
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Available Seats</span>
-          <input type="number" ng-model="rideDetails.available_seats" value={{rideDetails.available_seats}} >
-        </label>
-        <!-- <label class="checkbox">Females only
-            <input type="checkbox" ng-model="rideDetails.femalesOnly">           
-          </label>
-          <label class="checkbox">Non-smokers
-            <input type="checkbox" ng-model="rideDetails.nonSmokers">          
-          </label> 
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comments</span>
-          <input type="text" placeholder="Ex: Non-smoker" ng-model="rideDetails.comments">
-        </label> -->
-        <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div>
+            <div class="list">
 
 
-        
-      </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">From</span>
+                    <input type="text" value={{rideDetails.from_location}} ng-model="rideDetails.from_location">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">To</span>
+                    <input type="text" ng-model="rideDetails.to_location" value={{rideDetails.to_location}}>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Date</span>
+                    <input type="date" ng-model="rideDetails.start_date" value={{rideDetails.start_date | date:'medium'}}
+                    >
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Time</span>
+                    <input type="time" ng-model="rideDetails.start_time" value={{rideDetails.start_time}}>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Available Seats</span>
+                    <input type="number" ng-model="rideDetails.available_seats" value={{rideDetails.available_seats}}>
+                </label>
+                <!-- <label class="checkbox">Females only
+                    <input type="checkbox" ng-model="rideDetails.femalesOnly">
+                  </label>
+                  <label class="checkbox">Non-smokers
+                    <input type="checkbox" ng-model="rideDetails.nonSmokers">
+                  </label>
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">Comments</span>
+                  <input type="text" placeholder="Ex: Non-smoker" ng-model="rideDetails.comments">
+                </label> -->
+                <div id="map" data-tap-disabled="true" style="height:800px;width:100%"></div>
+
+
+            </div>
+
+            <!-- <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div> -->
+
+        </ion-content>
     </form>
-     <!-- <div id="map" data-tap-disabled="true" style= "height:800px;width:100%"></div> -->
-
-  </ion-content>
 </ion-view>

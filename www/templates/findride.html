@@ -15,7 +15,7 @@
     </div>
     <ion-list class="lightblue" ng-init="getAllRides()">
     	<!-- <ion-item ng-repeat="ride in rides | filter:searchText" href="#/app/ride/{{ride.id}}"> -->
-      <ion-item ng-repeat="ride in rides | filter:searchText" ng-click="loadRide()"  ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
+      <ion-item class="wrap" ng-repeat="ride in rides | filter:searchText" ng-click="loadRide()"  ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
     		From <b>{{ride.from | removeLastNode}}</b> to <b>{{ride.to | removeLastNode}}</b>
     	</ion-item>
     </ion-list>

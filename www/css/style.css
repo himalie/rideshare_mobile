@@ -69,10 +69,23 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, input, button, selec
 button:before {
 	color: #fff;
 }
-.modal button:before {
-	font-size: 20px;
+
+.ion-close-round:before {
+	font-size: 20px !important;
 }
 
 .search-bar {
 	background-color: #42a5f5;
+}
+
+.rides-title {
+	padding: 20px 0 0 10px;
+}
+
+.rides-title + hr {
+	opacity: 0.2;
+}
+
+.item.wrap, .item-content.wrap {
+	white-space: normal;
 }

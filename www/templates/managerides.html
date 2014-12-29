@@ -1,52 +1,59 @@
-<ion-view title="Rides" >
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-  <ion-content class="has-header">
-    <form >
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">{{error_message}}</span>
-        </label>
-        ¬¬¬¬¬¬¬¬ Rides Owned ¬¬¬¬¬¬¬¬¬  
-        <ion-list class="lightblue" ng-init="getUserRides()">
-          <ion-item ng-repeat="ride in userRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
-            <a class="item" >
-              <div class="row">
-               <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
-              </div>
-              <div class="row">
-               <span>{{ride.start_date}}</span> &nbsp; &nbsp;
-               <span>{{ride.start_time}}</span>
-              </div>
-              <div class="row">
-               <span><b>{{ride.state}}</b></span>&nbsp; &nbsp;
-               <span>Available seats : {{ride.seats}}</span>
-              </div>
-            </a>
-          </ion-item>
-        </ion-list>
-      </div>
-      ¬¬¬¬¬¬¬¬ Rides Joined ¬¬¬¬¬¬¬¬¬
-      <div class="list">
-        <ion-list class="lightblue" ng-init="getPassengerRides()">
-          <ion-item ng-repeat="ride in joinedRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
-            <a class="item" >
-              <div class="row">
-               <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
-              </div>
-              <div class="row">
-               <span>{{ride.start_date}}</span> &nbsp; &nbsp;
-               <span>{{ride.start_time}}</span>
-              </div>
-              <div class="row">
-               <span><b>{{ride.state}}</b></span>&nbsp; &nbsp;
-               <span>Available seats : {{ride.seats}}</span>
-              </div>
-            </a>
-          </ion-item>
-        </ion-list>
-      </div>
-    </form>
-  </ion-content>
+<ion-view title="Rides">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+        <form>
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">{{error_message}}</span>
+                </label>
+
+                <h4 class="rides-title">Rides Owned</h4>
+                <hr>
+                <ion-list class="lightblue" ng-init="getUserRides()">
+                    <ion-item class="wrap"
+                              ng-repeat="ride in userRides"
+                              ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
+                        <a class="item">
+                            <div class="row">
+                                <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
+                            </div>
+                            <div class="row">
+                                <span>{{ride.start_date}}</span> &nbsp; &nbsp;
+                                <span>{{ride.start_time}}</span>
+                            </div>
+                            <div class="row">
+                                <span><b>{{ride.state}}</b></span>&nbsp; &nbsp;
+                                <span>Available seats : {{ride.seats}}</span>
+                            </div>
+                        </a>
+                    </ion-item>
+                </ion-list>
+            </div>
+            <h4 class="rides-title">Rides Joined</h4>
+            <hr>
+            <div class="list">
+                <ion-list class="lightblue" ng-init="getPassengerRides()">
+                    <ion-item class="wrap"
+                              ng-repeat="ride in joinedRides"
+                              ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
+                        <a class="item">
+                            <div class="row">
+                                <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
+                            </div>
+                            <div class="row">
+                                <span>{{ride.start_date}}</span> &nbsp; &nbsp;
+                                <span>{{ride.start_time}}</span>
+                            </div>
+                            <div class="row">
+                                <span><b>{{ride.state}}</b></span>&nbsp; &nbsp;
+                                <span>Available seats : {{ride.seats}}</span>
+                            </div>
+                        </a>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </form>
+    </ion-content>
 </ion-view>

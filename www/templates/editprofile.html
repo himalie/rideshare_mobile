@@ -1,52 +1,58 @@
 <ion-view title="User" ng-init="loadUser()">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-  <ion-content class="has-header" style= "height:100%;width:100%">
+    <form>
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon ion-checkmark-round" type="submit" ng-click="editUser()"></button>
+        </ion-nav-buttons>
+        <ion-content class="has-header" style="height:100%;width:100%">
 
-    <form ng-init="">
-      <div class="list">
-      	<button class="button button-block button-positive" type="submit" ng-click="editUser()">Update</button>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Username</span>
-          <br>
-          <span ng-model="userDetails.username">{{userDetails.user_name}}</span>
-          <!-- <input type="text" ng-model="userDetails.username" placeholder="Ex: tom_123"> -->
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">First Name</span>
-          <input type="text" ng-model="userDetails.first_name" value={{userDetails.first_name}}>
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Last Name</span>
-          <input type="text" ng-model="userDetails.last_name" value={{userDetails.last_name}}>
-        </label>
-        <label class="item item-input item-select">
-            <div class="input-label">
-              Gender
+
+            <div class="list">
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Username</span>
+                    <br>
+                    <span ng-model="userDetails.username">{{userDetails.user_name}}</span>
+                    <!-- <input type="text" ng-model="userDetails.username" placeholder="Ex: tom_123"> -->
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">First Name</span>
+                    <input type="text" ng-model="userDetails.first_name" value={{userDetails.first_name}}>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Last Name</span>
+                    <input type="text" ng-model="userDetails.last_name" value={{userDetails.last_name}}>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Gender
+                    </div>
+                    <select ng-model="userDetails.gender">
+                        <option selected="selected">Male</option>
+                        <option>Female</option>
+                    </select>
+                </label>
+
+                <div>
+                    <input type="radio" ng-model="userDetails.gender" value="">Female
+                    <input type="radio" ng-model="userDetails.gender" value="{{userDetails.gender}}">Male
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">E mail</span>
+                    <input type="email" ng-model="userDetails.email" placeholder={{userDetails.email}}>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Telephone</span>
+                    <input type="text" ng-model="userDetails.telephone" value={{userDetails.telephone}}>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">My Location</span>
+                    <input type="text" ng-model="userDetails.location" value={{userDetails.location}}>
+                </label>
             </div>
-            <select ng-model="userDetails.gender">
-              <option selected="selected">Male</option>
-              <option>Female</option>
-            </select>
-          </label>
-         <div >
-            <input type="radio" ng-model="userDetails.gender" value="">Female
-            <input type="radio" ng-model="userDetails.gender" value="{{userDetails.gender}}">Male
-        </div>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">E mail</span>
-          <input type="email" ng-model="userDetails.email" placeholder={{userDetails.email}}>
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Telephone</span>
-          <input type="text" ng-model="userDetails.telephone" value={{userDetails.telephone}}>
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">My Location</span>
-          <input type="text" ng-model="userDetails.location" value={{userDetails.location}}>
-        </label>
-      </div>
-  </form>
-</ion-content>
+
+        </ion-content>
+    </form>
 </ion-view>
