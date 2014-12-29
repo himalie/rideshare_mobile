@@ -146,81 +146,81 @@ angular.module('starter')
     });
     // send data to server side for validating and saving 
   };
-  function initialize() {
-    var promise = UserFactory.getCurrentLocatoin();
-      promise.then(function() {
-      console.log();
-        //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
-        var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
-        console.log('^^^^^^^^^^ '+myLatlng);
-        var mapOptions = {
-          center: myLatlng,
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
+  // function initialize() {
+  //   var promise = UserFactory.getCurrentLocatoin();
+  //     promise.then(function() {
+  //     console.log();
+  //       //var myLatlng = new google.maps.LatLng(7.2964,80.6350);
+  //       var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
+  //       console.log('^^^^^^^^^^ '+myLatlng);
+  //       var mapOptions = {
+  //         center: myLatlng,
+  //         zoom: 16,
+  //         mapTypeId: google.maps.MapTypeId.ROADMAP
+  //       };
+  //       var map = new google.maps.Map(document.getElementById("map"),
+  //           mapOptions);
         
-        //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-        var compiled = $compile(contentString)($scope);
+  //       //Marker + infowindow + angularjs compiled ng-click
+  //       var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+  //       var compiled = $compile(contentString)($scope);
 
-        var infowindow = new google.maps.InfoWindow({
-          content: compiled[0]
-        });
+  //       var infowindow = new google.maps.InfoWindow({
+  //         content: compiled[0]
+  //       });
 
-        // var marker = new google.maps.Marker({
-        //   position: myLatlng,
-        //   map: map,
-        //   title: 'Uluru (Ayers Rock)'
-        // });
+  //       // var marker = new google.maps.Marker({
+  //       //   position: myLatlng,
+  //       //   map: map,
+  //       //   title: 'Uluru (Ayers Rock)'
+  //       // });
 
-        google.maps.event.addListener(map, 'click', function(e) {
-         // infowindow.open(map,marker);
-         console.log('**********'+e.latLng);
-          placeMarkerRegister(e.latLng, map);
+  //       google.maps.event.addListener(map, 'click', function(e) {
+  //        // infowindow.open(map,marker);
+  //        console.log('**********'+e.latLng);
+  //         placeMarkerRegister(e.latLng, map);
 
-        });
+  //       });
 
-        $scope.map = map;
-       });
-      };
+  //       $scope.map = map;
+  //      });
+  //     };
 
-      function placeMarkerRegister(position1, map1) {
-        var marker = new google.maps.Marker({
-          position: position1,
-          map: map1
-        });
-        console.log('clicking port ='+ position1.lat());
-        map1.panTo(position1);
-      }
+  //     function placeMarkerRegister(position1, map1) {
+  //       var marker = new google.maps.Marker({
+  //         position: position1,
+  //         map: map1
+  //       });
+  //       console.log('clicking port ='+ position1.lat());
+  //       map1.panTo(position1);
+  //     }
 
 
 
-      google.maps.event.addDomListener(window, 'load', initialize);
+  //     google.maps.event.addDomListener(window, 'load', initialize);
       
-      $scope.centerOnMe = function() {
-        if(!$scope.map) {
-          return;
-        }
+  //     $scope.centerOnMe = function() {
+  //       if(!$scope.map) {
+  //         return;
+  //       }
 
-        $scope.loading = $ionicLoading.show({
-          content: 'Getting current location...',
-          showBackdrop: false
-        });
+  //       $scope.loading = $ionicLoading.show({
+  //         content: 'Getting current location...',
+  //         showBackdrop: false
+  //       });
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          $scope.loading.hide();
-        }, function(error) {
-          alert('Unable to get location: ' + error.message);
-        });
-      };
+  //       navigator.geolocation.getCurrentPosition(function(pos) {
+  //         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+  //         $scope.loading.hide();
+  //       }, function(error) {
+  //         alert('Unable to get location: ' + error.message);
+  //       });
+  //     };
       
-      $scope.clickTest = function() {
-        alert('Example of infowindow with ng-click')
-      };
-      initialize();
+  //     $scope.clickTest = function() {
+  //       alert('Example of infowindow with ng-click')
+  //     };
+  //     initialize();
 
   })
 
