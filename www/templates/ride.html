@@ -39,7 +39,6 @@
 
     <form ng-init="loadRide()">
       <div class="list">
-    ion-backspace-outline
         <div class="row">
         	<span class="col col-20">From:</span>
         	<span class="col" ng-model="rideDetails.from_location" >{{rideDetails.from_location}}</span>
@@ -61,6 +60,10 @@
          <div class="row">
           <span class="col col-20">Start Time :</span>
           <span class="col" ng-model="rideDetails.start_time" >{{rideDetails.start_time}}</span>
+        </div>
+        <div class="row">
+          <span class="col col-20">Ride Type</span>
+          <span class="col" ng-model="rideDetails" >{{rideDetails.ride_type}}</span>
         </div>
         <div class="row">
           <span class="col col-20">Current status of the ride:</span>

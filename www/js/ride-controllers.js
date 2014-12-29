@@ -314,7 +314,6 @@ angular.module('starter')
               mapOptions);        
           google.maps.event.addListener(map, 'click', function(e) {
             placeMarkerPosition(e.latLng, map);
-             console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@')
             console.log(markers[0].position.D)
             console.log(markers[0].position.k)
           });
@@ -413,40 +412,24 @@ angular.module('starter')
     $scope.viewPassengers = function(){
       if (UserFactory.signedIn()){
         var promise = RideFactory.viewPassengers(RideFactory.currentRide.ride_id);
-        console.log('view passengerrrrrrrrrrrsssssssssssss')
         promise.then(function(){
-          console.log('before loop')
           console.log(RideFactory.passengers)
           var ii=0;
           for(var i= 0; i<RideFactory.passengers.length ; i++){
             console.log('loooopppppppppp' + i)
             console.log(RideFactory.passengers[i].user_id)
             var id_ = RideFactory.passengers[i].ride_id;
-            //var promise1 = UserFactory.getUserById(RideFactory.passengers[i].user_id);
+            $scope.ridePassengers[ii] = {id : ii,
+                                        ride_id : id_,
+                                        user_id : RideFactory.passengers[i].User.user_id,
+                                        user_name : RideFactory.passengers[i].User.user_name,
+                                        first_name : RideFactory.passengers[i].User.first_name,
+                                        last_name : RideFactory.passengers[i].User.last_name,
+                                        tel_no : RideFactory.passengers[i].User.telephone,
+                                        start_location : RideFactory.passengers[i].User.location};
 
-             //promise1.then(function(data){
-
-                // $scope.ridePassengers[ii] = {id : ii,
-                //                           ride_id : id_,
-                //                           user_id : data.data.user_id,
-                //                           user_name : data.data.user_name,
-                //                           first_name : data.data.first_name,
-                //                           last_name : data.data.last_name,
-                //                           tel_no : data.data.telephone,
-                //                           start_location : data.data.start_location};
-                  $scope.ridePassengers[ii] = {id : ii,
-                                          ride_id : id_,
-                                          user_id : RideFactory.passengers[i].User.user_id,
-                                          user_name : RideFactory.passengers[i].User.user_name,
-                                          first_name : RideFactory.passengers[i].User.first_name,
-                                          last_name : RideFactory.passengers[i].User.last_name,
-                                          tel_no : RideFactory.passengers[i].User.telephone,
-                                          start_location : RideFactory.passengers[i].User.location};
-
-                ii = ii + 1;
-                console.log($scope.ridePassengers[ii])
-            //   //$scope.ridePassengers.push(ride_id : RideFactory.passengers[0].ride_id);
-            // });
+            ii = ii + 1;
+            console.log($scope.ridePassengers[ii])
           }  
           console.log($scope.ridePassengers);
           $scope.modalPassengers.show();
@@ -735,11 +718,25 @@ angular.module('starter')
       }
     };
 
-
     // show the dialog to enter joining position once the user joins a ride
     $scope.joinRide = function(){
       if (UserFactory.signedIn()) { 
-        $scope.modalPosition.show();
+        if (($scope.rideDetails.available_seats - 1)>= 0) {
+          $scope.modalPosition.show();
+          //setTimeout(loadPositionMarker(), 1000)
+          //loadPositionMarker();
+        }
+        else {
+          $ionicPopup.alert({
+             title: 'No Seats!',
+             template: 'There are no seats available for you to join the ride.'
+           })
+          .then(function(res){
+            console.log('no seats available');
+          $scope.popover.hide();
+          });
+          
+        }
       }
       else{
         $scope.modal.show();
@@ -751,9 +748,10 @@ angular.module('starter')
     $scope.insertRider = function(){
       console.log($scope.reservationPosition)
       if (UserFactory.signedIn()) { 
+
         //var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
         var promise = Reservation.joinRide($scope.reservationPosition);
-         promise.then(function(){
+          promise.then(function(){
 
           $scope.currentRider = Reservation.currentRes.user_id;
           $scope.rideDetails.available_seats = $scope.rideDetails.available_seats - 1 ;
@@ -764,13 +762,13 @@ angular.module('starter')
             $scope.currentRideId = RideFactory.currentRide.ride_id;
 
             $scope.modalPosition.hide();
+            $scope.popover.hide();
           });
-         });
+       });                  
       }
       else
       {
         $scope.modal.show();
-
       }
 
     };
@@ -801,11 +799,11 @@ angular.module('starter')
         var message = 'The ride from '+ $scope.rideDetails.from_location.trim() +' to '+ $scope.rideDetails.to_location.trim() + ' started now.';
         console.log(message)
         for (var i =0; i < $scope.rideDetails.RiderInfoes.length; i++){
-          SMS.sendSMS($scope.rideDetails.RiderInfoes[i].User.telephone.trim(), message, function(){}, function(str){alert(str);});
+          //SMS.sendSMS($scope.rideDetails.RiderInfoes[i].User.telephone.trim(), message, function(){}, function(str){alert(str);});
         }
 
 
-        SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
+       // SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
         $scope.closePopover();
         // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
         // $location.path(path);
@@ -821,13 +819,37 @@ angular.module('starter')
     // };
 
     $scope.endRide = function(){
-      $scope.rideDetails.status = 'Completed';
-      var promise =RideFactory.editRide($scope.rideDetails);
-      promise.then(function(){
-        console.log('completed ride');
-        $scope.closePopover();
-        // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
-        // $location.path(path);
-      });
+      if($scope.rideDetails.ride_type.trim() === 'OneTime'){
+        $scope.rideDetails.status = 'Completed';
+        completeRide();
+      }
+      else{
+        
+        $ionicPopup.alert({
+             title: 'Reccurrent Ride!',
+             template: 'Next ride will be added for the next week.'
+           })
+          .then(function(res){
+            console.log('date changed');
+            $scope.rideDetails.status = 'Planned';
+            console.log($scope.rideDetails.start_date);
+            var date = new Date($scope.rideDetails.start_date);
+            date.setDate(date.getDate() + 7);
+            $scope.rideDetails.start_date = date.toISOString();
+            console.log($scope.rideDetails.start_date);
+            completeRide();
+          });
+
+
+      }
+      var completeRide = function(){
+        console.log($scope.rideDetails.start_date);
+       //$scope.rideDetails.status = 'Completed';
+        var promise =RideFactory.editRide($scope.rideDetails);
+        promise.then(function(){
+          console.log('completed ride');
+          $scope.closePopover();
+        });
+      }
     };
 })
