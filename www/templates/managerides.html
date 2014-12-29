@@ -31,7 +31,7 @@
       <div class="list">
         <ion-list class="lightblue" ng-init="getPassengerRides()">
           <ion-item ng-repeat="ride in joinedRides" ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
-            <a class="item item-avatar" >
+            <a class="item" >
               <div class="row">
                <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
               </div>
