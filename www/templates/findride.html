@@ -9,14 +9,14 @@
         <i class="icon ion-ios7-search placeholder-icon"></i>
         <input type="search" placeholder="Search" ng-model="searchText">
       </label>
-      <button class="button button-icon icon ion-backspace-outline">
+      <button class="button button-icon icon ion-close-round">
 
       </button>
     </div>
     <ion-list class="lightblue" ng-init="getAllRides()">
     	<!-- <ion-item ng-repeat="ride in rides | filter:searchText" href="#/app/ride/{{ride.id}}"> -->
       <ion-item ng-repeat="ride in rides | filter:searchText" ng-click="loadRide()"  ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
-    		From <b>{{ride.from}}</b> to <b>{{ride.to}}</b>
+    		From <b>{{ride.from | removeLastNode}}</b> to <b>{{ride.to | removeLastNode}}</b>
     	</ion-item>
     </ion-list>
 
