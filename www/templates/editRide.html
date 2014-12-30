@@ -12,28 +12,28 @@
 
 
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">From</span>
+                    <span class="input-label title-label">From</span>
                     <input type="text" value={{rideDetails.from_location}} ng-model="rideDetails.from_location">
                 </label>
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">To</span>
+                    <span class="input-label title-label">To</span>
                     <input type="text" ng-model="rideDetails.to_location" value={{rideDetails.to_location}}>
                 </label>
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">Date</span>
+                    <span class="input-label title-label">Date</span>
                     <input type="date" ng-model="rideDetails.start_date" value={{rideDetails.start_date | date:'medium'}}
                     >
                 </label>
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">Time</span>
+                    <span class="input-label title-label">Time</span>
                     <input type="time" ng-model="rideDetails.start_time" value={{rideDetails.start_time}}>
                 </label>
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">Ride Type</span>
+                    <span class="input-label title-label">Ride Type</span>
                     <input type="text" ng-model="rideDetails.ride_type" value={{rideDetails.ride_type}}>
                 </label>
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">Available Seats</span>
+                    <span class="input-label title-label">Available Seats</span>
                     <input type="number" ng-model="rideDetails.available_seats" value={{rideDetails.available_seats}}>
                 </label>
                 <!-- <label class="checkbox">Females only

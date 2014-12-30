@@ -70,6 +70,10 @@ button:before {
 	color: #fff;
 }
 
+.back-button {
+	color: #fff !important;
+}
+
 .ion-close-round:before {
 	font-size: 20px !important;
 }
@@ -86,6 +90,40 @@ button:before {
 	opacity: 0.2;
 }
 
-.item.wrap, .item-content.wrap {
+.item.wrap span, .item-content.wrap span {
 	white-space: normal;
+	padding: 3px 0 3px 0;
+}
+
+.register-option {
+	text-align: center;
+	display: block;
+	padding: 15px;
+}
+
+.register-option a {
+	text-decoration: none;
+}
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
+	color: #777;
+}
+
+.title-label {
+	color: #777;
+}
+
+.item-input {
+	padding: 6px 16px 5px 16px;
+}
+
+.ng-dirty.ng-invalid {
+	border: 2px solid #ff000d;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"]  {
+	padding: 0 8px 0 8px;
+	font-size: 16px;
 }

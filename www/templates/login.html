@@ -12,17 +12,17 @@
           <span class="input-label">{{error_message}}</span>
         </label>
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Username</span>
+          <span class="input-label title-label">Username</span>
           <input type="text" ng-model="loginData.username">
         </label>
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Password</span>
+          <span class="input-label title-label">Password</span>
           <input type="password" ng-model="loginData.password">
         </label>
         <label class="item item-input item-stacked-label">
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
-        <span class="center">OR
+        <span class="register-option">or
           <a ui-sref="app.register" ng-click="closeLogin()">Register</a>
         </span>
       </div>
