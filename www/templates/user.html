@@ -11,10 +11,6 @@
          <span class="col"  ><b>{{userDetails.first_name}} &nbsp; {{userDetails.last_name}} </b></span> 
         </div>
         <div class="row">
-          <span class="col">Telephone :</span>
-          <span class="col" ng-model="userDetails.telephone" >{{userDetails.telephone}}</span>
-        </div>
-        <div class="row">
           <span class="col">Email</span>
          <span class="col" ng-model="userDetails.email" >{{userDetails.email}}</span>
         </div>
@@ -24,11 +20,17 @@
         </div>
         <div class="row">
           <span class="col">Gender</span>
-         <span class="col" ng-model="userDetails.last_name" >{{userDetails.gender}}</span>
+         <span class="col" ng-model="userDetails.gender" >{{userDetails.gender}}</span>
         </div>
         <div class="row">
           <span class="col">Location</span>
-          <span class="col" ng-model="userDetails.telephone" >{{userDetails.location}}</span>
+          <span class="col" ng-model="userDetails.location" >{{userDetails.location}}</span>
+        </div>
+        <div class="row">
+          <span class="col">View Vehicles</span>
+          <div class="buttons">
+            <button class="button button-icon icon ion-plus" ng-click="viewVehicles()">bb</button>
+          </div>
         </div>
       </div>
   </form>
