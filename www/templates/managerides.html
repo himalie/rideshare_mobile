@@ -20,7 +20,7 @@
                                 <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
                             </div>
                             <div class="row">
-                                <span>{{ride.start_date}}</span>
+                                <span>{{ride.start_date | date:'mediumDate'}}</span>  &nbsp; &nbsp;
                                 <span>{{ride.start_time}}</span>
                             </div>
                             <div class="row">
@@ -45,7 +45,7 @@
                                 <span>From <b>{{ride.from}}</b> to <b>{{ride.to}}</b></span>
                             </div>
                             <div class="row">
-                                <span>{{ride.start_date}}</span> &nbsp; &nbsp;
+                                <span>{{ride.start_date | date:'mediumDate'}}</span> &nbsp; &nbsp;
                                 <span>{{ride.start_time}}</span>
                             </div>
                             <div class="row">
