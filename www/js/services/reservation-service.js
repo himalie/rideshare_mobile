@@ -1,10 +1,10 @@
 
 angular.module('starter')
 
-.factory('Reservation', ['$http', '$rootScope', '$q', 'UserFactory', 'RideFactory', function($http, $rootScope, $q, UserFactory, RideFactory) {
+.factory('Reservation', ['$http', '$rootScope', '$q', 'UserFactory', 'RideFactory', 'RIDESHARE_URL', function($http, $rootScope, $q, UserFactory, RideFactory, RIDESHARE_URL) {
 
 
-var urlBase = 'http://localhost/api/riderinfo';
+var urlBase = RIDESHARE_URL+'api/riderinfo';
 //var urlBase = 'http://192.168.43.70/api/riderinfo'
 //var urlBase = 'http://localhost/ARideShare/api/riderinfo';
 var Reservation = {};

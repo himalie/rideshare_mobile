@@ -1,10 +1,13 @@
 angular.module('starter')
 
-.factory('RideFactory', ['$http', '$rootScope', '$q', 'UserFactory', function($http, $rootScope, $q, UserFactory) {
+.factory('RideFactory', ['$http', '$rootScope', '$q', 'UserFactory', 'RIDESHARE_URL', function($http, $rootScope, $q, UserFactory, RIDESHARE_URL) {
 
-	var urlBase = 'http://localhost/api/ride';
-  var waypoint_url = 'http://localhost/api/ridecordinates/';
-  var rider_url = 'http://localhost/api/riderinfo/';
+  //var urlBase = 'http://192.168.43.70/api/ride'
+	var urlBase = RIDESHARE_URL + 'api/ride';
+  //var urlBase ='http://localhost/api/ride';
+
+  var waypoint_url = RIDESHARE_URL+'api/ridecordinates/';
+  var rider_url = RIDESHARE_URL+'api/riderinfo/';
   //var urlBase = 'http://localhost/ARideShare/api/ride';
     var Ride = {};
     Ride.currentRide = {};

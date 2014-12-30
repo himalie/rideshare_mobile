@@ -1,12 +1,13 @@
 angular.module('starter.controllers', [])
 
-.factory('UserFactory', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
+.factory('UserFactory', ['$http', '$rootScope', '$q', '$ionicModal', 'RIDESHARE_URL', function($http, $rootScope, $q, $ionicModal, RIDESHARE_URL) {
 
 
-    var urlBase = 'http://localhost/api/user';
+    var urlBase = RIDESHARE_URL + 'api/user'; 
+    //var urlBase ='http://localhost/api/user';
+    //var urlBase = 'http://192.168.43.70/api/user';
     //var urlBase = 'http://localhost/ARideShare/api/user';
     var User = {};
-
     User.currentUser = {};
 
 
