@@ -24,7 +24,7 @@ angular.module('starter')
                 user_id : UserFactory.currentUser.user_id,
                 from_location: routeData.startAddress,
                 to_location : routeData.endAddress,
-                ride_type :'car',
+                ride_type :rideData.ride_type,
                 available_seats: rideData.availableSeats,
                 start_date: rideData.date,
                 start_time: rideData.startTime,
@@ -120,7 +120,7 @@ angular.module('starter')
               }).
               error(function (data, status, headers, config) {
                 Ride.currentRide = null;
-                $scope.error = error;
+                //$scope.error = error;
                 console.log('error: ' + data);
       });
     };
@@ -133,8 +133,8 @@ angular.module('starter')
               }).
               error(function (data, status, headers, config) {
                 Ride.allRides = null;
-                $scope.error = data.data;
-                console.log('error: ' + $scope.error);
+                //$scope.error = data.data;
+                console.log('error: ' + data);
       });
     };
 
