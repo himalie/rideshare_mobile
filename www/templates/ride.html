@@ -9,25 +9,25 @@
     <ion-popover-view>
       <ion-content>
           <div class="list">
-            <a class="item" ng-show="rideAuthor==currentUserr" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})" >
+            <a class="item" ng-class="{disabled: !(rideAuthor==currentUserr)}" ng-click="loadRide()" ui-sref="app.ride({ rideId: {{currentRideId}}, editable: true})" >
               Edit
             </a>
-            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="deleteRide()">
+            <a class="item" ng-class="{disabled: !(rideAuthor==currentUserr)}" type="submit" ng-click="deleteRide()">
               Delete
             </a>
-            <a class="item" ng-show="rideAuthor==currentUserr && status==statusP" type="submit" ng-click="startRide()">
+            <a class="item" ng-class="{disabled: !(rideAuthor==currentUserr && status==statusP)}" type="submit" ng-click="startRide()">
               Start Journey
             </a>
-            <a class="item" ng-show="rideAuthor==currentUserr && status ==statusS" type="submit" ng-click="endRide()">
+            <a class="item" ng-class="{disabled: !(rideAuthor==currentUserr && status ==statusS)}" type="submit" ng-click="endRide()">
               End Journey
             </a>
-            <a class="item" ng-show="rideAuthor!=currentUserr && status ==statusP" type="submit" ng-click="joinRide()">
+            <a class="item" ng-class="{disabled: !(rideAuthor!=currentUserr && status ==statusP)}" type="submit" ng-click="joinRide()">
               Join
             </a>
-            <a class="item" ng-show="rideAuthor!=currentUserr && status ==statusP" type="submit" ng-click="leaveRide()">
+            <a class="item" ng-class="{disabled: !(rideAuthor!=currentUserr && status ==statusP)}" type="submit" ng-click="leaveRide()">
               Leave ride
             </a>
-            <a class="item" ng-show="rideAuthor==currentUserr" type="submit" ng-click="viewPassengers()">
+            <a class="item" ng-class="{disabled: !(rideAuthor==currentUserr)}" type="submit" ng-click="viewPassengers()">
               View Passengers
             </a>
           </div>
