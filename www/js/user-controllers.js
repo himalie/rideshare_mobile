@@ -465,15 +465,19 @@ angular.module('starter')
         promise.then(function(data){
           RideFactory.userRides = data.data;
           console.log(RideFactory.userRides)
+          console.log(data.data)
           console.log(RideFactory.userRides.length)
-          for(var i= 0; i<RideFactory.userRides.length ; i++){
-            $scope.userRides[i] = {id : RideFactory.userRides[i].ride_id,
-                              from : RideFactory.userRides[i].from_location,
-                              to : RideFactory.userRides[i].to_location,
-                              seats : RideFactory.userRides[i].available_seats,
-                              start_date : RideFactory.userRides[i].start_date,
-                              start_time : RideFactory.userRides[i].start_time,
-                              state : RideFactory.userRides[i].status};
+          if (RideFactory.userRides !== "null")  {
+            console.log(typeof RideFactory.userRides)
+            for(var i= 0; i<RideFactory.userRides.length ; i++){
+              $scope.userRides[i] = {id : RideFactory.userRides[i].ride_id,
+                                from : RideFactory.userRides[i].from_location,
+                                to : RideFactory.userRides[i].to_location,
+                                seats : RideFactory.userRides[i].available_seats,
+                                start_date : RideFactory.userRides[i].start_date,
+                                start_time : RideFactory.userRides[i].start_time,
+                                state : RideFactory.userRides[i].status};
+            }
           }
         });
       }
@@ -492,15 +496,17 @@ angular.module('starter')
       if (promise){
         promise.then(function(data){
           RideFactory.passengerRides = data.data;
-           console.log(RideFactory.passengerRides)
-          for(var i= 0; i<RideFactory.passengerRides.length ; i++){
-            $scope.joinedRides[i] = {id : RideFactory.passengerRides[i].Ride.ride_id,
-                              from : RideFactory.passengerRides[i].Ride.from_location,
-                              to : RideFactory.passengerRides[i].Ride.to_location,
-                              seats : RideFactory.passengerRides[i].Ride.available_seats,
-                              start_date : RideFactory.passengerRides[i].Ride.start_date,
-                              start_time : RideFactory.passengerRides[i].Ride.start_time,
-                              state : RideFactory.passengerRides[i].Ride.status};
+          console.log(RideFactory.passengerRides)
+          if (RideFactory.passengerRides !== 'null') {
+            for(var i= 0; i<RideFactory.passengerRides.length ; i++){
+              $scope.joinedRides[i] = {id : RideFactory.passengerRides[i].Ride.ride_id,
+                                from : RideFactory.passengerRides[i].Ride.from_location,
+                                to : RideFactory.passengerRides[i].Ride.to_location,
+                                seats : RideFactory.passengerRides[i].Ride.available_seats,
+                                start_date : RideFactory.passengerRides[i].Ride.start_date,
+                                start_time : RideFactory.passengerRides[i].Ride.start_time,
+                                state : RideFactory.passengerRides[i].Ride.status};
+            }
           }
         });
       }
