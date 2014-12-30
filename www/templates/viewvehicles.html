@@ -1,0 +1,32 @@
+<div class="modal">
+  <ion-header-bar>
+    <h1 class="title">Vehicles</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeVehicles()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form >
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">{{error_message}}</span>
+        </label>
+        
+        <ion-list class="lightblue">
+          <ion-item ng-repeat="v in vehicleDetails">
+          <a class="item" >
+            <div class="row">
+             <span>Vehicle No : {{v.vehicle_no}}</span> &nbsp; &nbsp; - &nbsp; &nbsp;
+             <span>Type : {{v.type}}</span>
+            </div>
+            <div class="row"> Available seats :
+             <span>{{v.available_seats}}</span> &nbsp; &nbsp;
+            </div>
+            <a ng-click="removeVehicle(v.id)">Remove</a>
+           </a>
+          </ion-item>
+        </ion-list>
+      </div>
+    </form>
+  </ion-content>
+</div>
