@@ -77,8 +77,8 @@ angular.module('starter')
 
     Ride.getRidesByUser = function(){
      // var deferred = $q.defer();
-     console.log(UserFactory.currentUser.user_id);
-     if (UserFactory.currentUser.user_id !== undefined){
+    // console.log(UserFactory.currentUser.user_id);
+     if (UserFactory.currentUser !== null){
       return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}});
      }
      else {
@@ -105,7 +105,12 @@ angular.module('starter')
     // fetch the rides that the logged in user has joined
     Ride.getJoinedRidesByUser = function(){
       console.log('sssssssssssssssssssrrrrrrrrrrrrrrrssssssssssssssss')
-      return $http.get(rider_url, {params: {user_id : UserFactory.currentUser.user_id}});
+      if (UserFactory.currentUser !== null){
+        return $http.get(rider_url, {params: {user_id : UserFactory.currentUser.user_id}});
+      } 
+      else {
+        return false;
+      }
 
     };
 

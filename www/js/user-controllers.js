@@ -64,16 +64,17 @@ angular.module('starter')
               })
               .then(function(result) {
                 if(result) {
-                    $scope.loginData = null;
+                    //$scope.loginData = null;
                     $scope.currentUser = null;
                     $scope.userDetails = null;
                     UserFactory.currentUser = null;
                    // $scope.userDetails.user_id = undefined;
                     console.log($scope.userDetails)
                     console.log('ooooooooooooooooooooooooooooooooooo')
+                    $scope.modal.show();
                     //console.log( $scope.userDetails.user_id)
-                    var path = '/app/findride/' ;
-                    $location.path(path);
+                    //var path = '/app/findride/' ;
+                    //$location.path(path);
                   }
                 });
   
@@ -354,7 +355,11 @@ angular.module('starter')
   if(RideFactory.currentRide !== undefined) {
     $scope.currentRideId = RideFactory.currentRide.ride_id;
   }
-  $scope.currentUserr = UserFactory.currentUser.user_id;
+  console.log(UserFactory.currentUser)
+  console.log(typeof UserFactory.currentUser)
+  if(UserFactory.currentUser !== null){
+    $scope.currentUserr = UserFactory.currentUser.user_id;
+  }
   $scope.allRider = {};
   $scope.userRides = {};
   $scope.joinedRides = {};
@@ -382,7 +387,6 @@ angular.module('starter')
 
     // Triggered in the login modal to close it
     $scope.closeLogin = function() {
-      console.log(" ddd "+ UserFactory.currentUser.first_name);
       //$scope.getCurrLocation();
       $scope.loginmodal.hide();
     };
