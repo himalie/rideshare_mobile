@@ -7,7 +7,7 @@ angular.module('starter')
   //var urlBase ='http://localhost/api/ride';
 
   var waypoint_url = RIDESHARE_URL+'api/ridecordinates/';
-  var rider_url = RIDESHARE_URL+'api/riderinfo/';
+  var rider_url = RIDESHARE_URL+'api/riderinfo';
   //var urlBase = 'http://localhost/ARideShare/api/ride';
     var Ride = {};
     Ride.currentRide = {};
@@ -25,7 +25,7 @@ angular.module('starter')
                 from_location: routeData.startAddress,
                 to_location : routeData.endAddress,
                 ride_type :rideData.ride_type,
-                available_seats: rideData.availableSeats,
+                available_seats: rideData.available_seats,
                 start_date: rideData.date,
                 start_time: rideData.startTime,
                 //estimated_end_time: ,
