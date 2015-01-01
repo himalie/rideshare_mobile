@@ -10,6 +10,7 @@ angular.module('starter')
     $scope.currentUserr = UserFactory.currentUser.user_id;
 
     $scope.addRide = function(){
+      //console.log($rideData.availableSeats)
       var promise = RideFactory.addRide($scope.rideData, $scope);
       if (promise)
       {
@@ -69,6 +70,9 @@ angular.module('starter')
         var mapOptions = {
           center: myLatlng,
           zoom: 16,
+          zoomControl: true,
+          streetViewControl: false,
+          scaleControl: true,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map"),
@@ -302,11 +306,13 @@ angular.module('starter')
     };
 
     $scope.loadPositionMarker = function(){
-        var promise = UserFactory.getCurrentLocatoin();
-
-        promise.then(function() {
-          console.log();
-          var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
+        //var promise = UserFactory.getCurrentLocatoin();
+        //console.log('loadPositionMarker coming to this')
+        //console.log(promise)
+        //promise.then(function() {
+          console.log('and hhereeeeeee');
+          //var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
+          var myLatlng = new google.maps.LatLng(6.9270786, 79.861243);
           directionsDisplay2 = new google.maps.DirectionsRenderer();
           var mapOptions = {
             center: myLatlng,
@@ -367,7 +373,7 @@ angular.module('starter')
 
            $scope.map_position = map;
           directionsDisplay2.setMap(map);
-       });
+       //});
 
     };
 
@@ -791,6 +797,7 @@ angular.module('starter')
           });
         });
       }
+      $scope.popover.hide();
     };
 
     $scope.startRide = function(){
@@ -799,18 +806,27 @@ angular.module('starter')
       promise.then(function(){
         console.log('started ride');
         console.log($scope.rideDetails)
-        var message = 'The ride from '+ $scope.rideDetails.from_location.trim() +' to '+ $scope.rideDetails.to_location.trim() + ' started now.';
-        console.log(message)
-        for (var i =0; i < $scope.rideDetails.RiderInfoes.length; i++){
-          //SMS.sendSMS($scope.rideDetails.RiderInfoes[i].User.telephone.trim(), message, function(){}, function(str){alert(str);});
+        console.log($scope.rideDetails.RiderInfoes.length)
+        if ($scope.rideDetails.RiderInfoes.length>0){
+          // need to have below lop
+          var message = 'The ride from '+ $scope.rideDetails.from_location.trim() +' to '+ $scope.rideDetails.to_location.trim() + ' started now.' ;
+          console.log(message)
+          console.log($scope.rideDetails.RiderInfoes[0].User.telephone)
+          SMS.sendSMS('0094773361039', message, function(){}, function(str){});
         }
+        
+        //console.log(message)
+        //for (var i =0; i < $scope.rideDetails.RiderInfoes.length; i++){
+          //SMS.sendSMS($scope.rideDetails.RiderInfoes[i].User.telephone.trim(), message, function(){}, function(str){alert(str);});
+        //}
 
 
-       // SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
+        
         $scope.closePopover();
         // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
         // $location.path(path);
       });
+      $scope.popover.hide();
     };
 
 
