@@ -1,168 +1,109 @@
 angular.module('starter')
 
-.controller('UserCtrl', function(Auth, $scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope, $stateParams, $location, $ionicPopup, VehicleFactory, Auth) {
+.controller('UserCtrl', function(Auth, $scope, $state, $http, $ionicModal, $timeout, UserFactory, $rootScope, $stateParams, $location, $ionicPopup, VehicleFactory) {
 
     // Form data for the login modal
+
     $scope.loginData = {};
 
-    // Create the login modal that we will use later
-    // var showModal = function(){
-    //   // Create the login modal that we will use later
-    //   $ionicModal.fromTemplateUrl('templates/login.html', {
-    //     scope: $scope,
-    //     //animation: 'slide-in-up',
-    //     focusFirstInput: true
-    //   }).then(function(modal) {
-    //     console.log('login THEN')
-    //     $scope.loginmodal = modal;
+    
+    var showModal = function(){
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl('templates/login.html', {
+        scope: $scope,
+        //animation: 'slide-in-up',
+        focusFirstInput: true
+      }).then(function(modal) {
+        console.log('login THEN')
+        $scope.loginmodal = modal;
 
-    //     $scope.loginmodal.show();
+        $scope.loginmodal.show();
 
-    //   });
+      });
 
-    // }
+    }
 
 
-    // var login = Auth.login();
-    // console.log(login)
-    // console.log('1111111111111111111111111')
-    // if (login && typeof login.then === 'function') {
-    //   console.log('1111111111111111111111111')
-    //   login.then(
+    var login = Auth.login();
+    console.log(login)
+    if (login && typeof login.then === 'function') {
+      login.then(
 
-    //     function(){
-    //       console.log('222222222222222222222222222')
-    //       $scope.userDetails = UserFactory.currentUser;
-    //     },
-    //     function(){
-    //       alert('error');
-    //     }
-    //   );
-    // } else {
-    //   showModal();
+        function(){
+          console.log(UserFactory.currentUser)
+          $scope.userDetails = UserFactory.currentUser;
+        },
+        function(){
+          //alert('error');
+        }
+      );
+    } else {
+      showModal();
       
-    // }
+    }
+    
+    
 
-    // $scope.logOut = function (){
-    //   $ionicPopup.confirm({
-    //             title: "Sign Out",
-    //             content: "Are you sure you want to sign out?"
-    //           })
-    //           .then(function(result) {
-    //             if(result) {
-    //                 //$scope.loginData = null;
-    //                 $scope.currentUser = null;
-    //                 $scope.userDetails = null;
-    //                 UserFactory.currentUser = null;
-    //                // $scope.userDetails.user_id = undefined;
-    //                 console.log($scope.userDetails)
-    //                 Auth.deleteCookie();
-    //                 console.log('oooooooooooooooooffffffffffffffffffffffoooooooooooooooooo')
-    //                 //login()
-    //                 showModal();
-    //               }
-    //             });
-  
-    // };
-
-    // $scope.doLoginn = function() {
-    //   console.log('Doing login ', $scope.loginData);
-    //   var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
-    //   promise.then(function() {
-
-    //       if ($rootScope.currentUser !== undefined)
-    //       {
-    //         Auth.setCookie();
-    //         console.log('coming heeeeeeeeeeeeeeeee')
-    //         $scope.userDetails = UserFactory.currentUser;
-    //         $scope.loginmodal.hide();
-            
-    //         $state.transitionTo($state.current, $stateParams, {
-    //             reload: true,
-    //             inherit: false,
-    //             notify: true
-    //         });
-    //       }
-    //       else
-    //       {
-    //         $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
-    //       }
-    //   });
-    // };
-    // //Be sure to cleanup the modal by removing it from the DOM
-    // $scope.$on('$destroy', function() {
-    //   $scope.modal.remove();
-    // });
 
     // Triggered in the login modal to close it
-    // $scope.closeLogin = function() {
-    //   console.log(" ddd "+ UserFactory.currentUser.first_name);
-    //   //$scope.getCurrLocation();
-    //   $scope.modal.hide();
-    // };
+    $scope.closeLogin = function() {
+      //$scope.getCurrLocation();
+      $scope.loginmodal.hide();
+    };
 
-    // Open the login modal
-    // $scope.login = function() {
-    //   //console.log(" ddd "+ UserFactory.currentUser.first_name);
-    //   var authCookie = Auth.getCookie('authorized')
-    //   if(authCookie){
-    //     autoLog(authCookie);
-    //   }
-    //   else{
-    //     $scope.modal.show();
-    //   }
-    // };
 
 
     // Perform the login action when the user submits the login form
-    // $scope.doLogin = function() {
-    //   console.log('Doing login ', $scope.loginData);
-    //   var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
-    //   promise.then(function() {
-         
-    //       console.log('User name in Gobal data '+ UserFactory.currentUser.first_name);
-    //       console.log('User name '+ $rootScope.currentUser);
-    //       if ($rootScope.currentUser !== undefined)
-    //       {
-    //         Auth.setCookie();
-    //         console.log('coming SET COOKIEEEEEEEEEEEEEEEEe')
-    //         $scope.userDetails = UserFactory.currentUser;
-    //         $scope.modal.hide();    
-    //         //var path = '/app/managerides/' ;
+    $scope.doLogin = function() {
+      $scope.error_message = "";
+      console.log('Doing login ', $scope.loginData);
+      var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+      promise.then(function() {
 
-    //         //$location.path(path);   
-    //         console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa')
-    //         //$scope.error_message =''; 
-    //       }
-    //       else
-    //       {
-    //         $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
-    //       }
-    //   });
-    // };
+          if ($rootScope.currentUser !== undefined)
+          {
+            Auth.setCookie();
+            console.log('coming heeeeeeeeeeeeeeeee')
+            $scope.userDetails = UserFactory.currentUser;
+            $scope.loginmodal.hide();
+            
+            $state.transitionTo($state.current, $stateParams, {
+                reload: true,
+                inherit: false,
+                notify: true
+            });
+          }
+          else
+          {
+            $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
+          }
+      });
+    };
 
-    // $scope.logOut = function (){
-    //   $ionicPopup.confirm({
-    //             title: "Sign Out",
-    //             content: "Are you sure you want to sign out?"
-    //           })
-    //           .then(function(result) {
-    //             if(result) {
-    //                 //$scope.loginData = null;
-    //                 $scope.currentUser = null;
-    //                 $scope.userDetails = null;
-    //                 UserFactory.currentUser = null;
-    //                // $scope.userDetails.user_id = undefined;
-    //                 console.log($scope.userDetails)
-    //                 console.log('ooooooooooooooooooooooooooooooooooo')
-    //                 $scope.modal.show();
-    //                 //console.log( $scope.userDetails.user_id)
-    //                 //var path = '/app/findride/' ;
-    //                 //$location.path(path);
-    //               }
-    //             });
+    $scope.logOut = function (){
+      $ionicPopup.confirm({
+                title: "Sign Out",
+                content: "Are you sure you want to sign out?"
+              })
+              .then(function(result) {
+                if(result) {
+                    //$scope.loginData = null;
+                    $scope.currentUser = null;
+                    $scope.userDetails = null;
+                    UserFactory.currentUser = null;
+                   // $scope.userDetails.user_id = undefined;
+                    console.log($scope.userDetails)
+                    Auth.deleteCookie();
+                    //login()
+                    showModal();
+                  }
+                });
   
-    // };
+    };
+
+
+
+
 
     // getting the current location of the user
     $scope.getCurrLocation = function () {
@@ -186,7 +127,6 @@ angular.module('starter')
         var promise = UserFactory.getUserById(user_id_);
         promise.then(function(data){
           if($scope.userDetails.user_id !== data.data.user_id) {
-            console.log('fetching hereeeeeeeeeeeeeeee')
             $scope.userDetails = data.data;
             console.log($scope.userDetails);
           }
@@ -349,7 +289,7 @@ angular.module('starter')
 
 // -------------------------
 // Form data for the login modal
-    $scope.loginData = {};
+    // $scope.loginData = {};
 
     
     var showModal = function(){
@@ -379,6 +319,8 @@ angular.module('starter')
         function(){
           console.log('222222222222222222222222222')
           $scope.userDetails = UserFactory.currentUser;
+          prepareUserRides();
+          preparePassengerRides();
         },
         function(){
           alert('error');
@@ -392,61 +334,61 @@ angular.module('starter')
     
 
 
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
-      //$scope.getCurrLocation();
-      $scope.loginmodal.hide();
-    };
+    // // Triggered in the login modal to close it
+    // $scope.closeLogin = function() {
+    //   //$scope.getCurrLocation();
+    //   $scope.loginmodal.hide();
+    // };
 
 
 
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function() {
-      console.log('Doing login ', $scope.loginData);
-      var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
-      promise.then(function() {
+    // // Perform the login action when the user submits the login form
+    // $scope.doLogin = function() {
+    //   console.log('Doing login ', $scope.loginData);
+    //   var promise = UserFactory.getUser($scope.loginData.username, $scope.loginData.password);
+    //   promise.then(function() {
 
-          if ($rootScope.currentUser !== undefined)
-          {
-            Auth.setCookie();
-            console.log('coming heeeeeeeeeeeeeeeee')
-            $scope.userDetails = UserFactory.currentUser;
-            $scope.loginmodal.hide();
+    //       if ($rootScope.currentUser !== undefined)
+    //       {
+    //         Auth.setCookie();
+    //         console.log('coming heeeeeeeeeeeeeeeee')
+    //         $scope.userDetails = UserFactory.currentUser;
+    //         $scope.loginmodal.hide();
             
-            $state.transitionTo($state.current, $stateParams, {
-                reload: true,
-                inherit: false,
-                notify: true
-            });
-          }
-          else
-          {
-            $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
-          }
-      });
-    };
+    //         $state.transitionTo($state.current, $stateParams, {
+    //             reload: true,
+    //             inherit: false,
+    //             notify: true
+    //         });
+    //       }
+    //       else
+    //       {
+    //         $scope.error_message = 'User name or password is incorrect. Please enter your data again.';
+    //       }
+    //   });
+    // };
 
-    $scope.logOut = function (){
-      $ionicPopup.confirm({
-                title: "Sign Out",
-                content: "Are you sure you want to sign out?"
-              })
-              .then(function(result) {
-                if(result) {
-                    //$scope.loginData = null;
-                    $scope.currentUser = null;
-                    $scope.userDetails = null;
-                    UserFactory.currentUser = null;
-                   // $scope.userDetails.user_id = undefined;
-                    console.log($scope.userDetails)
-                    Auth.deleteCookie();
-                    console.log('oooooooooooooooooffffffffffffffffffffffoooooooooooooooooo')
-                    //login()
-                    showModal();
-                  }
-                });
+    // $scope.logOut = function (){
+    //   $ionicPopup.confirm({
+    //             title: "Sign Out",
+    //             content: "Are you sure you want to sign out?"
+    //           })
+    //           .then(function(result) {
+    //             if(result) {
+    //                 //$scope.loginData = null;
+    //                 $scope.currentUser = null;
+    //                 $scope.userDetails = null;
+    //                 UserFactory.currentUser = null;
+    //                // $scope.userDetails.user_id = undefined;
+    //                 console.log($scope.userDetails)
+    //                 Auth.deleteCookie();
+    //                 console.log('oooooooooooooooooffffffffffffffffffffffoooooooooooooooooo')
+    //                 //login()
+    //                 showModal();
+    //               }
+    //             });
   
-    };
+    // };
 
 // -------------------------------------
   var loggedIn = function(){
@@ -480,7 +422,30 @@ angular.module('starter')
 
     //$scope.getAllRides();
 
-    $scope.getUserRides = function(){
+    // $scope.getUserRides = function(){
+    //   RideFactory.getRidesByUser()
+    //     .then(function(data){
+    //       RideFactory.userRides = data.data;
+    //       console.log(RideFactory.userRides)
+    //       console.log(data.data)
+    //       console.log(RideFactory.userRides.length)
+    //       if (RideFactory.userRides !== "null")  {
+    //         console.log(typeof RideFactory.userRides)
+    //         for(var i= 0; i<RideFactory.userRides.length ; i++){
+    //           $scope.userRides[i] = {id : RideFactory.userRides[i].ride_id,
+    //                             from : RideFactory.userRides[i].from_location,
+    //                             to : RideFactory.userRides[i].to_location,
+    //                             seats : RideFactory.userRides[i].available_seats,
+    //                             start_date : RideFactory.userRides[i].start_date,
+    //                             start_time : RideFactory.userRides[i].start_time,
+    //                             state : RideFactory.userRides[i].status};
+    //         }
+    //       }
+    //     });
+
+    // };
+
+    var prepareUserRides = function(){
       RideFactory.getRidesByUser()
         .then(function(data){
           RideFactory.userRides = data.data;
@@ -498,13 +463,37 @@ angular.module('starter')
                                 start_time : RideFactory.userRides[i].start_time,
                                 state : RideFactory.userRides[i].status};
             }
+
           }
         });
+      
+    }
 
-    };
 
+    // $scope.getPassengerRides = function(){
+    //   console.log('sssssssssssssssssssssssssssssssssss');
+    //   var promise = RideFactory.getJoinedRidesByUser();
+    //   if (promise){
+    //     promise.then(function(data){
+    //       RideFactory.passengerRides = data.data;
+    //       console.log(RideFactory.passengerRides)
+    //       if (RideFactory.passengerRides !== 'null') {
+    //         for(var i= 0; i<RideFactory.passengerRides.length ; i++){
+    //           $scope.joinedRides[i] = {id : RideFactory.passengerRides[i].Ride.ride_id,
+    //                             from : RideFactory.passengerRides[i].Ride.from_location,
+    //                             to : RideFactory.passengerRides[i].Ride.to_location,
+    //                             seats : RideFactory.passengerRides[i].Ride.available_seats,
+    //                             start_date : RideFactory.passengerRides[i].Ride.start_date,
+    //                             start_time : RideFactory.passengerRides[i].Ride.start_time,
+    //                             state : RideFactory.passengerRides[i].Ride.status};
+    //         }
+    //       }
+    //     });
+    //   }
 
-    $scope.getPassengerRides = function(){
+    // };
+
+    var preparePassengerRides = function() {
       console.log('sssssssssssssssssssssssssssssssssss');
       var promise = RideFactory.getJoinedRidesByUser();
       if (promise){
@@ -525,6 +514,6 @@ angular.module('starter')
         });
       }
 
-    };
+    }
     //$scope.getPassengerRides();
 })

@@ -117,8 +117,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ipCookie'])
       views: {
         'menuContent' :{
           templateUrl: "templates/settings.html",
-          controller: 'RidesCtrl'
-          //controller : 'UserCtrl'
+          //controller: 'RidesCtrl'
+          controller : 'UserCtrl'
         }
       }
     })

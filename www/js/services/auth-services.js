@@ -1,7 +1,7 @@
 
 angular.module('starter')
 
-.factory('Auth', ['$http', '$rootScope', 'ipCookie' , 'UserFactory', function($http, $rootScope, ipCookie, UserFactory) {
+.factory('Auth', ['$http', '$rootScope', 'ipCookie' , 'UserFactory', '$window', function($http, $rootScope, ipCookie, UserFactory, $window) {
 
     var Auth = {};
 
@@ -18,18 +18,28 @@ angular.module('starter')
         var value = {name : UserFactory.currentUser.user_name ,
                      token : token()};
 
+        //$window.localStorage['authorized'] = value;
+        $window.localStorage['authorized'] = JSON.stringify(value);
         ipCookie('authorized', value, { expires: 30000 });
         UserFactory.currentUser.token = value.token;
         UserFactory.updateUser(UserFactory.currentUser);
     }
 
     Auth.deleteCookie = function(){
-        ipCookie.remove('authorized');
+        $window.localStorage.clear();
+        console.log()
+        //ipCookie.remove('authorized');
     };
 
 
     Auth.getCookie = function(cookie){
-        return ipCookie(cookie);
+        //console.log(JSON.parse($window.localStorage[cookie]))
+        console.log($window.localStorage[cookie])
+        //return $window.localStorage[cookie];
+        if($window.localStorage[cookie] !== undefined){
+         return JSON.parse($window.localStorage[cookie]);
+     }
+       // return ipCookie(cookie);
     }
 
     Auth.login = function() {

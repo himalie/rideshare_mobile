@@ -11,7 +11,7 @@
 
                 <h4 class="rides-title">Rides Owned</h4>
                 <hr>
-                <ion-list class="lightblue" ng-init="getUserRides()">
+                <ion-list class="lightblue" >
                     <ion-item class="wrap"
                               ng-repeat="ride in userRides"
                               ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
@@ -36,7 +36,7 @@
             <h4 class="rides-title">Rides Joined</h4>
             <hr>
             <div class="list">
-                <ion-list class="lightblue" ng-init="getPassengerRides()">
+                <ion-list class="lightblue" >
                     <ion-item class="wrap"
                               ng-repeat="ride in joinedRides"
                               ui-sref="app.single({ rideId: {{ride.id}}, editable: false})">
