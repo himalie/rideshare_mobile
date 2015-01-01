@@ -79,6 +79,7 @@ angular.module('starter')
      // var deferred = $q.defer();
     // console.log(UserFactory.currentUser.user_id);
      if (UserFactory.currentUser !== null){
+      console.log(UserFactory.currentUser.user_id);
       return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}});
      }
      else {

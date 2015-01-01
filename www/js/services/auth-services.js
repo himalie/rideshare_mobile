@@ -1,29 +1,49 @@
-app.factory('Auth', function ($rootScope, User) {
 
-    var authUser = {};
+angular.module('starter')
 
-    var Auth = {
-        register: function (user) {
-            return User.Create(user);                    
-        },
+.factory('Auth', ['$http', '$rootScope', 'ipCookie' , 'UserFactory', function($http, $rootScope, ipCookie, UserFactory) {
 
-        login: function (user) {
-            // write a method in server to check for password and svalidate login user.. and return the user object
-            return auth.$login('password', user);
-        },
+    var Auth = {};
 
-        logout: function () {
-            // call a method in server? 
-            // or simply clear the AuthUser?
-            User.currentUser = null;
-        },
+    Auth.setCookie = function(){
 
-        signedIn: function () {
-            // this returns True or False
-            return User !== null;
-        }
+        var rand = function() {
+            return Math.random().toString(36).substr(2); // remove `0.`
+        };
+
+        var token = function() {
+            return rand(); // to make it longer
+        };
+
+        var value = {name : UserFactory.currentUser.user_name ,
+                     token : token()};
+
+        ipCookie('authorized', value, { expires: 30000 });
+        UserFactory.currentUser.token = value.token;
+        UserFactory.updateUser(UserFactory.currentUser);
+    }
+
+    Auth.deleteCookie = function(){
+        ipCookie.remove('authorized');
+    };
+
+
+    Auth.getCookie = function(cookie){
+        return ipCookie(cookie);
+    }
+
+    Auth.login = function() {
+
+      var authCookie = Auth.getCookie('authorized')
+      console.log(typeof authCookie)
+      if(authCookie){
+        console.log(UserFactory.currentUser)
+        console.log('*8888888888888888888888888888888888')
+        //autoLog(authCookie);
+        return UserFactory.getUserByToken(authCookie);
+      }     
     };
 
     return Auth;
-});
+}])
 

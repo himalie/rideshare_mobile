@@ -1,10 +1,10 @@
-// Ionic Starter App
+// Ionic Starter app
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ipCookie'])
 
 //.constant('RIDESHARE_URL', 'http://192.168.43.70/ARideShare/')
 .constant('RIDESHARE_URL', 'http://192.168.1.3/')
@@ -39,6 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
   $httpProvider.defaults.useXDomain = true;﻿
   delete $httpProvider.defaults.headers.common["X-Requested-With"];
   $httpProvider.defaults.headers.common["Accept"] = "application/json";
@@ -116,8 +117,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       views: {
         'menuContent' :{
           templateUrl: "templates/settings.html",
-          controller: 'UserCtrl'
-          //controller : 'UserCtrl
+          controller: 'RidesCtrl'
+          //controller : 'UserCtrl'
         }
       }
     })

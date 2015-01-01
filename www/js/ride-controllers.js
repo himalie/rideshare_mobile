@@ -7,7 +7,9 @@ angular.module('starter')
       $scope.currentRideId = RideFactory.currentRide.ride_id;
     }
 
-    $scope.currentUserr = UserFactory.currentUser.user_id;
+    if(UserFactory.currentUser){
+      $scope.currentUserr = UserFactory.currentUser.user_id;
+  }
 
     $scope.addRide = function(){
       //console.log($rideData.availableSeats)
@@ -243,7 +245,9 @@ angular.module('starter')
       $scope.status = RideFactory.currentRide.status;
     }
 
-    $scope.currentUserr = UserFactory.currentUser.user_id;
+    if(UserFactory.currentUser){
+      $scope.currentUserr = UserFactory.currentUser.user_id;
+    }
     $scope.statusP = "Planned";
     $scope.statusS = "Started";
     $scope.statusC = "Completed";

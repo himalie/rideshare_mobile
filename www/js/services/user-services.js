@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.factory('UserFactory', ['$http', '$rootScope', '$q', '$ionicModal', 'RIDESHARE_URL', function($http, $rootScope, $q, $ionicModal, RIDESHARE_URL) {
+.factory('UserFactory', ['$http', '$rootScope', '$q', '$ionicModal', 'RIDESHARE_URL', 'ipCookie', function($http, $rootScope, $q, $ionicModal, RIDESHARE_URL, ipCookie) {
 
 
     var urlBase = RIDESHARE_URL + 'api/user'; 
@@ -16,23 +16,31 @@ angular.module('starter.controllers', [])
         return $http.get(urlBase, {params: {user_id : user_id_} });
     };
 
+    User.getUserByToken = function (token) {
+        console.log('gggggggggggggggggggggggggggg')
+        return $http.get(urlBase, {params: {user_name : token.name, token : token.token} })
+            .success(function(data, status, headers, config) {
+                console.log(data)
+                    setCurrentUser(data);
+                    console.log(User.currentUser)
+                  }).
+                  error(function (data, status, headers, config) {
+                    User.currentUser = undefined;
+          });
+    };
+
     User.getUser = function (user_name, password) {
         console.log('come here');
         
         var deferred = $q.defer();
         $http.get(urlBase, {params: {user_name : user_name, password : password}})
         .success(function(data, status, headers, config) {
-                console.log(data);
-                User.currentUser = data;
-                console.log('SERVICE User.currentUser ='+ User.currentUser.user_name);
-                setCurrentUser(User.currentUser.user_name);
+            console.log(data)
+                setCurrentUser(data);
                 deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
                 User.currentUser = undefined;
-                //$scope.error = error;
-                console.log('error: ' + data);
-                console.log(data.data)
                 deferred.reject(data);
       });
       return deferred.promise;                  
@@ -68,11 +76,7 @@ angular.module('starter.controllers', [])
             //return deferred.promise;
     };
 
-    User.updateUser = function (user) {
-        //return $http.put(urlBase + '/' + user.user_id, user);
-
-
-
+    User.updateUser = function (user) {   
         var deferred = $q.defer();
         $http.put(urlBase + '/' + user.user_id, user)
         .success(function(data, status, headers, config) {
@@ -137,9 +141,10 @@ angular.module('starter.controllers', [])
         return deferred.promise;
     };
 
-    setCurrentUser = function(username) {
-        console.log('SERVICE set curr user :'+ username);
-        $rootScope.currentUser = username;
+    var setCurrentUser = function(user) {
+        console.log('SERVICE set curr user :'+ user.user_name);
+        $rootScope.currentUser = user.user_name;
+        User.currentUser = user;
 
         //User.currentUser = User.findByUsername(username);
     };
