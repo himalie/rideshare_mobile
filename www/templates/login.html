@@ -6,10 +6,10 @@
     </div> -->
   </ion-header-bar>
   <ion-content>
-     <span class ="heading">Ride Share</span>
+     <span class ="heading">RIDE SHARE</span>
     <form ng-submit="doLogin()" class="custom-form">
       <div class="list">
-        <label class="item item-input item-stacked-label">
+        <label class="item item-input item-stacked-label" ng-show="error_message">
           <span class="input-label">{{error_message}}</span>
         </label>
         <label class="item item-input item-stacked-label">
