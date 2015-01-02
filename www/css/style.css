@@ -66,8 +66,22 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, input, button, selec
 	margin-bottom: 10px;
 }
 
+.popup-buttons .button.button-default {
+	background-color: #e3e3e3;
+}
+
 button:before {
 	color: #fff;
+}
+
+.error-message {
+	padding: 16px !important;
+}
+
+.error-message span {
+	color: #ff0000;
+	text-align: center;
+	display: block;
 }
 
 .back-button {
@@ -76,6 +90,10 @@ button:before {
 
 .ion-close-round:before {
 	font-size: 20px !important;
+}
+
+.ion-checkmark-round:before {
+	font-size: 23px !important;
 }
 
 .search-bar {
@@ -90,9 +108,13 @@ button:before {
 	opacity: 0.2;
 }
 
-.item.wrap span, .item-content.wrap span {
+.item.wrap span, .item-content.wrap span, .item.wrap a {
 	white-space: normal;
 	padding: 3px 0 3px 0;
+}
+
+.item.wrap a {
+	padding: 15px 10px 15px 10px;
 }
 
 .register-option {
@@ -109,6 +131,7 @@ a.disabled {
 	pointer-events: none;
 	cursor: default;
 	color: #777;
+	opacity: 0.2;
 }
 
 .title-label {
@@ -128,10 +151,31 @@ a.disabled {
     font-family: Dosis;
     font-size: 64px;
     display:  block;
-	margin: 15%;
+	margin: 10%;
 	line-height: 1;
+	color: #1565c0;
 
 }
+
+.ion-trash-b:before, .ion-plus:before {
+	color: #1565c0;
+}
+
+.float-right {
+	position: absolute;
+	right: 0;
+}
+
+.ion-pinpoint {
+	height: 100px;
+}
+
+.ion-pinpoint:before {
+	font-size: 40px !important;
+	padding-right: 10px !important; 
+}
+
+
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"]  {
 	padding: 0 8px 0 8px;
 	font-size: 16px;

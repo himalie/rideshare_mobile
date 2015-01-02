@@ -1,9 +1,12 @@
 <div class="modal">
   <ion-header-bar>
     <h1 class="title">Add Vehicle</h1>
-    <div class="buttons">
-      <button class="button button-icon icon ion-close-round" ng-click="closeVehicle()"></button>
+    
+    <div class="float-right">
+        <button class="button button-icon icon ion-checkmark-round" type="submit"></button>
+        <button class="button button-icon icon ion-close-round" ng-click="closeVehicle()"></button>
     </div>
+
   </ion-header-bar>
   <ion-content>
     <form ng-submit="addVehicle()" class="custom-form">
@@ -23,9 +26,7 @@
           <span class="input-label">available seats</span>
           <input type="number" ng-model="vehicleData.available_seats">
         </label>
-        <label class="item item-input item-stacked-label">
-          <button class="button button-block button-positive" type="submit">Add</button>
-        </label>
+       
         
       </div>
     </form>

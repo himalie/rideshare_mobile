@@ -198,6 +198,7 @@ angular.module('starter')
     // ------------- view vehicles----------------------
     $ionicModal.fromTemplateUrl('templates/viewvehicles.html', {
       scope: $scope,
+      backdropClickToClose: false,
       //animation: 'slide-in-up',
       focusFirstInput: true
     }).then(function(modal) {

@@ -1,4 +1,4 @@
-<div class="modal" ng-init="loadPositionMarker()">
+<div class="modal">
     <form ng-submit="savePosition()">
         <ion-header-bar>
             <h1 class="title">Mark Position</h1>
@@ -11,12 +11,12 @@
         <ion-content>
 
             <div class="list">
-                <label class="item item-input">
+                <label class="item item-input" ng-show="error_message">
                     <span class="input-label">{{error_message}}</span>
                 </label>
 
-                <!--LOAD POSITION MARKER GOES ON INIT?-->
-                <button class="button button-block button-positive" ng-click="loadPositionMarker()">Mark in Map</button>
+                
+                <button class="button button-block button-positive icon ion-pinpoint" ng-hide="hideBtn" ng-click="loadPositionMarker(); hideBtn=true;"> Mark in Map</button>
                 <!--     <label class="item item-input">
                       <span class="input-label">Username</span>
                       <input type="text" ng-model="loginData.username">
