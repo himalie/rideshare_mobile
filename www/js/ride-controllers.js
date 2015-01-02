@@ -418,6 +418,7 @@ angular.module('starter')
 
     $scope.closeViewPassengers = function() {
       $scope.modalPassengers.hide();
+      $scope.popover.hide();
     };
 
 
@@ -444,7 +445,13 @@ angular.module('starter')
             ii = ii + 1;
             console.log($scope.ridePassengers[ii])
           }  
-          console.log($scope.ridePassengers);
+          if(RideFactory.passengers.length>0){
+            console.log($scope.ridePassengers);
+            //$scope.modalPassengers.show();
+          }
+          else {
+            $scope.error_message = 'There are no passengers joined for this ride';
+          }
           $scope.modalPassengers.show();
         });
       }

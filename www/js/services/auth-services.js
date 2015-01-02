@@ -19,6 +19,8 @@ angular.module('starter')
                      token : token()};
 
         //$window.localStorage['authorized'] = value;
+        console.log('LOCAL STORAGE')
+        console.log(value)
         $window.localStorage['authorized'] = JSON.stringify(value);
         ipCookie('authorized', value, { expires: 30000 });
         UserFactory.currentUser.token = value.token;
@@ -33,8 +35,6 @@ angular.module('starter')
 
 
     Auth.getCookie = function(cookie){
-        //console.log(JSON.parse($window.localStorage[cookie]))
-        console.log($window.localStorage[cookie])
         //return $window.localStorage[cookie];
         if($window.localStorage[cookie] !== undefined){
          return JSON.parse($window.localStorage[cookie]);
