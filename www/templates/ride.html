@@ -30,6 +30,9 @@
             <a class="item" ng-class="{disabled: !(rideAuthor==currentUserr)}" type="submit" ng-click="viewPassengers()">
               View Passengers
             </a>
+            <a class="item" ng-class="{disabled: !(passenger && status ==statusC)}" type="submit" ng-click="viewPassengers()">
+              Rate Ride
+            </a>
           </div>
         </ion-content>
     </ion-popover-view>
@@ -39,11 +42,11 @@
 
     <form ng-init="loadRide()">
       <div class="list">
-        <div class="item item-stacked-label">
+        <div class="item item-stacked-label wrap">
         	<span class="col title-label">From</span>
         	<span class="col" ng-model="rideDetails.from_location" class="wrap">{{rideDetails.from_location}}</span>
         </div>
-        <div class="item item-stacked-label">
+        <div class="item item-stacked-label wrap">
           <span class="col title-label">To</span>
           <span class="col" ng-model="rideDetails.to_location" class="wrap">{{rideDetails.to_location}}</span>
         </div>

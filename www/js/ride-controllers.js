@@ -240,13 +240,24 @@ angular.module('starter')
 
     $scope.rideAuthor = undefined;
     $scope.status = undefined;
-    if(RideFactory.currentRide !== undefined) {
-      $scope.rideAuthor = RideFactory.currentRide.user_id;
-      $scope.status = RideFactory.currentRide.status;
-    }
+    $scope.passenger = false;
 
     if(UserFactory.currentUser){
       $scope.currentUserr = UserFactory.currentUser.user_id;
+    }
+
+    if(RideFactory.currentRide !== undefined) {
+      $scope.rideAuthor = RideFactory.currentRide.user_id;
+      $scope.status = RideFactory.currentRide.status;
+      if($scope.status ==='Completed'){
+        var rider_length = RideFactory.currentRide.RiderInfoes.length;
+        for(var i=0; i< rider_length; i++){
+          if (RideFactory.currentRide.RiderInfoes[i].user_id === $scope.currentUserr.user_id) {
+            $scope.passenger = true;
+            break;
+          }
+        }
+      }
     }
     $scope.statusP = "Planned";
     $scope.statusS = "Started";
@@ -848,6 +859,16 @@ angular.module('starter')
 
     // };
 
+    var completeRide = function(){
+        console.log($scope.rideDetails.start_date);
+       //$scope.rideDetails.status = 'Completed';
+        var promise =RideFactory.editRide($scope.rideDetails);
+        promise.then(function(){
+          console.log('completed ride');
+          $scope.closePopover();
+        });
+      }
+
     $scope.endRide = function(){
       if($scope.rideDetails.ride_type.trim() === 'OneTime'){
         $scope.rideDetails.status = 'Completed';
@@ -872,14 +893,7 @@ angular.module('starter')
 
 
       }
-      var completeRide = function(){
-        console.log($scope.rideDetails.start_date);
-       //$scope.rideDetails.status = 'Completed';
-        var promise =RideFactory.editRide($scope.rideDetails);
-        promise.then(function(){
-          console.log('completed ride');
-          $scope.closePopover();
-        });
-      }
+      
     };
+
 })
