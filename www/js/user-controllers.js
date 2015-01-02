@@ -23,6 +23,21 @@ angular.module('starter')
 
     }
 
+    var closeModal = function(){
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl('templates/login.html', {
+        scope: $scope,
+        //animation: 'slide-in-up',
+        focusFirstInput: true
+      }).then(function(modal) {
+        console.log('closeeeeeeeeeeeeeeee')
+        $scope.loginmodal = modal;
+
+        $scope.loginmodal.hide();
+
+      });
+
+    }
 
     var login = Auth.login();
     console.log(login)
@@ -30,6 +45,7 @@ angular.module('starter')
       login.then(
 
         function(){
+          console.log('Auth login returned userrrrrrrrrrrrrrrrrrrr')
           console.log(UserFactory.currentUser)
           $scope.userDetails = UserFactory.currentUser;
         },
@@ -65,6 +81,7 @@ angular.module('starter')
             Auth.setCookie();
             console.log('coming heeeeeeeeeeeeeeeee')
             $scope.userDetails = UserFactory.currentUser;
+           // closeModal();
             $scope.loginmodal.hide();
             
             $state.transitionTo($state.current, $stateParams, {
@@ -246,7 +263,7 @@ angular.module('starter')
 
 
 
-.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory, $rootScope, $location) {
+.controller('RegisterCtrl', function($scope, $ionicLoading, $compile, UserFactory, $rootScope, $location, Auth) {
   //Form data for the register modal
   $scope.registerData = {};
   console.log('register');
@@ -256,9 +273,10 @@ angular.module('starter')
 
     var promise = UserFactory.insertUser($scope.registerData);
     promise.then(function() {
+        Auth.setCookie();
         console.log(' POST '+ UserFactory.currentUser.first_name);
         console.log('POST  '+ $rootScope.currentUser);
-        var path = '/app/findride/';
+        var path = '/app/managerides/';
         $location.path(path)
     });
     // send data to server side for validating and saving 

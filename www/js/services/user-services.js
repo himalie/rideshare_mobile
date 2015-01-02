@@ -12,15 +12,12 @@ angular.module('starter.controllers', [])
 
 
     User.getUserById = function (user_id_) {
-        console.log('gggggggggggggggggggggggggggg')
         return $http.get(urlBase, {params: {user_id : user_id_} });
     };
 
     User.getUserByToken = function (token) {
-        console.log('gggggggggggggggggggggggggggg')
         return $http.get(urlBase, {params: {user_name : token.name, token : token.token} })
             .success(function(data, status, headers, config) {
-                console.log(data)
                     setCurrentUser(data);
                     console.log(User.currentUser)
                   }).
@@ -57,20 +54,19 @@ angular.module('starter.controllers', [])
                 gender : user.gender,
                 password : user.password,
                 email : user.email,
-                location : user.location
+                location : user.location,
+                telephone : user.telephone
             }).
               success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
                 // when the response is available
                 User.currentUser = data;
-                setCurrentUser(User.currentUser.user_name);
-                console.log('POST SERVICE='+ data);
+                setCurrentUser(User.currentUser);
                 deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
                 User.currentUser = undefined;
-                setCurrentUser(User.currentUser.user_name);
-                console.log('error: ' + data);
+                setCurrentUser(User.currentUser);
                 deferred.reject(data);
             });
             //return deferred.promise;
@@ -120,7 +116,7 @@ angular.module('starter.controllers', [])
             deferred.resolve(startPos);
           }, function(error) {
             deferred.reject(error);
-            alert("Error occurred. Error code: " + error.code);
+           // alert("Error occurred. Error code: " + error.code);
             // error.code can be:
             //   0: unknown error
             //   1: permission denied
@@ -130,9 +126,7 @@ angular.module('starter.controllers', [])
 
           navigator.geolocation.watchPosition(function(position) {
             var currLat = position.coords.latitude;
-            var currLong = position.coords.longitude;  
-            console.log('######@@@ '+ currLat+ '');
-            console.log('######@@@ '+ currLong+ '');   
+            var currLong = position.coords.longitude;    
              $rootScope.currPosition = position;
             deferred.resolve(position);       
           });
@@ -142,11 +136,8 @@ angular.module('starter.controllers', [])
     };
 
     var setCurrentUser = function(user) {
-        console.log('SERVICE set curr user :'+ user.user_name);
-        $rootScope.currentUser = user.user_name;
-        User.currentUser = user;
-
-        //User.currentUser = User.findByUsername(username);
+        $rootScope.currentUser = user.user_name;   
+        User.currentUser = user; 
     };
     return User;
 }])
