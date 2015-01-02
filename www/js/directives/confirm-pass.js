@@ -1,18 +1,23 @@
-angular.module('starter').directive("confirmPass", function() {
+angular.module('starter').directive('confirmPass', ['$parse', function ($parse) {
     return {
-        require: "ngModel",
+        restrict: 'A',
         scope: {
-            otherModelValue: "=compareTo"
+            matchTarget: '='
         },
-        link: function(scope, element, attributes, ngModel) {
-
-            ngModel.$validators.compareTo = function(modelValue) {
-                return modelValue == scope.otherModelValue;
+        require: 'ngModel',
+        link: function link(scope, elem, attrs, ctrl) {
+            var validator = function (value) {
+                ctrl.$setValidity('match', value === scope.matchTarget);
+                return value;
             };
 
-            scope.$watch("otherModelValue", function() {
-                ngModel.$validate();
+            ctrl.$parsers.unshift(validator);
+            ctrl.$formatters.push(validator);
+
+            // This is to force validator when the original password gets changed
+            scope.$watch('matchTarget', function(newval, oldval) {
+                validator(ctrl.$viewValue);
             });
         }
     };
-});
+}]);
