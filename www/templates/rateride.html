@@ -1,0 +1,28 @@
+<div class="modal">
+  <form ng-submit="rateRide()">
+  <ion-header-bar>
+    <h1 class="title">Rate Ride</h1>
+    <div class="float-right">
+        <button class="button button-icon icon ion-checkmark-round" type="submit"></button>
+        <button class="button button-icon icon ion-close-round" ng-click="closeRating()"></button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">{{error_message}}</span>
+        </label>
+        
+    <div class="list">
+      <div class="item range range-positive">
+        <i class="icon ion-minus-round"></i>
+        <input type="range" name="volume" min="1" max="5" value="{{data.rating}}" ng-model="data.rating">
+        <i class="icon ion-plus-round"></i>
+      </div>
+    </div>
+      </div>
+    
+  </ion-content>
+</form>
+</div>

@@ -247,14 +247,29 @@ angular.module('starter')
     }
 
     if(RideFactory.currentRide !== undefined) {
+      console.log('44444444444444444444444444444444444444444')
+      console.log(RideFactory.currentRide)
       $scope.rideAuthor = RideFactory.currentRide.user_id;
       $scope.status = RideFactory.currentRide.status;
-      if($scope.status ==='Completed'){
-        var rider_length = RideFactory.currentRide.RiderInfoes.length;
-        for(var i=0; i< rider_length; i++){
-          if (RideFactory.currentRide.RiderInfoes[i].user_id === $scope.currentUserr.user_id) {
-            $scope.passenger = true;
-            break;
+      console.log($scope.status)
+      if($scope.status !== undefined){
+        console.log($scope.status.trim())
+
+      
+        console.log('ttttttttttttttttttttttttttttttttttttttttttttt')
+        if($scope.status.trim() ==='Completed'){
+          console.log('completeeddddddddddddddddddddddddddddddddddd')
+          var rider_length = RideFactory.currentRide.RiderInfoes.length;
+          console.log(rider_length)
+          for(var i=0; i< rider_length; i++){
+            console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
+            console.log(RideFactory.currentRide.RiderInfoes[i].user_id)
+            console.log(UserFactory.currentUser.user_id)
+            if (RideFactory.currentRide.RiderInfoes[i].user_id === UserFactory.currentUser.user_id) {
+              console.log('breakkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+              $scope.passenger = true;
+              break;
+            }
           }
         }
       }
@@ -896,4 +911,52 @@ angular.module('starter')
       
     };
 
+    
+
+
+    $scope.loadRateRide = function(){
+      console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
+      $ionicModal.fromTemplateUrl('templates/rateride.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.rateModal = modal;
+         $scope.rateModal.show();
+          $scope.popover.hide();
+      });
+      
+
+    };
+
+    $scope.closeRating = function(){
+      // $ionicModal.fromTemplateUrl('templates/rateride.html', {
+      //   scope: $scope
+      // }).then(function(modal) {
+      //   $scope.rateModal = modal;
+         $scope.rateModal.hide();
+
+    };
+
+    $scope.data = {};
+    $scope.data.rating = 3;
+
+    $scope.rateRide = function(){
+        var rating = $scope.data.rating;
+        console.log(RideFactory.currentRide.User.rating)
+        if (RideFactory.currentRide.User.rating !== null){
+          console.log(typeof rating)
+          console.log(new Number(RideFactory.currentRide.User.rating))
+          rating = (new Number(rating) + new Number(RideFactory.currentRide.User.rating))/2;
+          
+        }
+        RideFactory.currentRide.User.rating = rating;
+        console.log(RideFactory.currentRide.User.rating)
+        var promise = UserFactory.updateUser(RideFactory.currentRide.User);
+        promise.then(function(){
+          $scope.rateModal.hide();
+          $scope.popover.hide();
+        });
+
+      };
+
+      
 })

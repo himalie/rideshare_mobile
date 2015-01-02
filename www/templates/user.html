@@ -26,6 +26,10 @@
           <span class="col title-label">Location</span>
           <span class="col" ng-model="userDetails.location" >{{userDetails.location}}</span>
         </div>
+        <div class="item item-stacked-label" ng-show="userDetails.rating">
+          <span class="col title-label">Rating</span>
+          <span class="col user-rating" ng-model="userDetails.rating" >{{userDetails.rating}}/5</span>
+        </div>
         <div class="item item-stacked-label">
          <!--  <span class="col title-label">View Vehicles</span> -->
           <div class="buttons">
