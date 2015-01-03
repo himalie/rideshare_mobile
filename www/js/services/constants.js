@@ -7,10 +7,6 @@ angular.module('starter.controllers',[])
   	baseUrl: "http://localhost/api"
   }
 
-  // var _img = {
-  //   avatar : "img/avatar.png",
-  //   profile_bg : "img/bg_new.png"
-  // }
 
   var _timeouts = {
     collection: {

@@ -12,7 +12,6 @@ var Reservation = {};
 
 
 Reservation.joinRide = function(position) {
-    console.log(position)
 	if (UserFactory.signedIn()) { 
         return $http.post(urlBase, {
                 user_id : UserFactory.currentUser.user_id,
@@ -35,8 +34,7 @@ Reservation.joinRide = function(position) {
 
     };
 
-    Reservation.leaveRide = function (ride_id_, user_id_){
-        //http://localhost/ARideShare/api/riderinfo?ride_id=23&user_id=1
+    Reservation.leaveRide = function (ride_id_, user_id_){        
         return $http.delete(urlBase, {params: {ride_id : ride_id_, user_id : user_id_}});
 
     };

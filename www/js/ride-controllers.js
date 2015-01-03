@@ -12,7 +12,6 @@ angular.module('starter')
   }
 
     $scope.addRide = function(){
-      //console.log($rideData.availableSeats)
       var promise = RideFactory.addRide($scope.rideData, $scope);
       if (promise)
       {
@@ -85,8 +84,7 @@ angular.module('starter')
         google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
           $scope.myroute = directionsDisplay.getDirections();
 
-          $scope.waypoints = directionsDisplay.directions.routes[0].legs[0].via_waypoint;
-          //computeTotalDistance(directionsDisplay.getDirections());
+          $scope.waypoints = directionsDisplay.directions.routes[0].legs[0].via_waypoint;        
           $scope.startAddress = directionsDisplay.getDirections().routes[0].legs[0].start_address;
           $scope.endAddress = directionsDisplay.getDirections().routes[0].legs[0].end_address
           $scope.startLatitude = directionsDisplay.getDirections().routes[0].legs[0].start_location.k;
@@ -99,8 +97,6 @@ angular.module('starter')
         
         google.maps.event.addListener(map, 'click', function(e) {
          // infowindow.open(map,marker);
-
-
           placeMarker(e.latLng, map);
           if (markers.length ===2)
           {
@@ -129,17 +125,6 @@ angular.module('starter')
 
                 }
               });
-              // // First, remove any existing markers from the map.
-              // console.log('lengthhhhhhhhhhhhhhhhhhhhhhh')
-              // console.log(markers.length)
-              // for (var i = 0; i < markers.length; i++) {
-              //   console.log(markers[i])
-              //   markers[i].setMap(null);
-              // }
-
-              // // Now, clear the array itself.
-              // markers = [];
-              // console.log(markers)
 
           }
         });
@@ -157,32 +142,20 @@ angular.module('starter')
           //id: 'marker_' + markerId
         });
 
-
-       // markers[markerId] = marker; // cache marker in markers object
-       // count ++;
         bindMarkerEvents(marker);
 
-        //console.log(markers[markerId]);
-
-        // google.maps.event.addListener(marker, 'dragend', function(){
-        //   alert(marker.getPosition())
-        //     //(marker.getPosition());
-        // });
 
         markers.push(marker);
 
-         for (var i = 0; i < markers.length; i++) {
-             //markers[i].setMap(map);
-             console.log( markers[i].position.lat());
-             console.log( markers[i].position.lng());
-          }
+         // for (var i = 0; i < markers.length; i++) {
+         //     //markers[i].setMap(map);
+         //  }
         map.panTo(position);
       }
       var bindMarkerEvents = function(marker) {
           google.maps.event.addListener(marker, "dblclick", function (point) {
               var markerId = getMarkerUniqueId(point.latLng.lat(), point.latLng.lng()); // get marker id by using clicked point's coordinate
               var marker = markers[markerId]; // find marker
-              console.log('double clickkkkk')
               removeMarker(marker, markerId); // remove it
               count = count -1;
           });
@@ -200,7 +173,6 @@ angular.module('starter')
         }
         total = total / 1000.0;
         $scope.totalDistance = total;
-        console.log('distance' + total);
       }
       google.maps.event.addDomListener(window, 'load', initialize);
       
@@ -220,16 +192,12 @@ angular.module('starter')
         }, function(error) {
           alert('Unable to get location: ' + error.message);
         });
-      };
-
-      
-      
+      };      
       initialize();
 
 
 })
 
-// Rideshare logic, the controller first.
 .controller('RideCtrl', function($scope, $ionicLoading, $ionicModal, $compile, RideFactory, $rootScope, $location, $stateParams, UserFactory, Reservation, $ionicPopup, $ionicPopover) {
 
 
@@ -247,26 +215,15 @@ angular.module('starter')
     }
 
     if(RideFactory.currentRide !== undefined) {
-      console.log('44444444444444444444444444444444444444444')
-      console.log(RideFactory.currentRide)
+
       $scope.rideAuthor = RideFactory.currentRide.user_id;
       $scope.status = RideFactory.currentRide.status;
-      console.log($scope.status)
       if($scope.status !== undefined){
-        console.log($scope.status.trim())
 
-      
-        console.log('ttttttttttttttttttttttttttttttttttttttttttttt')
-        if($scope.status.trim() ==='Completed'){
-          console.log('completeeddddddddddddddddddddddddddddddddddd')
+        if($scope.status.trim() ==='Completed'){          
           var rider_length = RideFactory.currentRide.RiderInfoes.length;
-          console.log(rider_length)
           for(var i=0; i< rider_length; i++){
-            console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
-            console.log(RideFactory.currentRide.RiderInfoes[i].user_id)
-            console.log(UserFactory.currentUser.user_id)
             if (RideFactory.currentRide.RiderInfoes[i].user_id === UserFactory.currentUser.user_id) {
-              console.log('breakkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
               $scope.passenger = true;
               break;
             }
@@ -278,11 +235,6 @@ angular.module('starter')
     $scope.statusS = "Started";
     $scope.statusC = "Completed";
     
-    //$scope.currentRider = Reservation.currentRes.user_id;
-
-
-
-
     // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     $ionicPopover.fromTemplateUrl('ride.html', {
       scope: $scope,
@@ -323,8 +275,7 @@ angular.module('starter')
       $scope.modalPosition = modal;
     });
 
-    $scope.closePositionMarker = function() {
-      console.log(" ddd "+ UserFactory.currentUser.first_name);
+    $scope.closePositionMarker = function() {      
       $scope.modalPosition.hide();
     };
 
@@ -336,11 +287,6 @@ angular.module('starter')
     };
 
     $scope.loadPositionMarker = function(){
-        //var promise = UserFactory.getCurrentLocatoin();
-        //console.log('loadPositionMarker coming to this')
-        //console.log(promise)
-        //promise.then(function() {
-          console.log('and hhereeeeeee');
           //var myLatlng = new google.maps.LatLng($rootScope.position.coords.latitude,$rootScope.position.coords.longitude);
           var myLatlng = new google.maps.LatLng(6.9270786, 79.861243);
           directionsDisplay2 = new google.maps.DirectionsRenderer();
@@ -353,8 +299,6 @@ angular.module('starter')
               mapOptions);        
           google.maps.event.addListener(map, 'click', function(e) {
             placeMarkerPosition(e.latLng, map);
-            console.log(markers[0].position.D)
-            console.log(markers[0].position.k)
           });
 
           $scope.map_position = map;
@@ -373,7 +317,6 @@ angular.module('starter')
           }
           var start_title = $scope.rideDetails.from_location;
           var end_title = $scope.rideDetails.to_location;
-          //console.log(wypoints.lenth)
           var start = new google.maps.Marker({
                             position: startPosition,
                             map: map,
@@ -403,7 +346,6 @@ angular.module('starter')
 
            $scope.map_position = map;
           directionsDisplay2.setMap(map);
-       //});
 
     };
 
@@ -417,7 +359,6 @@ angular.module('starter')
         deleteMarkers();
         markers.push(marker);
         $scope.reservationPosition = {latitude : markers[0].position.k, longitude : markers[0].position.D};
-        console.log($scope.reservationPosition);
         //map.panTo(position);
         bindMarkerEvents(marker);
     };
@@ -453,11 +394,8 @@ angular.module('starter')
       if (UserFactory.signedIn()){
         var promise = RideFactory.viewPassengers(RideFactory.currentRide.ride_id);
         promise.then(function(){
-          console.log(RideFactory.passengers)
           var ii=0;
           for(var i= 0; i<RideFactory.passengers.length ; i++){
-            console.log('loooopppppppppp' + i)
-            console.log(RideFactory.passengers[i].user_id)
             var id_ = RideFactory.passengers[i].ride_id;
             $scope.ridePassengers[ii] = {id : ii,
                                         ride_id : id_,
@@ -468,12 +406,10 @@ angular.module('starter')
                                         tel_no : RideFactory.passengers[i].User.telephone,
                                         start_location : RideFactory.passengers[i].User.location};
 
-            ii = ii + 1;
-            console.log($scope.ridePassengers[ii])
+            ii = ii + 1;            
           }  
           if(RideFactory.passengers.length>0){
             console.log($scope.ridePassengers);
-            //$scope.modalPassengers.show();
           }
           else {
             $scope.error_message = 'There are no passengers joined for this ride';
@@ -489,40 +425,34 @@ angular.module('starter')
     $scope.loadRide = function() {
       var ride_id = $stateParams.rideId;
       var editable = $stateParams.editable;
-      
+      console.log(ride_id)
+      console.log(editable)
       $scope.currentRideId = ride_id;
 
         if (ride_id !== undefined){
-
-
+console.log('pppppppppppppppppppp')
             RideFactory.getRideByRideId(ride_id).then(
               function(data){
                 RideFactory.currentRide = data.data;
                 $scope.rideDetails = data.data;
-                console.log($scope.rideDetails)
                 $scope.rideAuthor = RideFactory.currentRide.user_id;
                 $scope.currentUserr = UserFactory.currentUser.user_id;
                 $scope.currentRideId = RideFactory.currentRide.ride_id;
                 $scope.status = RideFactory.currentRide.status.trim();
-                console.log($scope.status)
-                //loadMap();
                 var rendererOptions = {};
 
                 if(editable !== 'false')
                 {
-
                   rendererOptions = {
-
                     draggable: true
                   };
-
                 }
-
+                console.log('ooooooooooooooooo')
                 loadMap(rendererOptions, editable);
                 //google.maps.event.addDomListener(window, 'load', loadMap);
               },
               function(){
-                alert('error');
+                // alert('error');
               });
         }
         else
@@ -548,7 +478,7 @@ angular.module('starter')
         else {
           directionsDisplay = new google.maps.DirectionsRenderer();
         }
-
+        console.log('ddddddddddddd')
         var myLatlng = new google.maps.LatLng($scope.rideDetails.start_lattitude, $scope.rideDetails.start_longitude);
         var mapOptions = {
           center: myLatlng,
@@ -560,7 +490,7 @@ angular.module('starter')
 
         $scope.map = map; 
         directionsDisplay.setMap(map);
-
+        console.log('aft map')
         var startPosition = new google.maps.LatLng($scope.rideDetails.start_lattitude, $scope.rideDetails.start_longitude);
         var endPosition = new google.maps.LatLng($scope.rideDetails.end_latitude, $scope.rideDetails.end_longitude);
         var wypoints = [];
@@ -577,7 +507,6 @@ angular.module('starter')
 
         var start_title = $scope.rideDetails.from_location;
         var end_title = $scope.rideDetails.to_location;
-        //console.log(wypoints.lenth)
         var start = new google.maps.Marker({
                           position: startPosition,
                           map: map,
@@ -602,29 +531,24 @@ angular.module('starter')
           directionsService.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                   directionsDisplay.setDirections(response);
-                  //var route_names = directionsDisplay.getDirections();
-
 
                 }
               });
         $scope.map = map; 
         directionsDisplay.setMap(map);
-
+        console.log('againnnnn')
 
 
         if(UserFactory.currentUser.user_id === $scope.rideDetails.user_id){
           //***************************
-          console.log('*********************1111111111111111*************************')
           for (key in $scope.rideDetails.RiderInfoes) {  
             var pLatlng = new google.maps.LatLng($scope.rideDetails.RiderInfoes[key].start_latitude,$scope.rideDetails.RiderInfoes[key].start_longitude);
 
             placePassengerMarker(pLatlng, map, ($scope.rideDetails.RiderInfoes[key].User.first_name.trim()+ ' '+ $scope.rideDetails.RiderInfoes[key].User.last_name));
-
-            console.log('******************22222222*****************************')
+            console.log('11111')
           }
         }
-        console.log('************************333333333333****************************')
-        //$scope.map = map;
+
 
         if ((rendererOptions !== undefined) && (editable !== 'false')) {
           google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
@@ -642,7 +566,7 @@ angular.module('starter')
                                     endLongitude: myroute.legs[0].end_location.D};
             var wypoints_edited = [];
 
-
+            console.log('waypoints')
             for (var i = 0; i < myroute.legs[0].via_waypoint.length; i++) {
 
               wypoints_edited.push({
@@ -682,9 +606,6 @@ angular.module('starter')
 
             if (($scope.rideDetails.RideCordinates[i].latitude !== $scope.waypoints[i].location.k)
                  ||($scope.rideDetails.RideCordinates[i].longitude !== $scope.waypoints[i].location.D)) {
-              //$scope.rideDetails.RideCordinates[i].latitude = $scope.waypoints[i].location.k;
-              //$scope.rideDetails.RideCordinates[i].longitude = $scope.waypoints[i].location.D;
-              console.log('DATA ADDED!!')
               delete_waypoints = true;
             }
 
@@ -692,15 +613,11 @@ angular.module('starter')
         }
         else
         {
-          console.log('nothing for now')
           delete_waypoints = true;
           // here try to delete the records and then call insert again for waypoints
         }
 
-
-        console.log($scope.rideDetails)
         var promise =RideFactory.editRide($scope.rideDetails, $scope.editRouteData);
-        console.log('COME HERE AFTER EDITING ONCEEEEE')
         promise.then(function(){
           if ($scope.waypoints !== null)
           {
@@ -710,10 +627,7 @@ angular.module('starter')
               for(var i= 0; i<$scope.waypoints.length ; i++){
                 var waypoint_edit = {ride_id : $scope.rideDetails.ride_id, latitude :$scope.waypoints[i].location.k, longitude: $scope.waypoints[i].location.D}
                   var promise_waypoits = RideFactory.addRideCordinates($scope.waypoints[i]);
-                  // promise_waypoits.then(function(){
 
-                  
-                  // });
               }
             }
               var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
@@ -723,17 +637,11 @@ angular.module('starter')
           $location.path(path);
         });
 
-      // }
-      // else {
-      //   $scope.error_message = 'you do not have the permission to edit this Ride information';
-      // }
-
     };
 
     // theuser who enteres the Ride can delete the ride
     $scope.deleteRide = function (){
       var Id = $stateParams.rideId;
-      console.log($stateParams.rideId)
       if (UserFactory.currentUser.user_id === RideFactory.currentRide.user_id) {
         $ionicPopup.confirm({
                 title: "Delete Ride",
@@ -743,7 +651,6 @@ angular.module('starter')
                 if(result) {
                     var promise = RideFactory.deleteRide(Id);
                     promise.then(function(){
-                    console.log('deleted data');
                     delete RideFactory.currentRide;
                     var path = '/app/managerides/';
                     $location.path(path);
@@ -769,8 +676,6 @@ angular.module('starter')
       if (UserFactory.signedIn()) { 
         if (($scope.rideDetails.available_seats - 1)>= 0) {
           $scope.modalPosition.show();
-          //setTimeout(loadPositionMarker(), 1000)
-          //loadPositionMarker();
         }
         else {
           $ionicPopup.alert({
@@ -778,7 +683,6 @@ angular.module('starter')
              template: 'There are no seats available for you to join the ride.'
            })
           .then(function(res){
-            console.log('no seats available');
           $scope.popover.hide();
           });
           
@@ -792,7 +696,6 @@ angular.module('starter')
 
     // a passenger can join a ride 
     $scope.insertRider = function(){
-      console.log($scope.reservationPosition)
       if (UserFactory.signedIn()) { 
 
         //var promise = Reservation.joinRide(UserFactory.currentUser.user_id, $scope.rideDetails);
@@ -803,8 +706,6 @@ angular.module('starter')
           $scope.rideDetails.available_seats = $scope.rideDetails.available_seats - 1 ;
           var promise1 = RideFactory.editRide($scope.rideDetails);
           promise1.then(function(){
-            console.log('reduced seats') 
-            console.log(RideFactory.currentRide.ride_id)
             $scope.currentRideId = RideFactory.currentRide.ride_id;
 
             $scope.modalPosition.hide();
@@ -841,18 +742,13 @@ angular.module('starter')
       $scope.rideDetails.status = 'Started';
       var promise =RideFactory.editRide($scope.rideDetails);
       promise.then(function(){
-        console.log('started ride');
-        console.log($scope.rideDetails)
-        console.log($scope.rideDetails.RiderInfoes.length)
         if ($scope.rideDetails.RiderInfoes.length>0){
           // need to have below lop
           var message = 'The ride from '+ $scope.rideDetails.from_location.trim() +' to '+ $scope.rideDetails.to_location.trim() + ' started now.' ;
-          console.log(message)
           console.log($scope.rideDetails.RiderInfoes[0].User.telephone)
           SMS.sendSMS('0094773361039', message, function(){}, function(str){});
         }
         
-        //console.log(message)
         //for (var i =0; i < $scope.rideDetails.RiderInfoes.length; i++){
           //SMS.sendSMS($scope.rideDetails.RiderInfoes[i].User.telephone.trim(), message, function(){}, function(str){alert(str);});
         //}
@@ -860,26 +756,14 @@ angular.module('starter')
 
         
         $scope.closePopover();
-        // var path = '/app/ride/'+ RideFactory.currentRide.ride_id + '/' + false;
-        // $location.path(path);
       });
       $scope.popover.hide();
     };
 
-
-    // $scope.sendSMS = function(){
-    //   alert('dddddddddd')
-    //   console.log('send smsssssss')
-    //    SMS.sendSMS('0094773361039', 'messageeeeeee', function(){}, function(str){alert(str);});
-
-    // };
-
     var completeRide = function(){
-        console.log($scope.rideDetails.start_date);
        //$scope.rideDetails.status = 'Completed';
         var promise =RideFactory.editRide($scope.rideDetails);
         promise.then(function(){
-          console.log('completed ride');
           $scope.closePopover();
         });
       }
@@ -896,13 +780,11 @@ angular.module('starter')
              template: 'Next ride will be added for the next week.'
            })
           .then(function(res){
-            console.log('date changed');
             $scope.rideDetails.status = 'Planned';
-            console.log($scope.rideDetails.start_date);
             var date = new Date($scope.rideDetails.start_date);
             date.setDate(date.getDate() + 7);
             $scope.rideDetails.start_date = date.toISOString();
-            console.log($scope.rideDetails.start_date);
+            $scope.rideDetails.available_seats = $scope.rideDetails.User.Vehicles[0].available_seats;
             completeRide();
           });
 
@@ -915,7 +797,6 @@ angular.module('starter')
 
 
     $scope.loadRateRide = function(){
-      console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
       $ionicModal.fromTemplateUrl('templates/rateride.html', {
         scope: $scope
       }).then(function(modal) {
@@ -928,10 +809,6 @@ angular.module('starter')
     };
 
     $scope.closeRating = function(){
-      // $ionicModal.fromTemplateUrl('templates/rateride.html', {
-      //   scope: $scope
-      // }).then(function(modal) {
-      //   $scope.rateModal = modal;
          $scope.rateModal.hide();
 
     };
@@ -941,15 +818,11 @@ angular.module('starter')
 
     $scope.rateRide = function(){
         var rating = $scope.data.rating;
-        console.log(RideFactory.currentRide.User.rating)
-        if (RideFactory.currentRide.User.rating !== null){
-          console.log(typeof rating)
-          console.log(new Number(RideFactory.currentRide.User.rating))
+        if (RideFactory.currentRide.User.rating !== null){              
           rating = (new Number(rating) + new Number(RideFactory.currentRide.User.rating))/2;
           
         }
         RideFactory.currentRide.User.rating = rating;
-        console.log(RideFactory.currentRide.User.rating)
         var promise = UserFactory.updateUser(RideFactory.currentRide.User);
         promise.then(function(){
           $scope.rateModal.hide();

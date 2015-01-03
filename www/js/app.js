@@ -4,9 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ipCookie'])
+angular.module('starter', ['ionic', 'starter.controllers'])
 
 //.constant('RIDESHARE_URL', 'http://192.168.43.70/ARideShare/')
+//.constant('RIDESHARE_URL', 'http://192.168.43.219/')
+
 .constant('RIDESHARE_URL', 'http://192.168.1.3/')
 
 .run(function($ionicPlatform) {
@@ -44,15 +46,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ipCookie'])
   delete $httpProvider.defaults.headers.common["X-Requested-With"];
   $httpProvider.defaults.headers.common["Accept"] = "application/json";
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
-
- // $routeProvider
- //            .when('/', {
- //                templateUrl: '../templates/menu.html',
- //                controller: 'UserCtrl'
- //            })
- //            .otherwise({
- //                redirectTo: '/'
- //            });
   
   $stateProvider
 
@@ -117,7 +110,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ipCookie'])
       views: {
         'menuContent' :{
           templateUrl: "templates/settings.html",
-          //controller: 'RidesCtrl'
           controller : 'UserCtrl'
         }
       }
@@ -144,7 +136,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ipCookie'])
     })
 
     .state('app.edituser', {
-      url: "/edituser/:rideId",
+      url: "/edituser/:userId",
       views: {
         'menuContent' :{
           templateUrl: "templates/editprofile.html",

@@ -28,7 +28,6 @@ angular.module('starter')
                 available_seats: rideData.available_seats,
                 start_date: rideData.date,
                 start_time: rideData.startTime,
-                //estimated_end_time: ,
                 status : 'Planned',
                 comments : rideData.comments,
                 start_lattitude : routeData.startLatitude,
@@ -76,36 +75,18 @@ angular.module('starter')
     };
 
     Ride.getRidesByUser = function(){
-     // var deferred = $q.defer();
-    // console.log(UserFactory.currentUser.user_id);
+
      if (UserFactory.currentUser !== null){
-      console.log(UserFactory.currentUser.user_id);
       return $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}});
      }
      else {
       return false;
      }
-      
-      
-      //   $http.get(urlBase, {params: {user_id : UserFactory.currentUser.user_id}})
-      //   .success(function(data, status, headers, config) {
-      //           console.log(data.data)
-      //           Ride.userRides = data.data;
-      //           console.log(Ride.userRides)
-      //           deferred.resolve(data);
-      //         }).
-      //         error(function (data, status, headers, config) {
-      //           Ride.userRides = null;
-      //           $scope.error = error;
-      //           console.log('error: ' + data);
-      //           deferred.reject(data);
-      // });
-      // return deferred.promise;         
+               
     };
 
     // fetch the rides that the logged in user has joined
     Ride.getJoinedRidesByUser = function(){
-      console.log('sssssssssssssssssssrrrrrrrrrrrrrrrssssssssssssssss')
       if (UserFactory.currentUser !== null){
         return $http.get(rider_url, {params: {user_id : UserFactory.currentUser.user_id}});
       } 
@@ -116,25 +97,19 @@ angular.module('starter')
     };
 
     Ride.getRideByRideId = function(ride_id_){
-      console.log('getting data' + urlBase);
         //return $http.get(urlBase + '/'+ride_id_);
         return $http.get(urlBase + '/'+ride_id_) 
         .success(function(data, status, headers, config) {
-                //console.log(data);
-                console.log('get worked');
                 Ride.currentRide = data;
               }).
               error(function (data, status, headers, config) {
                 Ride.currentRide = null;
-                //$scope.error = error;
-                console.log('error: ' + data);
       });
     };
 
     Ride.getAllRides = function(){
         return $http.get(urlBase) 
         .success(function(data, status, headers, config) {
-              //console.log(data)
                 Ride.allRides = data;
               }).
               error(function (data, status, headers, config) {
@@ -153,13 +128,10 @@ angular.module('starter')
         ride.end_latitude =route.endLatitude;
         ride.end_longitude = route.endLongitude;
       }
-      console.log('COME HERE FOR EDITING ONCEEEEE')
-      console.log(ride.ride_id)
       return $http.put(urlBase+'/' + ride.ride_id, ride);
     };
 
     Ride.editRideWayoints = function(waypoint, ride_id_){
-     // return $http.put(urlBase + '/'+ride_id_);
 
       return $http.put(waypoint_url + ride_id_, ride);
     };
@@ -176,11 +148,9 @@ angular.module('starter')
       return $http.get(rider_url, {params: {ride_id : ride_id_}})
         .success(function(data, status, headers, config){
           Ride.passengers = data;
-          console.log(data)
         }).
         error(function(data, status, headers, console){
           Ride.passengers = undefined;
-          //$scope.error = error
 
         });
 

@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.factory('UserFactory', ['$http', '$rootScope', '$q', '$ionicModal', 'RIDESHARE_URL', 'ipCookie', function($http, $rootScope, $q, $ionicModal, RIDESHARE_URL, ipCookie) {
+.factory('UserFactory', ['$http', '$rootScope', '$q', '$ionicModal', 'RIDESHARE_URL', function($http, $rootScope, $q, $ionicModal, RIDESHARE_URL) {
 
 
     var urlBase = RIDESHARE_URL + 'api/user'; 
@@ -19,7 +19,6 @@ angular.module('starter.controllers', [])
         return $http.get(urlBase, {params: {user_name : token.name, token : token.token} })
             .success(function(data, status, headers, config) {
                     setCurrentUser(data);
-                    console.log(User.currentUser)
                   }).
                   error(function (data, status, headers, config) {
                     User.currentUser = undefined;
@@ -27,12 +26,10 @@ angular.module('starter.controllers', [])
     };
 
     User.getUser = function (user_name, password) {
-        console.log('come here');
         
         var deferred = $q.defer();
         $http.get(urlBase, {params: {user_name : user_name, password : password}})
         .success(function(data, status, headers, config) {
-            console.log(data)
                 setCurrentUser(data);
                 deferred.resolve(data);
               }).
@@ -83,11 +80,7 @@ angular.module('starter.controllers', [])
                 deferred.resolve(data);
               }).
               error(function (data, status, headers, config) {
-
-                //$scope.error = error;
                 console.log('error: ' );
-                console.log(data)
-                console.log(headers)
                 deferred.reject(data);
       });
       return deferred.promise; 
@@ -98,7 +91,6 @@ angular.module('starter.controllers', [])
     };
 
     User.signedIn = function () {
-        console.log(' signedIn');
         return $rootScope.currentUser !== undefined;
     };
 
@@ -110,8 +102,7 @@ angular.module('starter.controllers', [])
             startPos = position;
             var latitude = startPos.coords.latitude;
             var longitude  = startPos.coords.longitude;
-            console.log('###### '+ latitude+ '');
-            console.log('###### '+ longitude+ '');
+
             $rootScope.position = startPos;
             deferred.resolve(startPos);
           }, function(error) {
